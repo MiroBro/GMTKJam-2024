@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=3 uid="uid://4cmkpax17f04"]
+
+[ext_resource type="Script" path="res://move_stuff.gd" id="1_w5cx0"]
+[ext_resource type="PackedScene" uid="uid://5545kv3kraww" path="res://wall.tscn" id="2_gchmg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v2a5n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v0vfs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_un3l2"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rew31"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_m8q4h"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="Scene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0328808, -0.0497842, 0.0286374)
+script = ExtResource("1_w5cx0")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.871877, -0.106988, 0.477895, 0.0475466, 0.989728, 0.134828, -0.487411, -0.0948316, 0.868008, 5.79309, 6.74848, 9.32232)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.926121, -0.377227, 0, 0.322366, 0.791433, 0.51934, -0.195909, -0.480972, 0.854568, 0, 4.14885, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_v2a5n")
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+shape = SubResource("BoxShape3D_v0vfs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_un3l2")
+
+[node name="project_1" type="Node3D" parent="."]
+transform = Transform3D(0.974104, 0.0281087, 5.28852e-05, 0.00104144, -0.0448586, 0.255072, 0.0275274, -0.992977, -0.0115216, 0.131093, 3.98991, -0.12259)
+
+[node name="wall1" parent="project_1" instance=ExtResource("2_gchmg")]
+transform = Transform3D(0.00689002, 0.00109668, -0.257828, -1.0046, -0.0453666, -0.00170699, -0.176703, 3.91248, 0.000752493, -1.19663, -0.23677, 4.6955)
+
+[node name="wall2" parent="project_1" instance=ExtResource("2_gchmg")]
+transform = Transform3D(0.00689002, 0.00109668, -0.257828, -1.0046, -0.0453666, -0.00170699, -0.176703, 3.91248, 0.000752493, 1.90179, -0.21916, 4.68594)
+
+[node name="roof1" parent="project_1" instance=ExtResource("2_gchmg")]
+transform = Transform3D(0.999999, -1.30385e-08, -1.74623e-10, 1.86265e-09, 1, -9.31323e-10, -2.79397e-09, 7.45058e-08, 0.999999, 0.358528, -0.334002, 10.9146)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(0.144398, 0, 0, 0, 2.33293, 0, 0, 0, 2.04262, -8.41182, 2.33262, -3.95332)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(0.102105, -1.10855, 0, 0.102105, 1.10855, 0, 0, 0, 2.04262, -8.92234, 4.15503, -3.95332)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(-0.102105, 1.03927, 1.26269e-07, 0.102105, 1.03927, -1.26269e-07, -1.26237e-08, 0, -2.04262, -9.92286, 4.15503, -3.95332)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(-0.144398, 0, 1.78571e-07, 0, 2.33293, 0, -1.26237e-08, 0, -2.04262, -10.4526, 2.33262, -3.95332)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(1.89355e-08, 0, 2.04262, 0, 2.33293, 0, -0.144398, 0, 2.67857e-07, -9.44181, 2.33262, -4.9641)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(-6.31183e-09, 0, -2.04262, 0, 2.33293, 0, 0.144398, 0, -8.92856e-08, -9.44181, 2.33262, -2.94253)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="testmesh2" type="MeshInstance3D" parent="Node"]
+transform = Transform3D(0.999976, 0.00521594, -0.00449744, -0.00520849, 0.999985, 0.0016666, 0.00450606, -0.00164313, 0.999988, -6.95986, 2.95022, 3.67568)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.95986, 2.95022, 3.67568)
+
+[node name="testmesh" type="MeshInstance3D" parent="Node/RigidBody3D"]
+transform = Transform3D(1, 0.000168988, -0.000193467, -0.000168971, 1, 5.05494e-05, 0.000193482, -5.04926e-05, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node/RigidBody3D"]
+shape = SubResource("ConvexPolygonShape3D_m8q4h")
