@@ -82,6 +82,7 @@ func _process(delta: float) -> void:
 		#if n % 2 == 0 && n > 0:
 		if n > 1:
 			for i in n-1:
+
 				cut_grid_with_points(points[0], points[1])
 				points.pop_front()
 
@@ -140,18 +141,10 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var pp1 = point_to_grid_space(p1)
 	var pp2 = point_to_grid_space(p2)
 	
+	print(pp1)
 
 
 
-
-
-
-	var i1 = grid_space_to_index(pp1)
-	var n = grid.size()
-	if i1 >= 0 && i1 < n:
-		if grid[i1] == 1:
-			particles.emitting = true
-			grid[i1] = 0
 	
 	var d = pp2-pp1
 
@@ -164,15 +157,17 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 		for j in 100:
 			var pp1_outside = pp1.x < 0.0 || pp1.y > 1.0
 			newp = pp1 + j *d
+
 			if (pp1 - newp).length() > (pp2-pp1).length():
 				break
-			if newp.abs().x > 1.0 || newp.abs().y > 1.0:
+			if !(0 < newp.x && newp.x < 1 && 0 < newp.y && newp.y < 1):
 				continue
+
 			var i2 = grid_space_to_index(newp)
-			if i2 >= 0 && i2 < n:
-				if grid[i2] == 1:
-					particles.emitting = true
-					grid[i2] = 0
+
+			if grid[i2] == 1:
+				particles.emitting = true
+				grid[i2] = 0
 
 
 	#for p in [pp1, pp2]:
