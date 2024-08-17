@@ -12,6 +12,7 @@ var drawing = false
 
 var grid: PackedByteArray
 var cell_size = Vector2(0.01, 0.01)
+# var cell_size = Vector2(0.1, 0.1)
 var plank_size = Vector2(0.8, 0.5)
 var plank_half_size = plank_size / 2.0
 
@@ -41,11 +42,6 @@ func _ready() -> void:
 
 
 func _input(event):
-
-
-
-			
-		
 	if event is InputEventMouseMotion:
 		# Step 1: Get the mouse position in the viewport
 		var mouse_pos = event.position
@@ -76,6 +72,8 @@ func _input(event):
 				var idx = grid_space_to_index(pnorm)
 
 				flood_fill_mesh_from_index(grid, idx)
+				
+				find_islands()
 
 
 func _process(delta: float) -> void:
@@ -152,14 +150,7 @@ func vector2_max(a: Vector2, b: Vector2) -> Vector2:
 func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var pp1 = point_to_grid_space(p1)
 	var pp2 = point_to_grid_space(p2)
-	
-
-
-
-
-	
 	var d = pp2-pp1
-
 
 	if d.length() > cell_size.length()/4.0:
 		var m = 100 * max(d.abs().x, d.abs().y)
@@ -233,7 +224,32 @@ func line_intersects_line(p1_start: Vector2, p1_end: Vector2, p2_start: Vector2,
 func is_point_in_rect(point: Vector2, rect_position: Vector2, rect_size: Vector2) -> bool:
 	return (point.x >= rect_position.x and point.x <= rect_position.x + rect_size.x and point.y >= rect_position.y and point.y <= rect_position.y + rect_size.y)
 
-func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int):
+func find_islands():
+	print("called")
+	var island_indices: PackedInt32Array
+	var island_lens: Array[int]
+	var all_visited = grid.duplicate()
+	var n = all_visited.size()
+	for i in n:
+		all_visited[i] = 0
+	
+	for next_island_start in n:
+		if grid[next_island_start] == 0:
+			continue
+		if all_visited[next_island_start]:
+			continue
+		all_visited[next_island_start] = 1
+		var island = flood_fill_mesh_from_index(grid, next_island_start)
+		for idx in island:
+			all_visited[idx] = 1
+		island_indices += island
+		island_lens.push_back(island.size())
+
+		
+	print(island_lens)
+	
+
+func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int) -> PackedInt32Array:
 	var visited = grid.duplicate()
 	for i in visited.size():
 		visited[i] = 0
@@ -277,8 +293,7 @@ func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int):
 				indices.push_back(nidx)
 				dfs.push_back(int(nidx))
 				
-	for idx3 in indices:
-		grid[idx3] = 0
+	return indices
 
 
 func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
@@ -310,6 +325,64 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(tl)
+			
+			var thick = 0.05 * Vector3.DOWN
+			# add sides
+			# if we want to we can make sure to only add this if we do not have four filled neighbours
+
+			
+			var bl_b = bl + thick
+			var tr_b = tr + thick
+			var br_b = br + thick
+			var tl_b = tl + thick
+
+			#front facing side
+			mesh.surface_add_vertex(bl)
+			mesh.surface_add_vertex(br_b)
+			mesh.surface_add_vertex(bl_b)
+			
+			mesh.surface_add_vertex(br_b)
+			mesh.surface_add_vertex(bl)
+			mesh.surface_add_vertex(br)
+			
+			
+			# back facing side
+			mesh.surface_add_vertex(tl)
+			mesh.surface_add_vertex(tl_b)
+			mesh.surface_add_vertex(tr_b)
+			
+			mesh.surface_add_vertex(tr_b)
+			mesh.surface_add_vertex(tr)
+			mesh.surface_add_vertex(tl)
+
+			# left side
+			mesh.surface_add_vertex(bl)
+			mesh.surface_add_vertex(bl_b)
+			mesh.surface_add_vertex(tl_b)
+
+			mesh.surface_add_vertex(bl)
+			mesh.surface_add_vertex(tl_b)
+			mesh.surface_add_vertex(tl)
+
+			# right side
+			mesh.surface_add_vertex(tr)
+			mesh.surface_add_vertex(tr_b)
+			mesh.surface_add_vertex(br_b)
+
+			mesh.surface_add_vertex(tr)
+			mesh.surface_add_vertex(br_b)
+			mesh.surface_add_vertex(br)
+
+			
+			# add bottom
+			mesh.surface_add_vertex(br_b)
+			mesh.surface_add_vertex(tl_b)
+			mesh.surface_add_vertex(tr_b)
+
+			mesh.surface_add_vertex(br_b)
+			mesh.surface_add_vertex(bl_b)
+			mesh.surface_add_vertex(tl_b)
+
 
 	mesh.surface_end()
 
