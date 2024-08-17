@@ -19,7 +19,7 @@ func turn_project_into_colliders():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	turn_project_into_colliders()
-	
+
 	freeze_physics(true);
 	
 	var reference_children = reference_root.get_children() 

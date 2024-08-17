@@ -37,6 +37,9 @@ func _ready() -> void:
 	var grid_dims = plank_size / cell_size
 	grid_width = int(round(grid_dims.x))
 	grid_height = int(round(grid_dims.y))
+	
+	saw_pos = debug0.global_position
+	mouse_pos_in_plane = debug0.global_position
 
 	for i in range(grid_width * grid_height):
 		grid.append(1)
@@ -105,11 +108,13 @@ func _process(delta: float) -> void:
 		var n =  points.size()
 		#if n % 2 == 0 && n > 0:
 		if n > 1:
-			for i in n-1:
-				var cut_any = cut_grid_with_points(points[0], points[1])
+			var cut_any = false
+			for i in range(1, n-1):
+				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
+
+			if cut_any:
+				particles.emitting = true
 				points.pop_front()
-				if cut_any:
-					particles.emitting = true
 
 	convert_grid_to_mesh(grid, self.mesh)
 

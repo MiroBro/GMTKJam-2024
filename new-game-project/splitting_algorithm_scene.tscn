@@ -1,10 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://u617whog5up4"]
+[gd_scene load_steps=19 format=3 uid="uid://cwgaf6d14ubbf"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
-[ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
-[gd_scene load_steps=18 format=3 uid="uid://cwgaf6d14ubbf"]
-
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
+[ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
 [ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="3_50jch"]
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
@@ -79,7 +77,6 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 
 [node name="BluePrintOpenButton" parent="." instance=ExtResource("1_rdmpu")]
 
-[node name="Camera3D" type="Camera3D" parent="."]
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
 
@@ -128,7 +125,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(-5.70331e-09, 0, 0.198475, 0, 0.130476, 0, -0.130476, 0, -8.67563e-09, 0.00336978, -0.23239, -0.211747)
 
 [node name="debug0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 0, 0, 0)
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, -0.499785, 0, 0.101566)
 material_override = SubResource("StandardMaterial3D_8io1f")
 mesh = SubResource("SphereMesh_jg71j")
 
