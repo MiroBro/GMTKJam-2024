@@ -12,7 +12,7 @@ var drawing = false
 
 var grid: PackedByteArray
 var cell_size = Vector2(0.01, 0.01)
-var plank_size = Vector2(1.0, 1.0)
+var plank_size = Vector2(0.8, 0.5)
 var plank_half_size = plank_size / 2.0
 
 var plank_corrected = (plank_size - cell_size) / 2.0;
