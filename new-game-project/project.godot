@@ -12,6 +12,7 @@ config_version=5
 
 config/name="GMTK2024"
 config/version="0.1"
+run/main_scene="res://godot-git-plugin-v3.1.1/addons/godot-git-plugin/win64/AdrianScene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

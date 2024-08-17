@@ -1,3 +1,45 @@
-[gd_scene format=3 uid="uid://eqepjr3xioed"]
+[gd_scene load_steps=8 format=3 uid="uid://eqepjr3xioed"]
+
+[ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="1_k4w8x"]
+[ext_resource type="PackedScene" uid="uid://bytf3ncsvry6u" path="res://Meshes/SM_Saw_1.fbx" id="2_0qqai"]
+[ext_resource type="PackedScene" uid="uid://c11mu21sqy6ra" path="res://Meshes/SM_Pen_1.fbx" id="3_1u00k"]
+[ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="4_0q60c"]
+[ext_resource type="PackedScene" uid="uid://cftmk855cri6b" path="res://Meshes/M_Sawblade_1.glb" id="4_rvg18"]
+
+[sub_resource type="Animation" id="Animation_8ho8m"]
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("SM_Saw_1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d1s4r"]
+_data = {
+"RotationSaw": SubResource("Animation_8ho8m")
+}
 
 [node name="Node3D" type="Node3D"]
+
+[node name="SM_Banana_1" parent="." instance=ExtResource("1_k4w8x")]
+
+[node name="SM_Saw_1" parent="." instance=ExtResource("2_0qqai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.819055, 0, 1.70666)
+
+[node name="SM_Pen_1" parent="." instance=ExtResource("3_1u00k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0217772, 0, -1.15434)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.395761, 0.390068, 3.1524)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d1s4r")
+}
+
+[node name="M_Sawbody_1" parent="." instance=ExtResource("4_0q60c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09456, -3.57628e-07, 0.158969)
+
+[node name="M_Sawblade_1" parent="M_Sawbody_1" instance=ExtResource("4_rvg18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.128317, 3.57628e-07, 0.0718211)
