@@ -11,8 +11,10 @@ glow_enabled = true
 volumetric_fog_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjw16"]
-diffuse_mode = 1
-albedo_color = Color(1, 0.630934, 0.389505, 1)
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.841136, 0.549934, 0.389017, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_5gyxt"]
 
@@ -52,7 +54,7 @@ albedo_color = Color(0.959231, 5.77569e-07, 0.538349, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_jg71j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7t182"]
-albedo_color = Color(0.238599, 0.184279, 0.163831, 1)
+albedo_color = Color(0.918927, 0.531293, 0.174442, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_l2e85"]
 size = Vector3(0.005, 0.005, 0.005)
@@ -66,7 +68,7 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 8.74228e-08, -2.16418e-15, 2.87793e-08, 0.329196, 0.944262, 8.255e-08, 0.944262, -0.329196, 0.000753582, 0.875867, -0.590927)
+transform = Transform3D(1, -1.68737e-07, 3.21058e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 0.82926, 0.488521)
 fov = 77.9653
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -76,7 +78,6 @@ environment = SubResource("Environment_afixl")
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0.978596, 0)
 
 [node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles")]
-transform = Transform3D(-2.46622e-08, 0, 1, 0, 0.0464673, 0, -0.564206, 0, -4.37114e-08, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_sjw16")
 mesh = SubResource("ImmediateMesh_5gyxt")
 script = ExtResource("1_gb60y")
@@ -89,31 +90,32 @@ debug2 = NodePath("../debug2")
 particles = NodePath("../debug0/CPUParticles3D")
 
 [node name="Table" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.256385)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.103835, -0.224764)
+transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.474923, -0.224764)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.267043, -0.707886)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.638131, -0.707886)
 material_override = SubResource("ShaderMaterial_6bxkg")
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.267043, 0.255387)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.638131, 0.255387)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.267043, -0.737224)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.638131, -0.737224)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.267043, 0.276007)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.638131, 0.276007)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
@@ -123,7 +125,7 @@ material_override = SubResource("StandardMaterial3D_8io1f")
 mesh = SubResource("SphereMesh_jg71j")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="debug0"]
-transform = Transform3D(0.512484, -18.1746, -0.0208343, 18.1746, 0.51248, 0.00312934, -0.0025409, -0.0209142, 18.1818, 0.681784, 3.27477, -3.10829)
+transform = Transform3D(0.512484, -18.1746, -0.0208343, 18.1746, 0.51248, 0.00312934, -0.0025409, -0.0209142, 18.1818, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_7t182")
 amount = 76
 lifetime = 0.01

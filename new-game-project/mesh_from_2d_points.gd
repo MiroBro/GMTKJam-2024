@@ -11,9 +11,12 @@ var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
 var drawing = false
 
 var grid: PackedByteArray
-@export var cell_size = Vector2(0.01, 0.01)
-@export var plank_size = Vector2(2.0, 1.0)
+var cell_size = Vector2(0.5, 0.5)
+var plank_size = Vector2(1.0, 1.0)
 var plank_half_size = plank_size / 2.0
+
+var plank_corrected = (plank_size - cell_size) / 2.0;
+
 var plank_offset = -Vector3(plank_half_size.x, 0.0, plank_half_size.y)
 
 @export var debug0: Node3D
@@ -64,14 +67,16 @@ func _input(event):
 
 
 func _process(delta: float) -> void:
-	particles.emitting = drawing
-	
+	particles.emitting = false
+
 	if drawing:
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		debug0.global_position = mouse_pos_in_plane
-		var ww = point_to_grid_space(mouse_2d)
-		var w = grid_space_to_world(ww.x ,ww.y) 
+
+		var pnorm = point_to_grid_space(mouse_2d)
+		var w = grid_space_to_world(pnorm) 
 		debug1.global_position = Vector3(w.x, 0.0, w.y)
+
 		points.push_back(mouse_2d)
 		var n =  points.size()
 		if n % 2 == 0 && n > 0:
@@ -81,19 +86,43 @@ func _process(delta: float) -> void:
 	convert_grid_to_mesh(grid, self.mesh)
 
 
+# from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
-	var pp = (p + plank_half_size) * Vector2(float(grid_width), float(grid_height))
-	return pp
+	var pp = p / plank_corrected
+	var pnorm = pp / 2.0 + Vector2(0.5, 0.5)
+	return pnorm
 
-func grid_space_to_index(x: int, y: int):
+func grid_space_to_index(pnorm: Vector2):
+	var index_pos_cont = pnorm * Vector2(float(grid_width - 1), float(grid_height - 1))
+	var index_pos = vector2_round(index_pos_cont)
+	var x = int(index_pos.x)
+	var y = int(index_pos.y)
 	return y * grid_width + x
 
-func grid_space_to_world(x: int, y: int):
-	var p = Vector2(float(x), float(y)) / Vector2(float(grid_width), float(grid_height))
-	return p - plank_half_size
+func point_to_index(p: Vector2):
+	var pnorm = point_to_grid_space(p)
+	return grid_space_to_index(pnorm)
+
+func index_to_grid_space(i: int):
+	var x = i % grid_width
+	var y = i / grid_width
+	var pnorm = Vector2(float(x), float(y)) / Vector2(float(grid_width - 1), float(grid_height - 1))
+	return pnorm
+
+func index_to_world_space(i: int):
+	var pnorm = index_to_grid_space(i)
+	return grid_space_to_world(pnorm)
+
+func grid_space_to_world(pnorm: Vector2):
+	var p = (pnorm - Vector2(0.5, 0.5)) * 2.0
+	var middle = p * plank_corrected
+	return middle
 
 func vector2_min(a: Vector2, b: Vector2) -> Vector2:
 	return Vector2(min(a.x, b.x), min(a.y, b.y))
+
+func vector2_round(v: Vector2) -> Vector2:
+	return Vector2(round(v.x), round(v.y))
 
 func vector2_ceil(v: Vector2) -> Vector2:
 	return Vector2(ceil(v.x), ceil(v.y))
@@ -109,15 +138,30 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var pp1 = point_to_grid_space(p1)
 	var pp2 = point_to_grid_space(p2)
 	
+	var pp1_outside = pp1.x < 0.0 || pp1.y > 1.0
+	var pp2_outside = pp2.x < 0.0 || pp2.y > 1.0
+
+	if pp1_outside && pp2_outside:
+		return
+
 	var min = vector2_min(vector2_floor(pp1), vector2_floor(pp2))
 	var max = vector2_max(vector2_ceil(pp1), vector2_ceil(pp2))
 
+	var i1 = grid_space_to_index(pp1)
 	var n = grid.size()
-	
-	for p in [pp1, pp2]:
-		var index = grid_space_to_index(int(round(p.x)), int(round(p.y)))
-		if index >= 0 && index < n:
-			grid[index] = 0
+	if i1 >= 0 && i1 < n:
+		if grid[i1] == 1:
+			particles.emitting = true
+			grid[i1] = 0
+			print(pp1)
+
+
+	#for p in [pp1, pp2]:
+	#	var index = grid_space_to_index(int(round(p.x)), int(round(p.y)))
+	#	if index >= 0 && index < n:
+	#		if grid[index] == 1:
+	#			particles.emitting = true
+	#		grid[index] = 0
 
 	#for x in range(int(min.x), int(max.x)):
 	#	for y in range(int(min.y), int(max.y)):
@@ -163,24 +207,25 @@ func line_intersects_line(p1_start: Vector2, p1_end: Vector2, p2_start: Vector2,
 func is_point_in_rect(point: Vector2, rect_position: Vector2, rect_size: Vector2) -> bool:
 	return (point.x >= rect_position.x and point.x <= rect_position.x + rect_size.x and point.y >= rect_position.y and point.y <= rect_position.y + rect_size.y)
 
+
 func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	mesh.clear_surfaces()
 	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 
 	var half = cell / 2.0
 
-	var f = cell * Vector3.FORWARD
-	var r = cell * Vector3.RIGHT
+	var f = cell * -Vector3(0.0, 0.0, 1.0)
+	var r = cell * Vector3(1.0, 0.0, 0.0)
 
-	var i = 0
+	var i = -1
 	for value in grid:
 		i = i + 1
 		if value == 1:
-			var x = (i % grid_width) * cell.x
-			var y = 0.0
-			var z = (i / grid_width) * cell.z
+			var middle = index_to_world_space(i)
+			var mp = Vector3(middle.x, 0.0, middle.y)
 
-			var bl = plank_offset + Vector3(x, y, z) - half
+			var bl = mp - half
+
 			var tr = bl + f + r
 			var br = bl + r
 			var tl = bl + f
