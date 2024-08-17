@@ -32,6 +32,8 @@ var grid_height
 
 var cell = Vector3(cell_size.x, thickness, cell_size.y)
 
+@export var normal_bg: AudioStreamPlayer3D
+@export var cutting_bg: AudioStreamPlayer3D
 
 func _ready() -> void:
 	var grid_dims = plank_size / cell_size
@@ -79,14 +81,32 @@ func _input(event):
 				find_islands()
 
 var speed = 10.0
-var target_speed = 32.0
+var target_speed = 20.0
+
+var normal_from = 0.0
+var cutting_from = 0.0
+func fix_music():
+	if not drawing and not normal_bg.playing:
+		normal_bg.play(normal_from)
+	if drawing and not cutting_bg.playing:
+		cutting_bg.play(cutting_from)
+		
+	if not drawing:
+		cutting_from = cutting_bg.get_playback_position()
+		cutting_bg.stop()
+	if drawing:
+		normal_from = cutting_bg.get_playback_position()
+		normal_bg.stop()
+
 
 func _process(delta: float) -> void:
 	particles.emitting = false
 
+	fix_music()
+
 	if drawing:
 		camera.add_trauma(0.1)
-		speed = lerp(speed, target_speed, 0.3)
+		speed = lerp(speed, target_speed, 5.0 * delta)
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
@@ -94,7 +114,7 @@ func _process(delta: float) -> void:
 		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
 			var i = grid_space_to_index(p)
 			if grid[i] == 1:
-				speed = 1.0
+				speed = 0.5
 		
 		debug0.look_at(mouse_pos_in_plane)
 		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)

@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=21 format=3 uid="uid://cwgaf6d14ubbf"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
 [ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
 [ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="3_50jch"]
+[ext_resource type="AudioStream" uid="uid://du68fmp0178k2" path="res://Assets/Music/Banana (for Scale)_3.mp3" id="3_q8d4d"]
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
+[ext_resource type="AudioStream" uid="uid://pjggloaabujq" path="res://Assets/Music/Cutting song_2.mp3" id="4_eajf0"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="5_pt3pa"]
 
 [sub_resource type="Environment" id="Environment_afixl"]
@@ -22,11 +24,10 @@ fog_depth_curve = 0.231705
 fog_depth_begin = 1.0
 fog_depth_end = 6.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjw16"]
-shading_mode = 2
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sr1bg"]
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.841136, 0.549934, 0.389017, 1)
+albedo_color = Color(0.817162, 0.582912, 0.427322, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_5gyxt"]
 
@@ -84,6 +85,17 @@ transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.9
 fov = 46.7299
 script = ExtResource("1_lws0k")
 
+[node name="NormalBG" type="AudioStreamPlayer3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -2.98023e-08, 7.10543e-15, 2.98023e-08, 1, 0, 0, 0)
+stream = ExtResource("3_q8d4d")
+autoplay = true
+
+[node name="CuttingBG" type="AudioStreamPlayer3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -2.98023e-08, 7.10543e-15, 2.98023e-08, 1, 0, 0, 0)
+stream = ExtResource("4_eajf0")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Node3D"]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_afixl")
 
@@ -100,8 +112,9 @@ directional_shadow_fade_start = 0.795
 directional_shadow_max_distance = 2.0
 directional_shadow_pancake_size = 8.9
 
-[node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles")]
-material_override = SubResource("StandardMaterial3D_sjw16")
+[node name="GameManager" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg")]
+material_override = SubResource("StandardMaterial3D_sr1bg")
+gi_mode = 2
 mesh = SubResource("ImmediateMesh_5gyxt")
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
@@ -111,6 +124,8 @@ debug0 = NodePath("../debug0")
 debug1 = NodePath("../debug1")
 debug2 = NodePath("../debug2")
 particles = NodePath("../debug0/CPUParticles3D")
+normal_bg = NodePath("../Node3D/NormalBG")
+cutting_bg = NodePath("../Node3D/CuttingBG")
 
 [node name="Table" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.256385)
@@ -120,9 +135,6 @@ transform = Transform3D(0.492558, 0.000123576, -0.173012, -0.031802, 0.00604497,
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
-
-[node name="SM_Table_1" parent="Table" instance=ExtResource("3_r1qx8")]
-transform = Transform3D(-5.70331e-09, 0, 0.198475, 0, 0.130476, 0, -0.130476, 0, -8.67563e-09, 0.00336978, -0.23239, -0.211747)
 
 [node name="debug0" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, -0.499785, 0, 0.101566)
@@ -147,6 +159,9 @@ damping_max = 5.556
 
 [node name="M_Sawbody_1" parent="debug0" instance=ExtResource("3_50jch")]
 transform = Transform3D(1.62864e-07, 0, -1.24197, 0, 1.24197, 0, 1.24197, 0, 1.62864e-07, 0.193109, 0.51864, 1.24737)
+
+[node name="SM_Table_1" parent="." instance=ExtResource("3_r1qx8")]
+transform = Transform3D(-5.70331e-09, 0, 0.198475, 0, 0.130476, 0, -0.130476, 0, -8.67563e-09, 0.00336978, -0.1, 0.044638)
 
 [node name="debug1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.09107, 0, 0)
