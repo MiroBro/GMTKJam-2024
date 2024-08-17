@@ -11,15 +11,22 @@ var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
 var drawing = false
 
 var grid: PackedByteArray
-@export var cell_size = Vector2(0.03, 0.03)
+@export var cell_size = Vector2(0.01, 0.01)
 @export var plank_size = Vector2(2.0, 1.0)
-var plank_half_size = -plank_size / 2.0
-var plank_offset = Vector3(plank_half_size.x, 0.0, plank_half_size.y)
+var plank_half_size = plank_size / 2.0
+var plank_offset = -Vector3(plank_half_size.x, 0.0, plank_half_size.y)
+
+@export var debug0: Node3D
+@export var debug1: Node3D
+@export var debug2: Node3D
+
+@export var particles: CPUParticles3D
 
 var grid_width
 var grid_height
 
 var cell = Vector3(cell_size.x, thickness, cell_size.y)
+
 
 func _ready() -> void:
 	var grid_dims = plank_size / cell_size
@@ -57,8 +64,15 @@ func _input(event):
 
 
 func _process(delta: float) -> void:
+	particles.emitting = drawing
+	
 	if drawing:
-		points.push_back(Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z))
+		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
+		debug0.global_position = mouse_pos_in_plane
+		var ww = point_to_grid_space(mouse_2d)
+		var w = grid_space_to_world(ww.x ,ww.y) 
+		debug1.global_position = Vector3(w.x, 0.0, w.y)
+		points.push_back(mouse_2d)
 		var n =  points.size()
 		if n % 2 == 0 && n > 0:
 			cut_grid_with_points(points[0], points[1])
@@ -66,16 +80,17 @@ func _process(delta: float) -> void:
 
 	convert_grid_to_mesh(grid, self.mesh)
 
+
 func point_to_grid_space(p: Vector2):
-	var pp = (p - plank_half_size) * plank_size
+	var pp = (p + plank_half_size) * Vector2(float(grid_width), float(grid_height))
 	return pp
 
 func grid_space_to_index(x: int, y: int):
-	return 0
+	return y * grid_width + x
 
 func grid_space_to_world(x: int, y: int):
-	var p = Vector2(float(x), float(y)) * cell + plank_offset
-
+	var p = Vector2(float(x), float(y)) / Vector2(float(grid_width), float(grid_height))
+	return p - plank_half_size
 
 func vector2_min(a: Vector2, b: Vector2) -> Vector2:
 	return Vector2(min(a.x, b.x), min(a.y, b.y))
@@ -97,13 +112,18 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var min = vector2_min(vector2_floor(pp1), vector2_floor(pp2))
 	var max = vector2_max(vector2_ceil(pp1), vector2_ceil(pp2))
 
-	for x in range(int(min.x), int(max.x)):
-		for y in range(int(min.y), int(max.y)):
-			var index = grid_space_to_index(x, y)
-			if index in grid:
-				var grid_pos = grid_space_to_world(x, y)
-				if line_intersects_rectangle(min, max, grid_pos, cell_size):
-					grid[index] = 0
+	var n = grid.size()
+	
+	for p in [pp1, pp2]:
+		var index = grid_space_to_index(int(round(p.x)), int(round(p.y)))
+		if index >= 0 && index < n:
+			grid[index] = 0
+
+	#for x in range(int(min.x), int(max.x)):
+	#	for y in range(int(min.y), int(max.y)):
+	#		var index = grid_space_to_index(x, y)
+	#		if index >= 0 && index < n:
+	#			grid[index] = 0
 
 func line_intersects_rectangle(p1: Vector2, p2: Vector2, rect_position: Vector2, rect_size: Vector2) -> bool:
 	# Define the rectangle's edges

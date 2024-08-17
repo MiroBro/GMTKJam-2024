@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=16 format=3 uid="uid://cwgaf6d14ubbf"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
@@ -12,6 +12,7 @@ volumetric_fog_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjw16"]
 diffuse_mode = 1
+albedo_color = Color(1, 0.630934, 0.389505, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_5gyxt"]
 
@@ -45,6 +46,23 @@ shader_parameter/in_dashed_count_y = 6.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_svw24"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8io1f"]
+albedo_color = Color(0.959231, 5.77569e-07, 0.538349, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_jg71j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7t182"]
+albedo_color = Color(0.238599, 0.184279, 0.163831, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l2e85"]
+size = Vector3(0.005, 0.005, 0.005)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phvl4"]
+albedo_color = Color(0.192241, 0.643653, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26d8k"]
+albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
+
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -57,7 +75,7 @@ environment = SubResource("Environment_afixl")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0.978596, 0)
 
-[node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera")]
+[node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles")]
 transform = Transform3D(-2.46622e-08, 0, 1, 0, 0.0464673, 0, -0.564206, 0, -4.37114e-08, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_sjw16")
 mesh = SubResource("ImmediateMesh_5gyxt")
@@ -65,6 +83,10 @@ script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
 thickness = 1.0
 camera = NodePath("../Camera3D")
+debug0 = NodePath("../debug0")
+debug1 = NodePath("../debug1")
+debug2 = NodePath("../debug2")
+particles = NodePath("../debug0/CPUParticles3D")
 
 [node name="Table" type="Node3D" parent="."]
 
@@ -94,3 +116,34 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.267043, 0.276007)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
+
+[node name="debug0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_8io1f")
+mesh = SubResource("SphereMesh_jg71j")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="debug0"]
+transform = Transform3D(0.512484, -18.1746, -0.0208343, 18.1746, 0.51248, 0.00312934, -0.0025409, -0.0209142, 18.1818, 0.681784, 3.27477, -3.10829)
+material_override = SubResource("StandardMaterial3D_7t182")
+amount = 76
+lifetime = 0.01
+preprocess = 1.3
+speed_scale = 0.48
+randomness = 1.0
+lifetime_randomness = 0.5
+draw_order = 1
+mesh = SubResource("BoxMesh_l2e85")
+gravity = Vector3(0, -2.495, 0)
+initial_velocity_max = 42.74
+damping_min = 2.991
+damping_max = 5.556
+
+[node name="debug1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.09107, 0, 0)
+material_override = SubResource("StandardMaterial3D_phvl4")
+mesh = SubResource("SphereMesh_jg71j")
+
+[node name="debug2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.18149, 0, 0)
+material_override = SubResource("StandardMaterial3D_26d8k")
+mesh = SubResource("SphereMesh_jg71j")
