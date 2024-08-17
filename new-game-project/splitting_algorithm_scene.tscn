@@ -1,14 +1,25 @@
-[gd_scene load_steps=16 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=18 format=3 uid="uid://d3pm0f60x0o53"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
+[ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
+[ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="3_50jch"]
+[ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
+[ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="5_pt3pa"]
 
 [sub_resource type="Environment" id="Environment_afixl"]
 background_mode = 1
-background_color = Color(0.247834, 0.391913, 0.625223, 1)
+background_color = Color(0.787355, 0.650491, 0.526024, 1)
+background_energy_multiplier = 0.71
+ambient_light_energy = 0.93
 tonemap_mode = 3
 glow_enabled = true
-volumetric_fog_enabled = true
+fog_light_color = Color(0, 0.482293, 0.579114, 1)
+fog_sun_scatter = 0.31
+fog_density = 0.453
+fog_depth_curve = 0.231705
+fog_depth_begin = 1.0
+fog_depth_end = 6.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjw16"]
 shading_mode = 2
@@ -21,7 +32,7 @@ albedo_color = Color(0.841136, 0.549934, 0.389017, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v16nn"]
 render_priority = 0
 shader = ExtResource("2_w0i4a")
-shader_parameter/subdivisions = 186.0
+shader_parameter/subdivisions = 26.0
 shader_parameter/grid_width = 0.0
 shader_parameter/background_color = Color(0.168871, 0.274112, 0.415687, 1)
 shader_parameter/background_color_two = Color(0.188626, 0.334457, 0.641399, 1)
@@ -44,10 +55,6 @@ shader_parameter/in_dashed_count_y = 6.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_7yi7t"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6bxkg"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_svw24"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8io1f"]
 albedo_color = Color(0.959231, 5.77569e-07, 0.538349, 1)
 
@@ -67,15 +74,27 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
+[node name="BluePrintOpenButton" parent="." instance=ExtResource("1_rdmpu")]
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, -1.68737e-07, 3.21058e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 0.82926, 0.488521)
-fov = 77.9653
+transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
+fov = 46.7299
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_afixl")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0.978596, 0)
+transform = Transform3D(0.932134, -0.181056, 0.313599, -0.362113, -0.466067, 0.807252, -2.16227e-09, -0.866025, -0.5, 0, 0.421738, 0)
+shadow_enabled = true
+shadow_bias = 0.062
+shadow_normal_bias = 0.0
+shadow_transmittance_bias = 0.225
+shadow_blur = 0.568
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 0.795
+directional_shadow_max_distance = 2.0
+directional_shadow_pancake_size = 8.9
 
 [node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles")]
 material_override = SubResource("StandardMaterial3D_sjw16")
@@ -93,31 +112,13 @@ particles = NodePath("../debug0/CPUParticles3D")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.256385)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.152935, -0.224764)
+transform = Transform3D(0.492558, 0.000123576, -0.173012, -0.031802, 0.00604497, -0.0574962, 0.172318, 0.000762391, 0.483928, 0.680563, -0.152935, 0.16517)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.316143, -0.707886)
-material_override = SubResource("ShaderMaterial_6bxkg")
-mesh = SubResource("BoxMesh_svw24")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.316143, 0.255387)
-mesh = SubResource("BoxMesh_svw24")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.316143, -0.737224)
-mesh = SubResource("BoxMesh_svw24")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.316143, 0.276007)
-mesh = SubResource("BoxMesh_svw24")
-skeleton = NodePath("../..")
+[node name="SM_Table_1" parent="Table" instance=ExtResource("3_r1qx8")]
+transform = Transform3D(-5.70331e-09, 0, 0.198475, 0, 0.130476, 0, -0.130476, 0, -8.67563e-09, 0.00336978, -0.23239, -0.211747)
 
 [node name="debug0" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 0, 0, 0)
@@ -140,6 +141,9 @@ initial_velocity_max = 42.74
 damping_min = 2.991
 damping_max = 5.556
 
+[node name="M_Sawbody_1" parent="debug0" instance=ExtResource("3_50jch")]
+transform = Transform3D(1.62864e-07, 0, -1.24197, 0, 1.24197, 0, 1.24197, 0, 1.62864e-07, 0.193109, 0.51864, 1.24737)
+
 [node name="debug1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.09107, 0, 0)
 material_override = SubResource("StandardMaterial3D_phvl4")
@@ -149,3 +153,6 @@ mesh = SubResource("SphereMesh_jg71j")
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.18149, 0, 0)
 material_override = SubResource("StandardMaterial3D_26d8k")
 mesh = SubResource("SphereMesh_jg71j")
+
+[node name="SM_Banana_1" parent="." instance=ExtResource("5_pt3pa")]
+transform = Transform3D(0.0673544, 0, 0, 0, 0.00884046, 0.0667717, 0, -0.0667717, 0.00884046, -0.295976, -0.0546528, 0.335684)

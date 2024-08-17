@@ -12,7 +12,11 @@ config_version=5
 
 config/name="GMTK2024"
 config/version="0.1"
+<<<<<<< HEAD
 run/main_scene="res://Scenes/BluePrintOpenButton.tscn"
+=======
+run/main_scene="res://splitting_algorithm_scene.tscn"
+>>>>>>> main
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-[gd_scene load_steps=3 format=3 uid="uid://cdldsdwvl51ux"]
-
-[ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
-[ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
-=======
-[gd_scene load_steps=6 format=3 uid="uid://cdldsdwvl51ux"]
+[gd_scene load_steps=4 format=3 uid="uid://cdldsdwvl51ux"]
 
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
 [ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
-[ext_resource type="Material" uid="uid://l0jpgn7cnn7r" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
-[ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="4_uwtof"]
->>>>>>> main
 
 [node name="BluePrintOpenButton" type="Control"]
 layout_mode = 3
@@ -41,26 +32,6 @@ text = "Open Blueprint"
 custom_minimum_size = Vector2(1000, 100)
 layout_mode = 1
 
-<<<<<<< HEAD
-=======
-[node name="Polygon" type="TextureRect" parent="BlueprintUi"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -7.0
-offset_top = -7.0
-offset_right = 12.0
-offset_bottom = 9.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 2
-stretch_mode = 1
-script = ExtResource("3_nuaf2")
-
->>>>>>> main
 [node name="Close" type="Button" parent="BlueprintUi"]
 layout_mode = 1
 anchors_preset = 7
@@ -77,15 +48,18 @@ grow_vertical = 0
 text = "Close blueprint
 "
 
-<<<<<<< HEAD
-=======
-[node name="Sprite2D" type="Sprite2D" parent="BlueprintUi"]
-visible = false
-material = ExtResource("4_rkj1k")
-position = Vector2(588, 346)
-texture = ExtResource("4_uwtof")
+[node name="Polygon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -158.0
+offset_top = 228.0
+offset_right = 155.0
+offset_bottom = 516.0
+grow_horizontal = 2
+script = ExtResource("3_nuaf2")
 
->>>>>>> main
 [connection signal="pressed" from="Open_Blueprint" to="." method="_on_open_blueprint_pressed"]
 [connection signal="gui_input" from="BlueprintUi" to="." method="_on_blueprint_ui_gui_input"]
 [connection signal="mouse_exited" from="BlueprintUi" to="." method="_on_blueprint_ui_mouse_exited"]

@@ -12,7 +12,7 @@ var drawing = false
 
 var grid: PackedByteArray
 var cell_size = Vector2(0.01, 0.01)
-var plank_size = Vector2(1.0, 1.0)
+var plank_size = Vector2(0.8, 0.5)
 var plank_half_size = plank_size / 2.0
 
 var plank_corrected = (plank_size - cell_size) / 2.0;
@@ -41,12 +41,10 @@ func _ready() -> void:
 
 
 func _input(event):
-	if event is InputEventMouseButton:
-		var e: InputEventMouseButton = event
-		if e.button_index == MOUSE_BUTTON_LEFT:
-			drawing = e.pressed
-			if drawing:
-				points.clear()
+
+
+
+			
 		
 	if event is InputEventMouseMotion:
 		# Step 1: Get the mouse position in the viewport
@@ -64,6 +62,20 @@ func _input(event):
 		
 		if intersection != null:
 			mouse_pos_in_plane = intersection
+			
+	if event is InputEventMouseButton:
+		var e: InputEventMouseButton = event
+		if e.button_index == MOUSE_BUTTON_LEFT:
+			drawing = e.pressed
+			if drawing:
+				points.clear()
+		if e.button_index == MOUSE_BUTTON_RIGHT:
+			if e.pressed:
+				var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
+				var pnorm = point_to_grid_space(mouse_2d)
+				var idx = grid_space_to_index(pnorm)
+
+				flood_fill_mesh_from_index(grid, idx)
 
 
 func _process(delta: float) -> void:
@@ -79,9 +91,12 @@ func _process(delta: float) -> void:
 
 		points.push_back(mouse_2d)
 		var n =  points.size()
-		if n % 2 == 0 && n > 0:
-			cut_grid_with_points(points[0], points[1])
-			points.clear()
+		#if n % 2 == 0 && n > 0:
+		if n > 1:
+			for i in n-1:
+
+				cut_grid_with_points(points[0], points[1])
+				points.pop_front()
 
 	convert_grid_to_mesh(grid, self.mesh)
 
@@ -138,22 +153,33 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var pp1 = point_to_grid_space(p1)
 	var pp2 = point_to_grid_space(p2)
 	
-	var pp1_outside = pp1.x < 0.0 || pp1.y > 1.0
-	var pp2_outside = pp2.x < 0.0 || pp2.y > 1.0
 
-	if pp1_outside && pp2_outside:
-		return
 
-	var min = vector2_min(vector2_floor(pp1), vector2_floor(pp2))
-	var max = vector2_max(vector2_ceil(pp1), vector2_ceil(pp2))
 
-	var i1 = grid_space_to_index(pp1)
-	var n = grid.size()
-	if i1 >= 0 && i1 < n:
-		if grid[i1] == 1:
-			particles.emitting = true
-			grid[i1] = 0
-			print(pp1)
+
+	
+	var d = pp2-pp1
+
+
+	if d.length() > cell_size.length()/4.0:
+		var m = 100 * max(d.abs().x, d.abs().y)
+		d = d / m
+		
+		var newp = pp1
+		for j in 100:
+			var pp1_outside = pp1.x < 0.0 || pp1.y > 1.0
+			newp = pp1 + j *d
+
+			if (pp1 - newp).length() > (pp2-pp1).length():
+				break
+			if !(0 < newp.x && newp.x < 1 && 0 < newp.y && newp.y < 1):
+				continue
+
+			var i2 = grid_space_to_index(newp)
+			if i2 >= 0 && i2 < grid.size():
+				if grid[i2] == 1:
+					particles.emitting = true
+					grid[i2] = 0
 
 
 	#for p in [pp1, pp2]:
@@ -206,6 +232,53 @@ func line_intersects_line(p1_start: Vector2, p1_end: Vector2, p2_start: Vector2,
 # Helper function to check if a point is inside a rectangle
 func is_point_in_rect(point: Vector2, rect_position: Vector2, rect_size: Vector2) -> bool:
 	return (point.x >= rect_position.x and point.x <= rect_position.x + rect_size.x and point.y >= rect_position.y and point.y <= rect_position.y + rect_size.y)
+
+func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int):
+	var visited = grid.duplicate()
+	for i in visited.size():
+		visited[i] = 0
+		
+	var indices: PackedInt32Array;
+	var dfs: Array[int]
+	indices.push_back(idx)
+	dfs.push_back(idx)
+	visited[idx] = 1
+	
+	
+	var safety = 0
+	while true:
+		if dfs.is_empty():
+			break
+		if safety > grid.size():
+			break
+		safety += 1
+		var idx2 = dfs.pop_back()
+		var x = idx2 % grid_width
+		var y = idx2 / grid_width
+		
+		
+		var v1 = Vector2(x+1,y)
+		var v2 = Vector2(x,y+1)
+		var v3 = Vector2(x-1,y)
+		var v4 = Vector2(x,y-1)
+		
+		for p in [v1,v2,v3,v4]:
+			var xn = int(p.x);
+			var yn = int(p.y)
+			if !(0 <= xn && xn < grid_width && 0 <= yn && yn < grid_height):
+				continue	
+			var nidx = xn + yn*grid_width
+			if grid[nidx] == 0:
+				continue
+			if visited[nidx] == 1:
+				continue
+			else:
+				visited[nidx] = 1
+				indices.push_back(nidx)
+				dfs.push_back(int(nidx))
+				
+	for idx3 in indices:
+		grid[idx3] = 0
 
 
 func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
