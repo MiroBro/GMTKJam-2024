@@ -164,10 +164,10 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 				continue
 
 			var i2 = grid_space_to_index(newp)
-
-			if grid[i2] == 1:
-				particles.emitting = true
-				grid[i2] = 0
+			if i2 >= 0 && i2 < grid.size():
+				if grid[i2] == 1:
+					particles.emitting = true
+					grid[i2] = 0
 
 
 	#for p in [pp1, pp2]:
