@@ -194,7 +194,7 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var any_cuts = false
 	var d = pp2-pp1
 
-	if d.length() > cell_size.length()/4.0:
+	if d.length() > 0.000001:
 		var m = 100 * max(d.abs().x, d.abs().y)
 		d = d / m
 
