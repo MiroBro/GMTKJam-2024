@@ -93,29 +93,29 @@ particles = NodePath("../debug0/CPUParticles3D")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.256385)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.474923, -0.224764)
+transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.152935, -0.224764)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.638131, -0.707886)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.316143, -0.707886)
 material_override = SubResource("ShaderMaterial_6bxkg")
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.638131, 0.255387)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.316143, 0.255387)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.638131, -0.737224)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.316143, -0.737224)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.638131, 0.276007)
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.316143, 0.276007)
 mesh = SubResource("BoxMesh_svw24")
 skeleton = NodePath("../..")
 

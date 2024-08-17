@@ -11,7 +11,7 @@ var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
 var drawing = false
 
 var grid: PackedByteArray
-var cell_size = Vector2(0.5, 0.5)
+var cell_size = Vector2(0.01, 0.01)
 var plank_size = Vector2(1.0, 1.0)
 var plank_half_size = plank_size / 2.0
 
@@ -222,7 +222,7 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 		i = i + 1
 		if value == 1:
 			var middle = index_to_world_space(i)
-			var mp = Vector3(middle.x, 0.0, middle.y)
+			var mp = Vector3(middle.x, 0.15, middle.y)
 
 			var bl = mp - half
 
