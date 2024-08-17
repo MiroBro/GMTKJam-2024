@@ -1,59 +1,50 @@
 extends Node3D
 
-@onready var testmesh2 = $"testmesh2"
+@onready var reference_root: Node3D = $"reference"
+@onready var project_root: Node3D = $"project" 
 
-@onready var g = $"project_1" 
+
+func turn_project_into_colliders():
+	for child in project_root.get_children():
+		var rb = RigidBody3D.new()
+		rb.name = child.name
+		project_root.add_child(rb)
+		child.reparent(rb)
+
+		var cs = CollisionShape3D.new()
+		cs.make_convex_from_siblings()
+		rb.add_child(cs)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	turn_project_into_colliders()
+	
 	freeze_physics(true);
-	var meshes = g.get_children();
-	for mesh: RigidBody3D in meshes:
-		pass
-		#mesh.position.z += 10;
-		
-	#turn_test_mesh_into_rigid_body();
-	pass # Replace with function body.
+	
+	var reference_children = reference_root.get_children() 
+	var project_children = project_root.get_children()
+	
+	for i in range(len(reference_children)):
+		var ref: Node3D = reference_children[i]
+		var pr: Node3D = project_children[i]
+
+		var offset = reference_root.global_position - ref.global_position
+		var rot = ref.quaternion
+
+		pr.global_position = project_root.global_position + offset
+		pr.quaternion = rot
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-
 	if Input.is_action_just_pressed("start_physics"):
 		freeze_physics(false);
-
 	pass
-
-	
-func turn_test_mesh_into_rigid_body():
-	
-	var mesh = Mesh.new()
-	#testmesh2.create_trime
-	##testmesh2.
-	#var rb = RigidBody3D.new();
-	#
-	#var cs = CollisionShape3D.new();
-	#add_child(cs);
-	#cs.create	
-	#rb.add_child(testmesh2);
-	
-	#rb.add_constant_force(Vector3.ONE * 10);
-
-	
-	
-	#testmesh2.colli;
-	#testmesh.global_position = Vector3.ONE;
-	#
-	#get_tree().root.add_child(rb);
-	#print("hello")
-	#testmesh.create_convex_collision(false, false);
-	
-	
 
 
 func freeze_physics(frozen: bool) -> void:
-	
-	var meshes = g.get_children();
+	var meshes = project_root.get_children();
 	for mesh: RigidBody3D in meshes:
 		mesh.freeze = frozen;
 	pass # Replace with function body.
