@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://u617whog5up4"]
+[gd_scene load_steps=18 format=3 uid="uid://d3pm0f60x0o53"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
+[ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
 [ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="3_50jch"]
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
@@ -72,6 +73,8 @@ albedo_color = Color(0.192241, 0.643653, 0, 1)
 albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 
 [node name="Splitting Algorithm Scene" type="Node3D"]
+
+[node name="BluePrintOpenButton" parent="." instance=ExtResource("1_rdmpu")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
