@@ -343,6 +343,7 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	mesh.clear_surfaces()
 	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 
+
 	var half = cell / 2.0
 
 	var f = cell * -Vector3(0.0, 0.0, 1.0)
@@ -360,14 +361,24 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var tr = bl + f + r
 			var br = bl + r
 			var tl = bl + f
+			
 
+
+			var normal = Vector3.UP
+			#add top
 			mesh.surface_add_vertex(br)
+			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(tl)
+			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(tr)
+			mesh.surface_set_normal(normal)
 
 			mesh.surface_add_vertex(br)
+			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(bl)
+			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(tl)
+			mesh.surface_set_normal(normal)
 			
 			var thick = 0.05 * Vector3.DOWN
 			# add sides
