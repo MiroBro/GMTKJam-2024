@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwgaf6d14ubbf"]
+
+[ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
+[ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
+
+[sub_resource type="Environment" id="Environment_afixl"]
+background_mode = 1
+background_color = Color(0.247834, 0.391913, 0.625223, 1)
+tonemap_mode = 3
+glow_enabled = true
+volumetric_fog_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjw16"]
+diffuse_mode = 1
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_5gyxt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v16nn"]
+render_priority = 0
+shader = ExtResource("2_w0i4a")
+shader_parameter/subdivisions = 186.0
+shader_parameter/grid_width = 0.0
+shader_parameter/background_color = Color(0.168871, 0.274112, 0.415687, 1)
+shader_parameter/background_color_two = Color(0.188626, 0.334457, 0.641399, 1)
+shader_parameter/grid_color = Color(1, 1, 1, 1)
+shader_parameter/dashed_scale_x = 0.02
+shader_parameter/dashed_scale_y = 0.02
+shader_parameter/dashed_count_x = 16.0
+shader_parameter/dashed_count_y = 16.0
+shader_parameter/point_width = 0.021
+shader_parameter/point_color = Color(0, 0, 0, 1)
+shader_parameter/point_scale_x = 0.05
+shader_parameter/point_scale_y = 0.05
+shader_parameter/inside_width = 0.01
+shader_parameter/inside_subdivisions = 6.0
+shader_parameter/inside_color = Color(0.4, 0.4, 0.4, 1)
+shader_parameter/in_dashed_scale_x = 0.3
+shader_parameter/in_dashed_scale_y = 0.3
+shader_parameter/in_dashed_count_x = 6.0
+shader_parameter/in_dashed_count_y = 6.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_7yi7t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6bxkg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_svw24"]
+
+[node name="Splitting Algorithm Scene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, -2.16418e-15, 2.87793e-08, 0.329196, 0.944262, 8.255e-08, 0.944262, -0.329196, 0.000753582, 0.875867, -0.590927)
+fov = 77.9653
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_afixl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0.978596, 0)
+
+[node name="AutoMesh" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera")]
+transform = Transform3D(-2.46622e-08, 0, 1, 0, 0.0464673, 0, -0.564206, 0, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_sjw16")
+mesh = SubResource("ImmediateMesh_5gyxt")
+script = ExtResource("1_gb60y")
+points = Array[Vector2]([Vector2(0, 0)])
+thickness = 1.0
+camera = NodePath("../Camera3D")
+
+[node name="Table" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(1.52134, 0, 0, 0, 0.0177338, 0, 0, 0, 0.957096, 0, -0.103835, -0.224764)
+material_override = SubResource("ShaderMaterial_v16nn")
+mesh = SubResource("BoxMesh_7yi7t")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.742326, -0.267043, -0.707886)
+material_override = SubResource("ShaderMaterial_6bxkg")
+mesh = SubResource("BoxMesh_svw24")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, 0.748747, -0.267043, 0.255387)
+mesh = SubResource("BoxMesh_svw24")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.734887, -0.267043, -0.737224)
+mesh = SubResource("BoxMesh_svw24")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.0967879, 0, 0, 0, 0.389832, 0, 0, 0, 0.0806566, -0.764999, -0.267043, 0.276007)
+mesh = SubResource("BoxMesh_svw24")
+skeleton = NodePath("../..")
