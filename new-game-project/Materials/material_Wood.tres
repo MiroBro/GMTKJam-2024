@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dkbc2sv4tr610"]
+
+[ext_resource type="Shader" path="res://Shaders/triplanar.gdshader" id="1_ie0fs"]
+[ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="2_kkjqv"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ie0fs")
+shader_parameter/scale = 5.0
+shader_parameter/side_texture = ExtResource("2_kkjqv")
