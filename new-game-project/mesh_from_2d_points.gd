@@ -7,6 +7,7 @@ extends MeshInstance3D
 
 var scene_root: Node
 var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
+var saw_pos = Vector3(0.0, 0.0, 0.0)
 
 var drawing = false
 
@@ -39,7 +40,6 @@ func _ready() -> void:
 
 	for i in range(grid_width * grid_height):
 		grid.append(1)
-
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -75,26 +75,41 @@ func _input(event):
 				
 				find_islands()
 
+var speed = 10.0
+var target_speed = 32.0
 
 func _process(delta: float) -> void:
 	particles.emitting = false
 
 	if drawing:
+		camera.add_trauma(0.1)
+		speed = lerp(speed, target_speed, 0.3)
+
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
-		debug0.global_position = mouse_pos_in_plane
+		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
+		var p = point_to_grid_space(saw_2dd)
+		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
+			var i = grid_space_to_index(p)
+			if grid[i] == 1:
+				speed = 1.0
+		
+		debug0.look_at(mouse_pos_in_plane)
+		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 
-		var pnorm = point_to_grid_space(mouse_2d)
-		var w = grid_space_to_world(pnorm) 
-		debug1.global_position = Vector3(w.x, 0.0, w.y)
+		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
-		points.push_back(mouse_2d)
+		debug0.global_position = saw_pos
+		debug1.global_position = mouse_pos_in_plane
+
+		points.push_back(saw_2d)
 		var n =  points.size()
 		#if n % 2 == 0 && n > 0:
 		if n > 1:
 			for i in n-1:
-
-				cut_grid_with_points(points[0], points[1])
+				var cut_any = cut_grid_with_points(points[0], points[1])
 				points.pop_front()
+				if cut_any:
+					particles.emitting = true
 
 	convert_grid_to_mesh(grid, self.mesh)
 
@@ -150,12 +165,14 @@ func vector2_max(a: Vector2, b: Vector2) -> Vector2:
 func cut_grid_with_points(p1: Vector2, p2: Vector2):
 	var pp1 = point_to_grid_space(p1)
 	var pp2 = point_to_grid_space(p2)
+
+	var any_cuts = false
 	var d = pp2-pp1
 
 	if d.length() > cell_size.length()/4.0:
 		var m = 100 * max(d.abs().x, d.abs().y)
 		d = d / m
-		
+
 		var newp = pp1
 		for j in 100:
 			var pp1_outside = pp1.x < 0.0 || pp1.y > 1.0
@@ -169,9 +186,10 @@ func cut_grid_with_points(p1: Vector2, p2: Vector2):
 			var i2 = grid_space_to_index(newp)
 			if i2 >= 0 && i2 < grid.size():
 				if grid[i2] == 1:
-					particles.emitting = true
 					grid[i2] = 0
+					any_cuts = true
 
+	return any_cuts
 
 	#for p in [pp1, pp2]:
 	#	var index = grid_space_to_index(int(round(p.x)), int(round(p.y)))

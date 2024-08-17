@@ -1,6 +1,10 @@
 [gd_scene load_steps=17 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
+[ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
+[gd_scene load_steps=18 format=3 uid="uid://cwgaf6d14ubbf"]
+
+[ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
 [ext_resource type="PackedScene" uid="uid://bry6v52uam5gy" path="res://Meshes/M_Sawbody_1.glb" id="3_50jch"]
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
@@ -73,9 +77,15 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
+[node name="BluePrintOpenButton" parent="." instance=ExtResource("1_rdmpu")]
+
 [node name="Camera3D" type="Camera3D" parent="."]
+[node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
 fov = 46.7299
+script = ExtResource("1_lws0k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_afixl")
@@ -99,7 +109,7 @@ mesh = SubResource("ImmediateMesh_5gyxt")
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
 thickness = 1.0
-camera = NodePath("../Camera3D")
+camera = NodePath("../Node3D/Camera3D")
 debug0 = NodePath("../debug0")
 debug1 = NodePath("../debug1")
 debug2 = NodePath("../debug2")

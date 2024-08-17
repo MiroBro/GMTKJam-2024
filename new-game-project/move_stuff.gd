@@ -29,11 +29,11 @@ func _ready() -> void:
 		var ref: Node3D = reference_children[i]
 		var pr: Node3D = project_children[i]
 
-		var offset = reference_root.global_position - ref.global_position
-		var rot = ref.quaternion
+		var offset = ref.position
+		var rot = ref.rotation
 
-		pr.global_position = project_root.global_position + offset
-		pr.quaternion = rot
+		pr.position = project_root.global_position + offset
+		pr.rotation = rot
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

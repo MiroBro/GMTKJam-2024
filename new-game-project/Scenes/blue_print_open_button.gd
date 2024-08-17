@@ -13,7 +13,7 @@ var t = 2
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	target = get_child(1)
-	
+
 	if (target):
 		var sizeVec : Vector2 = target.get_parent_area_size()
 		targetYSize = sizeVec[1]
@@ -34,7 +34,6 @@ func close_blueprint() -> void:
 	
 # Dismiss the blueprint
 func open_blueprint() -> void:
-	
 	if (target):
 		t = 0
 		endOffset = Vector2(0,0)
