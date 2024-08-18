@@ -20,9 +20,11 @@ void fragment() {
 	vec3 abs_normal = abs(local_normal);
 	vec3 normal_weights = abs_normal / (abs_normal.x + abs_normal.y + abs_normal.z);
 	ALBEDO = albedoX * normal_weights.x + albedoY * normal_weights.y + albedoZ * normal_weights.z;
+
 }
 
 //void light() {
-	// Called for every pixel for every light affecting the material.
-	// Uncomment to replace the default light processing function with this one.
+	 ////Called for every pixel for every light affecting the material.
+	 ////Uncomment to replace the default light processing function with this one.
+	////DIFFUSE_LIGHT = vec3(1,1,1);
 //}
