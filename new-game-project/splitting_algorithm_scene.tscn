@@ -108,7 +108,7 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -344.0
+offset_left = -289.0
 offset_top = 40.0
 offset_right = -38.0
 offset_bottom = 145.0
@@ -126,6 +126,20 @@ theme_override_font_sizes/normal_font_size = 30
 text = "Keybinds
 
 - Next Plank: E"
+
+[node name="What to do" type="RichTextLabel" parent="HudUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -193.0
+offset_right = 551.0
+offset_bottom = 16.0
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 30
+text = "Use the blueprint and banana to
+figure out what shape and scale to cut the piece."
 
 [node name="BlueprintUI" parent="." instance=ExtResource("1_rdmpu")]
 

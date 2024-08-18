@@ -277,7 +277,7 @@ func _process(delta: float) -> void:
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
 			var d = mouse_pos_in_plane - saw_pos
-			print(d.length())
+			#print(d.length())
 			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
