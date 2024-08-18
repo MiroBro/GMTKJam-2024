@@ -46,6 +46,17 @@ var plank: MeshInstance3D
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
+	
+	var bird = load("res://building_blocks/projects/reference_2.tscn").instantiate()
+	
+	for sub_node in bird.get_child(0).get_children():
+		if sub_node is MeshInstance3D:
+			
+			print(sub_node.transform)
+		
+	add_child(bird)
+	print("BIRD", bird)
+	
 	plank = self.get_child(0)
 
 	scene_root = get_tree().current_scene
@@ -255,9 +266,12 @@ func _process(delta: float) -> void:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
 		
-	if Input.is_key_pressed(KEY_E):
-		if Globals.cut_meshes.size() == 3:
-			load_result_scene()
+	if Input.is_key_pressed(KEY_E):		
+		if Globals.cut_meshes.size() == 0:
+			for i in range(5):
+				var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+				Globals.cut_meshes.append(mesh)
+			load_result_scene()			
 		else:
 			reload_scene()
 

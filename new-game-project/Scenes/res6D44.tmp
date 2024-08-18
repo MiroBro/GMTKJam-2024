@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://eof063ohd4ob"]
+[gd_scene load_steps=9 format=3 uid="uid://eof063ohd4ob"]
 
 [ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
-[ext_resource type="PackedScene" uid="uid://c7w42q0kro6wl" path="res://building_blocks/projects/reference_2.tscn" id="2_snlrt"]
+[ext_resource type="PackedScene" uid="uid://cxn2x6f52d3l" path="res://building_blocks/projects/project_0.tscn" id="2_mgij4"]
+[ext_resource type="PackedScene" uid="uid://bcmyh0454bl4b" path="res://building_blocks/projects/reference_0.tscn" id="3_mop0m"]
 
 [sub_resource type="Environment" id="Environment_egj3s"]
 background_mode = 1
@@ -23,7 +24,7 @@ size = Vector3(10, 2, 10)
 script = ExtResource("1_6117w")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.345265, 0, 0.938505, 0, 1, 0, -0.938505, 0, 0.345265, 5.07726, 0, 1.73323)
+transform = Transform3D(0.929152, -0.105457, 0.354338, 0, 0.958452, 0.285253, -0.369698, -0.265043, 0.890548, 1.13364, 1.25681, 1.92326)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_egj3s")
@@ -38,6 +39,10 @@ directional_shadow_split_1 = 0.19
 directional_shadow_fade_start = 0.695
 directional_shadow_max_distance = 23.6
 
+[node name="project" parent="." instance=ExtResource("2_mgij4")]
+
+[node name="reference" parent="." instance=ExtResource("3_mop0m")]
+
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 physics_material_override = SubResource("PhysicsMaterial_v2a5n")
@@ -48,5 +53,3 @@ shape = SubResource("BoxShape3D_e5b8k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = SubResource("BoxMesh_un3l2")
-
-[node name="reference_3" parent="." instance=ExtResource("2_snlrt")]

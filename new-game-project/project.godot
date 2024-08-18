@@ -16,6 +16,10 @@ run/main_scene="res://splitting_algorithm_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://globals/globals.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -23,13 +27,6 @@ window/size/viewport_height=1080
 window/size/window_width_override=1090
 window/size/window_height_override=613
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
-[autoload]
-
-Globals="*res://globals/globals.gd"
-
-[display]
-
 mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
 
 [editor]
@@ -39,5 +36,6 @@ version_control/autoload_on_startup=true
 
 [rendering]
 
+anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/msaa_3d=2
 anti_aliasing/quality/use_debanding=true

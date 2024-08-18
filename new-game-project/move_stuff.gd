@@ -1,8 +1,10 @@
 extends Node3D
 
-@onready var reference_root: Node3D = $"reference"
-@onready var project_root: Node3D = $"project" 
+#@onready var reference_root: Node3D = $"reference"
+#@onready var project_root: Node3D = $"project" 
 
+var reference_root: Node3D
+var project_root: Node3D
 
 
 func instantiate_piece(instance, counter):
@@ -12,14 +14,17 @@ func instantiate_piece(instance, counter):
 	mesh_instance.mesh = Globals.cut_meshes[counter]
 	mesh_instance.material_override = load("res://Materials/material_Wood.tres")
 	
-	mesh_instance.global_transform.origin = reference_root.get_child(counter).global_transform.origin + Vector3(-0.025,0,0)
+	mesh_instance.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
+	
+	print("Mesh transform",mesh_instance.global_transform.origin)
 
 	mesh_instance.rotation = reference_root.get_child(counter).rotation
 	
 	var collision_shape = CollisionShape3D.new()
 	
 	collision_shape.shape = mesh_instance.mesh.create_convex_shape()
-	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin + Vector3(-0.025,0,0)
+	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
+	
 	collision_shape.rotation = reference_root.get_child(counter).rotation
 	
 	instance.add_child(mesh_instance)
@@ -29,15 +34,13 @@ func instantiate_piece(instance, counter):
 
 func turn_project_into_colliders():
 	var counter = 0
+	print(reference_root)
 	for root_child: Node3D in reference_root.get_children():
-		
-	
-		var instance = RigidBody3D.new()
-	
-		instantiate_piece(instance, counter)		
-		
+		var instance = RigidBody3D.new()	
+		instantiate_piece(instance, counter)			
 				#child_mesh.scale = reference_root.get_child(counter).scale 
 		project_root.get_child(counter).add_child(instance)
+		project_root.scale = Vector3(0.01,0.01,0.01)
 		counter += 1	
 		#var rb = RigidBody3D.new()
 		#rb.name = child.name
@@ -56,16 +59,25 @@ func turn_project_into_colliders():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+
+	reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
+	add_child(reference_root)
+	project_root = load("res://building_blocks/projects/bird.tscn").instantiate()
+	add_child(project_root)
+	#reference_root.global_transform.origin = Vector3(0,0,0)
+	#project_root.global_transform.origin = Vector3(0,0,0)
+	print(project_root.global_transform.origin)
+	
 	turn_project_into_colliders()
 
 	freeze_physics(true);
 	
-	var reference_children = reference_root.get_children() 
-	var project_children = project_root.get_children()
-	
-	for i in range(len(reference_children)):
-		var ref: MeshInstance3D = reference_children[i]
-		var pr: Node3D = project_children[i]
+	#var reference_children = reference_root.get_children() 
+	#var project_children = project_root.get_children()
+	#
+	#for i in range(len(reference_children)):
+		#var ref: MeshInstance3D = reference_children[i]
+		#var pr: Node3D = project_children[i]
 
 		#var offset = reference_root.global_position - ref.global_position
 		#var rot = ref.quaternion
@@ -86,7 +98,11 @@ func _process(delta: float) -> void:
 	#var project_children = project_root.get_children()
 	#for project_child in project_children:
 		#print(project_child)	
-	
+	if Input.is_key_pressed(KEY_ENTER):
+		Globals.level += 1
+		Globals.cut_meshes.clear()
+		get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
+		
 	if Input.is_key_pressed(KEY_SPACE):
 	#if Input.is_action_just_pressed("start_physics"):
 		freeze_physics(false);

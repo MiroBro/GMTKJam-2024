@@ -104,7 +104,6 @@ script = ExtResource("1_lws0k")
 transform = Transform3D(1, -2.84217e-14, -7.10543e-15, 4.26326e-14, 1, -8.9407e-08, 1.42109e-14, 8.9407e-08, 1, 0.000240803, 0.001297, 0.00145829)
 stream = ExtResource("3_q8d4d")
 volume_db = -80.0
-autoplay = true
 
 [node name="CuttingBG" type="AudioStreamPlayer3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -2.98023e-08, 7.10543e-15, 2.98023e-08, 1, 0, 0, 0)
