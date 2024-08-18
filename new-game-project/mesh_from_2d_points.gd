@@ -486,6 +486,23 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	for value in grid:
 		i = i + 1
 		if value == 1:
+			var w = i % grid_width;
+			var h = i / grid_width;
+			
+			var skip = true
+			for d in [Vector2i(-1,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(0,1)]:
+				var wi = w + d.x
+				var hi = h + d.y
+				if !(0 < wi && wi <= grid_width && 0 <= hi && hi < grid_height):
+					skip = false
+					break
+				#var side_idx = wh_to_index(w,h)
+				#if grid[side_idx] == 0:
+					#skip = false
+					#break
+			#if skip:
+				#continue
+			
 			var middle = index_to_world_space(i)
 			var mp = Vector3(middle.x, 0.0, middle.y)
 

@@ -6,9 +6,9 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_ie0fs")
-shader_parameter/top_tint = null
-shader_parameter/front_tint = null
-shader_parameter/side_tint = null
+shader_parameter/top_tint = Vector3(0.3, 0.5, 0.5)
+shader_parameter/front_tint = Vector3(0.75, 1, 1)
+shader_parameter/side_tint = Vector3(0.3, 0.5, 0.5)
 shader_parameter/scale = 1.0
 shader_parameter/front_texture = ExtResource("3_iulmx")
 shader_parameter/side_texture = ExtResource("3_iulmx")
