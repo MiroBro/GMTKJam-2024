@@ -17,6 +17,9 @@ func set_banana_relative_pos(pos: Vector3):
 func make_blueprint_from_mesh(mesh: MeshInstance3D):
 	polygon.make_thing(mesh.duplicate())
 
+func set_plank_blueprint_mesh(mesh: MeshInstance3D):
+	polygon.make_thing_plank(mesh.duplicate())
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	target = get_child(1)

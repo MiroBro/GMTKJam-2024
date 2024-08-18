@@ -1,10 +1,75 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyypefc2pu585"]
+[gd_scene load_steps=12 format=3 uid="uid://cyypefc2pu585"]
 
 [ext_resource type="Texture2D" uid="uid://cxtkafe14ov1n" path="res://Assets/Images/Intro/Intro_Art_Background.png" id="1_n2ap3"]
-[ext_resource type="Texture2D" uid="uid://b6y74en7p8pqo" path="res://Assets/Images/Intro/Intro Art_Split_Smaller.png" id="2_yqooc"]
 [ext_resource type="AudioStream" uid="uid://6orl8xmhrw8a" path="res://Assets/Music/Banana (for Scale)_3_derp.mp3" id="3_45454"]
 [ext_resource type="Texture2D" uid="uid://ct6pkn3g5j2vj" path="res://Assets/Images/Intro/UI_Boss_Dialog_Box.png" id="4_6oxwb"]
-[ext_resource type="Texture2D" uid="uid://dex1vxexl7xik" path="res://Assets/Images/Other/triangle.png" id="5_0kxck"]
+[ext_resource type="Theme" uid="uid://dtvyjupbpuhyo" path="res://Assets/Other/BluePrintUIBox.tres" id="4_p05c7"]
+[ext_resource type="Texture2D" uid="uid://bt714waiej0gy" path="res://Assets/Images/Ending/Boss_Kick.png" id="6_it5o2"]
+[ext_resource type="Script" path="res://Scripts/end_scene_controller.gd" id="6_pnctf"]
+[ext_resource type="Texture2D" uid="uid://byutk5jnk7mjy" path="res://Assets/Images/Ending/MainCharacter_Flying_From_Kick.png" id="7_y7km5"]
+[ext_resource type="Script" path="res://Scripts/ending_animation_player.gd" id="8_eomkk"]
+
+[sub_resource type="Animation" id="Animation_86r45"]
+resource_name = "Ending_angry_boss_kick"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BossKick:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(598, 719), Vector2(616, 719), Vector2(610, 710), Vector2(627.75, 744.375)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacterFlyingFromKick:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.8, 0.8), Vector2(-0.791571, 0.791571), Vector2(-0.8, 0.8)]
+}
+
+[sub_resource type="Animation" id="Animation_2u1cf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BossKick:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(598, 719)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacterFlyingFromKick:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.8, 0.8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sxdm4"]
+_data = {
+"Ending_angry_boss_kick": SubResource("Animation_86r45"),
+"RESET": SubResource("Animation_2u1cf")
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -12,272 +77,6 @@
 position = Vector2(944, 515)
 scale = Vector2(1.11073, 1.11073)
 texture = ExtResource("1_n2ap3")
-
-[node name="Cutscene" type="Node2D" parent="."]
-position = Vector2(1494, 342)
-scale = Vector2(-0.646, 0.646)
-
-[node name="Worker" type="Node2D" parent="Cutscene"]
-position = Vector2(337.579, 1156.75)
-
-[node name="Shadow" type="Sprite2D" parent="Cutscene/Worker"]
-position = Vector2(21, -2)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1845, 176, 389, 122)
-
-[node name="Relaxed" type="Node2D" parent="Cutscene/Worker"]
-visible = false
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Relaxed"]
-position = Vector2(205, -971)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1384, 767, 224, 363)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Relaxed"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Happy" type="Sprite2D" parent="Cutscene/Worker/Relaxed"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(60, 91, 202, 237)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Relaxed"]
-position = Vector2(-192, -936)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1350, 1189, 293, 446)
-
-[node name="Mini_Surprised" type="Node2D" parent="Cutscene/Worker"]
-visible = false
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Mini_Surprised"]
-position = Vector2(205, -971)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1384, 767, 224, 363)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Mini_Surprised"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Talk" type="Sprite2D" parent="Cutscene/Worker/Mini_Surprised"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(758, 91, 202, 237)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Mini_Surprised"]
-position = Vector2(97, -1009)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(622, 1218, 597, 387)
-
-[node name="Calls_Boss" type="Node2D" parent="Cutscene/Worker"]
-visible = false
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Calls_Boss"]
-position = Vector2(418, -965)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(591, 370, 530, 312)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Calls_Boss"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Mini_Surprised" type="Sprite2D" parent="Cutscene/Worker/Calls_Boss"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(523, 96, 202, 236)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Calls_Boss"]
-position = Vector2(-176, -958)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1350, 1189, 293, 446)
-
-[node name="Boss_Angry" type="Node2D" parent="Cutscene/Worker"]
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Angry"]
-position = Vector2(418, -965)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(591, 370, 530, 312)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Boss_Angry"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Surprised" type="Sprite2D" parent="Cutscene/Worker/Boss_Angry"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(300, 98, 202, 237)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Angry"]
-position = Vector2(-176, -958)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1350, 1189, 293, 446)
-
-[node name="Boss_Thinking" type="Node2D" parent="Cutscene/Worker"]
-visible = false
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Thinking"]
-position = Vector2(247, -955)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1384, 767, 224, 363)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Boss_Thinking"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Surprised" type="Sprite2D" parent="Cutscene/Worker/Boss_Thinking"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(300, 98, 202, 237)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Thinking"]
-position = Vector2(-176, -958)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1350, 1189, 293, 446)
-
-[node name="Boss_Aha" type="Node2D" parent="Cutscene/Worker"]
-visible = false
-
-[node name="Arm_L_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Aha"]
-position = Vector2(247, -955)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1384, 767, 224, 363)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Worker/Boss_Aha"]
-position = Vector2(30, -622)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(32, 420, 493, 1244)
-
-[node name="Head_Surprised" type="Sprite2D" parent="Cutscene/Worker/Boss_Aha"]
-position = Vector2(11, -1365)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(983, 96, 202, 236)
-
-[node name="Arm_R_To_Side" type="Sprite2D" parent="Cutscene/Worker/Boss_Aha"]
-position = Vector2(78, -1002)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(639, 767, 559, 387)
-
-[node name="Banana" type="Sprite2D" parent="Cutscene/Worker"]
-position = Vector2(-144, -691)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1350, 578, 120, 105)
-
-[node name="Boss" type="Node2D" parent="Cutscene"]
-position = Vector2(1495.88, 1110.29)
-
-[node name="Shadow2" type="Sprite2D" parent="Cutscene/Boss"]
-position = Vector2(8, 5)
-scale = Vector2(1.11073, 1.11073)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1845, 176, 389, 122)
-
-[node name="Listening" type="Node2D" parent="Cutscene/Boss"]
-visible = false
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Boss/Listening"]
-position = Vector2(0, -377)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1763, 767, 553, 847)
-
-[node name="Head" type="Sprite2D" parent="Cutscene/Boss/Listening"]
-position = Vector2(-16, -837)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1533, 94, 231, 241)
-
-[node name="Shouting" type="Node2D" parent="Cutscene/Boss"]
-
-[node name="Arm" type="Sprite2D" parent="Cutscene/Boss/Shouting"]
-position = Vector2(-251, -713)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1699, 390, 508, 330)
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Boss/Shouting"]
-position = Vector2(0, -377)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1763, 767, 553, 847)
-
-[node name="Head" type="Sprite2D" parent="Cutscene/Boss/Shouting"]
-position = Vector2(-67, -808)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1236, 94, 231, 241)
-
-[node name="Shouting2" type="Node2D" parent="Cutscene/Boss"]
-visible = false
-
-[node name="Body" type="Sprite2D" parent="Cutscene/Boss/Shouting2"]
-position = Vector2(0, -377)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1763, 767, 553, 847)
-
-[node name="Head" type="Sprite2D" parent="Cutscene/Boss/Shouting2"]
-position = Vector2(-73, -799)
-texture = ExtResource("2_yqooc")
-region_enabled = true
-region_rect = Rect2(1533, 94, 231, 241)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(558, 568)
@@ -312,39 +111,61 @@ scale = Vector2(-1, 1)
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Notmyproblem"]
 layout_mode = 0
-offset_left = 1244.0
-offset_top = 102.0
-offset_right = 2493.0
-offset_bottom = 595.0
+offset_left = 1357.0
+offset_top = 16.0
+offset_right = 2851.0
+offset_bottom = 606.0
 scale = Vector2(-0.463, 0.89)
 texture = ExtResource("4_6oxwb")
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/Notmyproblem"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ContImage3" type="TextureRect" parent="CanvasLayer/Control/Notmyproblem/Button"]
-layout_mode = 0
-offset_left = 1141.0
-offset_top = 343.0
-offset_right = 1397.0
-offset_bottom = 599.0
-rotation = 1.57276
-scale = Vector2(0.152282, 0.152282)
-texture = ExtResource("5_0kxck")
-
 [node name="Label" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_left = 655.0
-offset_top = 167.0
-offset_right = 1133.0
-offset_bottom = 362.0
+offset_left = 566.0
+offset_top = 88.0
+offset_right = 1140.0
+offset_bottom = 412.0
 theme_override_font_sizes/font_size = 45
-text = "You're FIRED!
-Who uses a banana 
-for scale?!"
+text = "You baffoon, you're 
+FIRED! Who uses a 
+banana for scale?!"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -189.0
+offset_top = -177.0
+offset_right = 6.00012
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.829571, 0.829571)
+theme = ExtResource("4_p05c7")
+theme_override_font_sizes/font_size = 61
+text = "OK"
+
+[node name="EndSceneController" type="Node" parent="CanvasLayer/Control/Button"]
+script = ExtResource("6_pnctf")
+
+[node name="BossKick" type="Sprite2D" parent="."]
+position = Vector2(598, 719)
+rotation = -0.355718
+scale = Vector2(-0.8, 0.8)
+texture = ExtResource("6_it5o2")
+
+[node name="MainCharacterFlyingFromKick" type="Sprite2D" parent="."]
+position = Vector2(1307, 494)
+rotation = -0.0526508
+scale = Vector2(-0.8, 0.8)
+texture = ExtResource("7_y7km5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sxdm4")
+}
+script = ExtResource("8_eomkk")
+
+[connection signal="pressed" from="CanvasLayer/Control/Button" to="CanvasLayer/Control/Button/EndSceneController" method="_ok_button_pressed"]
