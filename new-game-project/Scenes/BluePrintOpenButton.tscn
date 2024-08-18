@@ -35,7 +35,7 @@ text = "Open Blueprint"
 custom_minimum_size = Vector2(1000, 100)
 layout_mode = 1
 
-[node name="Polygon" type="TextureRect" parent="BlueprintUi" node_paths=PackedStringArray("reference_mesh")]
+[node name="Polygon" type="TextureRect" parent="BlueprintUi"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,7 +51,6 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 1
 script = ExtResource("3_nuaf2")
-reference_mesh = NodePath("")
 
 [node name="Close" type="Button" parent="BlueprintUi"]
 layout_mode = 1

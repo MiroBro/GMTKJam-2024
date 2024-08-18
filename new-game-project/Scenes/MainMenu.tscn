@@ -573,5 +573,5 @@ text = "Quit
 "
 
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
