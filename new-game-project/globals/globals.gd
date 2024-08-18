@@ -5,7 +5,7 @@ var level = 0
 var mesh_to_cut: MeshInstance3D
 var mesh = ImmediateMesh.new()
 var cut_meshes: Array[ImmediateMesh]
-var number_of_pieces = [5]
+var number_of_pieces = [3]
 var number_of_levels = number_of_pieces.size()
 
 ## Called when the node enters the scene tree for the first time.

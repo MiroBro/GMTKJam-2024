@@ -100,7 +100,7 @@ albedo_texture = ExtResource("6_vmog1")
 script = ExtResource("1_6117w")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.546065, -0.139907, 0.825978, 0.0256682, 0.988287, 0.15043, -0.837349, -0.0609433, 0.543261, 1.85891, 0.667374, 1.23961)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.389089, 2.47135)
 
 [node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e7igb")
