@@ -8,7 +8,7 @@ void vertex() {
 }
 
 void fragment() {
-    float scale = 20.0; 
+    float scale = 20.0;
 	// Called for every pixel the material is visible on.
 	vec4 projected_coords = INV_VIEW_MATRIX * vec4(VERTEX, 1.0) * scale;
 	 vec3 albedoX = texture(front_texture, projected_coords.zy).rgb;

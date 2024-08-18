@@ -79,7 +79,10 @@ func _input(event):
 				var idx = grid_space_to_index(pnorm)
 
 				# flood_fill_mesh_from_index(grid, idx)
-				# find_islands()
+				var island_indices: PackedInt32Array
+				var island_lens: Array[int]
+				find_islands(island_indices, island_lens)
+				
 
 				spawn_rigidbody_version_of_mesh(plank.mesh.duplicate())
 
@@ -100,6 +103,44 @@ var target_speed = 20.0
 var normal_from = 0.0
 var cutting_from = 0.0
 
+func find_and_delete_islands():
+	var island_indices: PackedInt32Array
+	var island_lens: Array[int]
+	
+	find_islands(island_indices, island_lens)
+	print(island_lens)
+	print(island_indices.size())
+	var i = -1
+	for l in island_lens:
+		var should_remove = true
+		for jjjj in l:
+			i += 1
+			i = int(i)
+			var grid_idx = island_indices[i]
+			if grid_idx == 0:
+				should_remove = false
+		if should_remove:
+			i -= l
+			var rb_grid = grid.duplicate();
+			for j in rb_grid.size():
+				rb_grid[j] = 0
+			for jjjj in l:
+				i += 1
+				var grid_idx = island_indices[i]
+				grid[grid_idx] = 0
+				rb_grid[grid_idx] = 1
+
+			
+			
+			
+			var rb_mesh = plank.mesh.duplicate()
+			rb_mesh.clear_surfaces()
+			convert_grid_to_mesh(rb_grid, rb_mesh)
+			spawn_rigidbody_version_of_mesh(rb_mesh)
+
+			
+	
+	
 
 func fix_music():
 	if not drawing and not normal_bg.playing:
@@ -117,6 +158,9 @@ func fix_music():
 
 func _process(delta: float) -> void:
 	particles.emitting = false
+
+	find_and_delete_islands()
+
 
 	fix_music()
 
@@ -288,9 +332,11 @@ func line_intersects_line(p1_start: Vector2, p1_end: Vector2, p2_start: Vector2,
 func is_point_in_rect(point: Vector2, rect_position: Vector2, rect_size: Vector2) -> bool:
 	return (point.x >= rect_position.x and point.x <= rect_position.x + rect_size.x and point.y >= rect_position.y and point.y <= rect_position.y + rect_size.y)
 
-func find_islands():
-	var island_indices: PackedInt32Array
-	var island_lens: Array[int]
+
+
+func find_islands(island_indices: PackedInt32Array, island_lens: Array[int]) :
+	#var island_indices: PackedInt32Array
+	#var island_lens: Array[int]
 	var all_visited = grid.duplicate()
 	var n = all_visited.size()
 	for i in n:
@@ -305,11 +351,10 @@ func find_islands():
 		var island = flood_fill_mesh_from_index(grid, next_island_start)
 		for idx in island:
 			all_visited[idx] = 1
-		island_indices += island
+		island_indices.append_array(island)
 		island_lens.push_back(island.size())
 
 		
-	print(island_lens)
 	
 
 func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int) -> PackedInt32Array:
@@ -353,9 +398,8 @@ func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int) -> PackedInt32A
 				continue
 			else:
 				visited[nidx] = 1
-				indices.push_back(nidx)
-				dfs.push_back(int(nidx))
-				
+				indices.push_back(int(nidx))
+				dfs.push_back(nidx)
 	return indices
 
 
