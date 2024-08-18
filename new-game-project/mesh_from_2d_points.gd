@@ -93,7 +93,7 @@ func _input(event):
 			if drawing:
 				tool = TOOL_NOTHING
 
-				var radius = 0.1
+				var radius = 0.2
 				
 				var tools = [TOOL_BANANA, TOOL_SAW]
 				var poss = [debug1.global_position, debug0.global_position]
@@ -270,7 +270,9 @@ func _process(delta: float) -> void:
 
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
-
+			var d = mouse_pos_in_plane - saw_pos
+			print(d.length())
+			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
 				var i = grid_space_to_index(p)
@@ -279,16 +281,21 @@ func _process(delta: float) -> void:
 
 			if points.size() > 0:
 				var old_p = points[0]
-				if old_p.distance_to(mouse_2d) > 0.1:
-					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 15*delta)
+				if old_p.distance_to(mouse_2d) > 0.00001:
+					saw_dir = lerp(saw_dir, d.normalized(), 15*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()
 					#debug0.look_at(mouse_pos_in_plane)					
 					debug0.look_at(saw_pos + saw_dir)
 
+			if d.length() > 0.1:
+				
+				var l = 0.5 + 0.5 / (1.0 + exp(-d.length()))
+				var f = max(5 * delta * speed * l, 0.1)
+				saw_pos = lerp(saw_pos, saw_pos + 0.1*d, f)
 
-			saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed)
+				#saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed * d.length())
 			var xlim = 0.8
 			var zlim = 0.6
 			saw_pos.x = clamp(saw_pos.x, -xlim, xlim)

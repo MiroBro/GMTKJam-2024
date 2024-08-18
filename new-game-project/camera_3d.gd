@@ -4,6 +4,8 @@ extends Camera3D
 @export var max_offset = Vector2(0.03, 0.03)
 @export var max_roll = 0.01  # Maximum rotation in radians (use sparingly).
 
+var impulse = false;
+
 var trauma = 0.0  # Current shake strength.
 var trauma_power = 2  # Trauma exponent. Use [2, 3].
 
@@ -16,6 +18,9 @@ func _ready():
 
 func add_trauma(amount):
 	trauma = min(trauma + amount, 1.0)
+	
+func add_impulse():
+		impulse = true
 
 func _process(delta: float):
 	var target_pos = original_pos + offset
@@ -31,6 +36,7 @@ func shake():
 	var amount = pow(trauma, trauma_power)
 	var angle = max_roll * amount * randf_range(-1, 1)
 	var T = 1
+	#if impulse:
 	angle = clamp(angle,-T,T)
 	#self.rotate_z(angle)
 	offset.x = max_offset.x * amount * randf_range(-1, 1)
