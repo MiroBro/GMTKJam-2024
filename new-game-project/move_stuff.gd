@@ -3,6 +3,14 @@ extends Node3D
 @onready var reference_root: Node3D = $"reference"
 @onready var project_root: Node3D = $"project" 
 
+func instantiate_piece(instance, counter):
+	
+		for child in instance.get_children():
+			if child is CollisionShape3D:
+				var box_shape: BoxShape3D = child.shape
+				box_shape.size = reference_root.get_child(counter).scale
+			if child is MeshInstance3D:
+				var child_mesh: MeshInstance3D = child
 
 func turn_project_into_colliders():
 	var counter = 0
@@ -12,14 +20,9 @@ func turn_project_into_colliders():
 			scene = load("res://building_blocks/roof.tscn")
 		elif root_child.name.begins_with("wall"):
 			scene = load("res://building_blocks/wall.tscn")	
-				
 		var instance = scene.instantiate()
-		for child in instance.get_children():
-			if child is CollisionShape3D:
-				var box_shape: BoxShape3D = child.shape
-				box_shape.size = reference_root.get_child(counter).scale
-			if child is MeshInstance3D:
-				var child_mesh: MeshInstance3D = child
+		instantiate_piece(instance, counter)		
+		
 				#child_mesh.scale = reference_root.get_child(counter).scale 
 		project_root.get_child(counter).add_child(instance)
 		counter += 1	
