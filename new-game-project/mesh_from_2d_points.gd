@@ -195,13 +195,23 @@ func find_and_delete_islands():
 			convert_grid_to_mesh(rb_grid, rb_mesh)
 			var new_node = plank.duplicate()
 			new_node.mesh = rb_mesh
+			
+			# Spawn per island
 			spawn_rigidbody_version_of_mesh(new_node)
 			any = true
 
+	# When plank falls off
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
+		
+		if randf() < 0.5:
+			$Audio/Plank_SFX_1.play()
+		else: 
+			$Audio/Plank_SFX_2.play()
+		
 
-func fix_music():
+## Called every frame, deals with music and SFX
+func fix_music(delta: float):
 
 	var is_cutting = drawing && tool == TOOL_SAW
 	
@@ -211,6 +221,7 @@ func fix_music():
 		cutting_audio.play(cutting_from)
 		$Audio/SawingSFX.play()
 
+
 	if not is_cutting:
 		cutting_from = cutting_audio.get_playback_position()
 		cutting_audio.stop()
@@ -218,6 +229,12 @@ func fix_music():
 	if is_cutting:
 		normal_from = cutting_audio.get_playback_position()
 		regularAudio.stop()
+		
+		# Prevent saw sound from stopping
+		var sawPlaybackPos = $Audio/SawingSFX.get_playback_position()
+		if (sawPlaybackPos > 3.7):
+			$Audio/SawingSFX.play(1 + (randf() - 0.5))
+			
 
 
 func wh_to_index(w: int, h: int) -> int:
@@ -227,7 +244,7 @@ func wh_to_index(w: int, h: int) -> int:
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	fix_music()
+	fix_music(delta)
 
 	var cut_any = false
 
