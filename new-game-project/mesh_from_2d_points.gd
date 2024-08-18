@@ -5,7 +5,7 @@ extends Node3D
 @export var camera: Camera3D
 
 @export var cell_size = Vector2(0.013, 0.013)
-@export var plank_thickness = 0.05;
+@export var plank_thickness = 0.1;
 
 var scene_root: Node
 var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)

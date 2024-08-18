@@ -30,26 +30,37 @@ func instantiate_piece(instance, counter):
 func turn_project_into_colliders():
 	var counter = 0
 	print(reference_root)
-	for root_child: Node3D in reference_root.get_children():
-		var instance = RigidBody3D.new()	
-		instantiate_piece(instance, counter)			
-				#child_mesh.scale = reference_root.get_child(counter).scale 
-		project_root.get_child(counter).add_child(instance)
-		
-		counter += 1	
-		#var rb = RigidBody3D.new()
-		#rb.name = child.name
-		#child.add_child(rb)
-		##child.reparent(rb)
-#
-		#var cs = CollisionShape3D.new()
-		#var shape = BoxShape3D.new()
-		#shape.size = Vector3(1,1,1)
-		#cs.shape = shape 
+	if reference_root:
+		for root_child: Node3D in reference_root.get_children():
+			var instance = RigidBody3D.new()	
+			instance.mass = 100;
+			instance.axis_lock_angular_x = true
+			
+			instance.axis_lock_angular_y = true
+			instance.axis_lock_angular_z = true
+			instance.axis_lock_linear_x = true
+			instance.axis_lock_linear_y = false
+			instance.axis_lock_linear_z = true
+			
+			instantiate_piece(instance, counter)			
+					#child_mesh.scale = reference_root.get_child(counter).scale 
+			if project_root:
+				project_root.get_child(counter).add_child(instance)
+			
+			counter += 1	
+			#var rb = RigidBody3D.new()
+			#rb.name = child.name
+			#child.add_child(rb)
+			##child.reparent(rb)
+	#
+			#var cs = CollisionShape3D.new()
+			#var shape = BoxShape3D.new()
+			#shape.size = Vector3(1,1,1)
+			#cs.shape = shape 
+				#
 			#
-		#
-		##cs.make_convex_from_siblings()
-		#child.add_child(cs)
+			##cs.make_convex_from_siblings()
+			#child.add_child(cs)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -108,10 +119,11 @@ func _process(delta: float) -> void:
 
 
 func freeze_physics(frozen: bool) -> void:
-	var nodes: Array[Node] = project_root.get_children();
-	for node in nodes:
-		
-		for child in node.get_children():
-			if child is RigidBody3D:
-				child.freeze = frozen;
-		pass # Replace with function body.
+	if project_root:
+		var nodes: Array[Node] = project_root.get_children();
+		for node in nodes:
+			
+			for child in node.get_children():
+				if child is RigidBody3D:
+					child.freeze = frozen;
+			pass # Replace with function body.
