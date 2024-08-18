@@ -4,7 +4,7 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-	$"../Cutscene2".play("Intro_Cutscene")
+	$"../Cutscene2".play("Intro_Cutscene_2")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
