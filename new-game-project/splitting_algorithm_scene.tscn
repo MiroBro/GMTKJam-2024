@@ -68,6 +68,9 @@ albedo_color = Color(0.918927, 0.531293, 0.174442, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_l2e85"]
 size = Vector3(0.005, 0.005, 0.005)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_igcge"]
+size = Vector3(2.76744, 5.83459, 2.00146)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26d8k"]
 albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 
@@ -77,8 +80,8 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 size = Vector3(1.815, 0.187, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcwg2"]
-friction = 0.1
-bounce = 0.28
+friction = 0.27
+bounce = 0.06
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7tobc"]
 size = Vector3(0.84, 0.067, 0.75)
@@ -202,11 +205,26 @@ transform = Transform3D(1.62864e-07, 0, -1.24197, 0, 1.24197, 0, 1.24197, 0, 1.6
 [node name="M_Sawblade_1" parent="debug0" instance=ExtResource("8_v0o3s")]
 transform = Transform3D(-5.00034e-08, -3.40922e-08, -0.320457, 4.06411e-15, 1.14394, -9.55037e-09, 1.14394, -5.55433e-15, -1.40076e-08, 0, 0.380099, 1.28478)
 
+[node name="RigidBody3D" type="RigidBody3D" parent="debug0"]
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="debug0/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.195281, 0.211426, 0.981445)
+shape = SubResource("BoxShape3D_igcge")
+
 [node name="debug1" type="Node3D" parent="."]
-transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, -0.60893, 0, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60893, 0, 0.3)
 
 [node name="BANANA" parent="debug1" instance=ExtResource("5_pt3pa")]
-transform = Transform3D(1.22463, 0, 0, 0, 0.160736, 1.21403, 0, -1.21403, 0.160736, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0)
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="debug1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.151999, 0, -0.642277)
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="debug1/RigidBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.100689, -0.630138, 0.500732)
+shape = SubResource("BoxShape3D_igcge")
 
 [node name="debug2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.18149, 0, 0)
@@ -224,6 +242,7 @@ shape = SubResource("BoxShape3D_vfysp")
 [node name="rb_template" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.56695, 1.37052, 0)
 physics_material_override = SubResource("PhysicsMaterial_mcwg2")
+gravity_scale = 4.428
 freeze = true
 script = ExtResource("11_3hlxx")
 

@@ -72,6 +72,7 @@ func _ready() -> void:
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
 	blueprint_ui.make_blueprint_from_mesh(plank)
+	blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -211,9 +212,7 @@ func find_and_delete_islands():
 			$Audio/Plank_SFX_2.play()
 		
 
-## Called every frame, deals with music and SFX
 func fix_music(delta: float):
-
 	var is_cutting = drawing && tool == TOOL_SAW
 	
 	if not is_cutting and not regularAudio.playing:
@@ -257,6 +256,7 @@ func _process(delta: float) -> void:
 
 		if tool == TOOL_BANANA:
 			debug1.global_position = mouse_pos_in_plane
+			blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
