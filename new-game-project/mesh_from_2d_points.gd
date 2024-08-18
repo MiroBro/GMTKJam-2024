@@ -40,6 +40,7 @@ var cell = Vector3(cell_size.x, thickness, cell_size.y)
 var plank: MeshInstance3D
 @export var plank_collision_shape: CollisionShape3D
 
+
 func _ready() -> void:
 	plank = self.get_child(0)
 
@@ -54,6 +55,10 @@ func _ready() -> void:
 
 	for i in range(grid_width * grid_height):
 		grid.append(1)
+
+	find_and_delete_islands()
+	convert_grid_to_mesh(grid, plank.mesh)
+
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -136,7 +141,6 @@ func find_and_delete_islands():
 				grid[grid_idx] = 0
 				rb_grid[grid_idx] = 1
 
-
 			var rb_mesh = plank.mesh.duplicate()
 			rb_mesh.clear_surfaces()
 			convert_grid_to_mesh(rb_grid, rb_mesh)
@@ -168,6 +172,8 @@ func _process(delta: float) -> void:
 
 	fix_music()
 
+	var cut_any = false
+
 	if drawing:
 		camera.add_trauma(0.2)
 		speed = lerp(speed, target_speed, 5.0 * delta)
@@ -197,16 +203,15 @@ func _process(delta: float) -> void:
 		var n =  points.size()
 		#if n % 2 == 0 && n > 0:
 		if n > 1:
-			var cut_any = false
 			for i in range(1, n-1):
 				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
 
 			if cut_any:
 				particles.emitting = true
 				points.pop_front()
-
-	find_and_delete_islands()
-	convert_grid_to_mesh(grid, plank.mesh)
+	if cut_any:
+		find_and_delete_islands()
+		convert_grid_to_mesh(grid, plank.mesh)
 
 # from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
