@@ -91,6 +91,7 @@ text = "Note: Banana for scale"
 scroll_active = false
 
 [node name="What to do" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
 offset_left = 323.0
 offset_top = 836.0
 offset_right = 838.0

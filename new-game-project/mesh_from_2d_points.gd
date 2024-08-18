@@ -168,10 +168,7 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D, center_of_mass: Vector
 
 				
 func load_result_scene():
-	
 	get_tree().change_scene_to_file("res://Scenes/result.tscn")
-	
-	
 
 var speed = 2.5
 var target_speed = 5.0
@@ -259,31 +256,55 @@ func find_and_delete_islands():
 			$Audio/Plank_SFX_1.play()
 		else: 
 			$Audio/Plank_SFX_2.play()
-		
+
 
 func fix_music(delta: float):
+	var saw_pos =  Vector2(debug0.global_position.x, debug0.global_position.z)
+	var forward = Vector2(saw_dir.x, saw_dir.z).normalized()
+	var poss = [saw_pos, saw_pos + forward * 0.1]
+	var any = false
+	for pos in poss:
+		var pnorm = point_to_grid_space(pos)
+		var pointer_in_plank = pnorm.x >= 0.0 && pnorm.x <= 1.0 && pnorm.y >= 0.0 && pnorm.y <= 1.0
+		if pointer_in_plank:
+			var index = grid_space_to_index(pnorm)
+			pointer_in_plank = grid[index] == 1
+			if pointer_in_plank:
+				any = true
+				break
+
 	var is_cutting = drawing && tool == TOOL_SAW
-	
-	if not is_cutting and not regularAudio.playing:
+	var is_really_cutting = is_cutting && any
+
+	if is_really_cutting:
+		camera.add_trauma(0.2)
+
+	var sawing_sfx = $Audio/SawingSFX
+
+	if not is_really_cutting and not regularAudio.playing:
 		regularAudio.play(normal_from)
-	if is_cutting and not cutting_audio.playing:
+	if is_really_cutting and not cutting_audio.playing:
 		cutting_audio.play(cutting_from)
-		$Audio/SawingSFX.play()
 
-
-	if not is_cutting:
+	if not is_really_cutting:
 		cutting_from = cutting_audio.get_playback_position()
 		cutting_audio.stop()
-		$Audio/SawingSFX.stop()
-	if is_cutting:
+	
+	if not is_cutting:
+		sawing_sfx.stop()
+	
+	if is_really_cutting:
 		normal_from = cutting_audio.get_playback_position()
 		regularAudio.stop()
 		
+	if is_cutting and not sawing_sfx.playing:
+		sawing_sfx.play()
+
+	if is_cutting:
 		# Prevent saw sound from stopping
-		var sawPlaybackPos = $Audio/SawingSFX.get_playback_position()
+		var sawPlaybackPos = sawing_sfx.get_playback_position()
 		if (sawPlaybackPos > 3.7):
-			$Audio/SawingSFX.play(1 + (randf() - 0.5))
-			
+			sawing_sfx.play(1 + (randf() - 0.5))
 
 
 func wh_to_index(w: int, h: int) -> int:
@@ -330,7 +351,6 @@ func _process(delta: float) -> void:
 					debug0.look_at(saw_pos + saw_dir)
 
 			if d.length() > 0.1:
-				
 				var l = 0.5 + 0.5 / (1.0 + exp(-d.length()))
 				var f = max(5 * delta * speed * l, 0.1)
 				saw_pos = lerp(saw_pos, saw_pos + 0.1*d, f)
@@ -360,9 +380,8 @@ func _process(delta: float) -> void:
 	if cut_any:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
-	
 
-		
+
 func reload_scene():
 	print(Globals.cut_meshes.size())
 	var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
