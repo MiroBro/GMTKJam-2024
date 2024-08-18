@@ -84,15 +84,19 @@ func _input(event):
 				find_islands(island_indices, island_lens)
 				
 
-				spawn_rigidbody_version_of_mesh(plank.mesh.duplicate())
+				spawn_rigidbody_version_of_mesh(plank)
 
 
-func spawn_rigidbody_version_of_mesh(mesh: Mesh):
+func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	var it: RigidBody3D = rb_template.duplicate()
 	it.freeze = false
 	it.global_position = debug0.global_position
-	var new_mesh = plank.duplicate()
-	plank.mesh = plank.mesh.duplicate()
+	var new_mesh = ref.duplicate()
+	ref.mesh = ref.mesh.duplicate()
+
+	var shape = ref.mesh.create_convex_shape()
+	var it2: CollisionShape3D = it.get_child(0)
+	it2.shape = new_mesh.mesh.create_convex_shape()
 	it.add_child(new_mesh)
 	scene_root.add_child(it)
 
