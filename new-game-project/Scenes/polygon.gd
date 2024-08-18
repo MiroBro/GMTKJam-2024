@@ -15,6 +15,7 @@ func set_banana_relative_pos(pos: Vector3):
 		reference_banana.global_position.x = new_pos.x
 		reference_banana.global_position.z = new_pos.z
 
+
 func make_thing(mesh: MeshInstance3D):
 	reference_mesh.mesh = mesh.mesh
 	reference_mesh.rotation = mesh.rotation
