@@ -1,10 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdldsdwvl51ux"]
+[gd_scene load_steps=10 format=3 uid="uid://cdldsdwvl51ux"]
 
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
 [ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
-[ext_resource type="Material" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
-[ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="4_uwtof"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="6_w81bv"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2tp6m"]
@@ -53,6 +51,7 @@ offset_right = 60.0
 offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 40
 text = "Open Blueprint"
 
 [node name="BlueprintUi" parent="." instance=ExtResource("2_o7ptg")]
@@ -96,6 +95,7 @@ offset_right = 62.0
 offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 40
 text = "Close blueprint
 "
 
@@ -104,17 +104,17 @@ texture_filter = 2
 texture_repeat = 1
 material = SubResource("CanvasItemMaterial_2tp6m")
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.216
-anchor_top = 0.038
-anchor_right = 0.774
-anchor_bottom = 0.824
-offset_left = 195.28
-offset_top = 148.96
-offset_right = -176.08
-offset_bottom = 0.0799561
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -349.0
+offset_top = -789.0
+offset_right = 351.0
+offset_bottom = -89.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("ViewportTexture_x7w3e")
@@ -138,13 +138,6 @@ transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 
 transform = Transform3D(0.0837, 0, 0, 0, -3.65865e-09, 0.0837, 0, -0.0837, -3.65865e-09, -8.95168, -0.463142, -0.649589)
 material_override = SubResource("StandardMaterial3D_bhs40")
 mesh = SubResource("CapsuleMesh_xdfgc")
-
-[node name="Sprite2D" type="Sprite2D" parent="BlueprintUi"]
-visible = false
-material = ExtResource("4_rkj1k")
-position = Vector2(968.5, 507)
-scale = Vector2(6.94531, 5.25)
-texture = ExtResource("4_uwtof")
 
 [connection signal="pressed" from="Open_Blueprint" to="." method="_on_open_blueprint_pressed"]
 [connection signal="gui_input" from="BlueprintUi" to="." method="_on_blueprint_ui_gui_input"]
