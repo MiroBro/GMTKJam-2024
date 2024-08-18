@@ -103,45 +103,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iamy2")
 
-[node name="Planks Left" type="RichTextLabel" parent="HudUI"]
+[node name="Next Plank" type="Button" parent="HudUI"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -289.0
-offset_top = 40.0
-offset_right = -38.0
-offset_bottom = 145.0
-grow_horizontal = 0
-theme_override_font_sizes/normal_font_size = 30
-text = "Planks Left: 3 / 3"
-
-[node name="Keybinds" type="RichTextLabel" parent="HudUI"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 35.0
-offset_right = 503.0
-offset_bottom = 244.0
-theme_override_font_sizes/normal_font_size = 30
-text = "Keybinds
-
-- Next Plank: E"
-
-[node name="What to do" type="RichTextLabel" parent="HudUI"]
-layout_mode = 1
-anchors_preset = 2
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = -193.0
-offset_right = 551.0
-offset_bottom = 16.0
+offset_left = -443.0
+offset_top = -138.0
+offset_right = -55.0
+offset_bottom = -52.0
+grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/normal_font_size = 30
-text = "Use the blueprint and banana to
-figure out what shape and scale to cut the piece."
+theme_override_font_sizes/font_size = 40
+text = "Next Blueprint"
 
-[node name="BlueprintUI" parent="." instance=ExtResource("1_rdmpu")]
+[node name="BlueprintUI" parent="HudUI" instance=ExtResource("1_rdmpu")]
+layout_mode = 1
+offset_left = 32.0
+mouse_filter = 2
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
@@ -179,7 +160,7 @@ regularAudio = NodePath("Audio/RegularAudio")
 cutting_audio = NodePath("Audio/CuttingAudio")
 rb_template = NodePath("../rb_template")
 plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
-blueprint_ui = NodePath("../BlueprintUI")
+blueprint_ui = NodePath("../HudUI/BlueprintUI")
 
 [node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
 material_override = ExtResource("6_ekt3n")
@@ -206,11 +187,11 @@ volume_db = 1.868
 
 [node name="Plank_SFX_1" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("8_b7big")
-volume_db = 16.928
+volume_db = 6.0
 
 [node name="Plank_SFX_2" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("9_jpn46")
-volume_db = 24.0
+volume_db = 6.0
 
 [node name="Table" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
@@ -301,3 +282,6 @@ shape = SubResource("BoxShape3D_7tobc")
 transform = Transform3D(0.0226417, 0, 0, 0, 0.177274, 0, 0, 0, 0.0339626, 0.0112702, -0.0496828, -0.00237818)
 material_override = SubResource("StandardMaterial3D_6svrv")
 mesh = SubResource("BoxMesh_vepuk")
+
+[connection signal="pressed" from="HudUI/Next Plank" to="HudUI" method="_on_next_plank_pressed"]
+[connection signal="pressed" from="HudUI/Next Plank" to="GameManager" method="_on_next_plank_pressed"]

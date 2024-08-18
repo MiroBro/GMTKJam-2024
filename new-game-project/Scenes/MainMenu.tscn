@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="13_k8su5"]
 [ext_resource type="AudioStream" uid="uid://npl7xvb6rrny" path="res://Assets/Music/Banana (for Scale)_3_scale_the_banana.mp3" id="14_7twkx"]
 [ext_resource type="Script" path="res://Scenes/menu_buttons.gd" id="16_smit0"]
-[ext_resource type="Theme" uid="uid://mg3pddy6ek64" path="res://Assets/Other/Main_Menu_Button.tres" id="16_v34gm"]
+[ext_resource type="Theme" uid="uid://cu4w2p7dumvr" path="res://Assets/Other/Main_Menu_Button.tres" id="16_v34gm"]
 [ext_resource type="AudioStream" uid="uid://y7dfgf507rea" path="res://Assets/SFX/UI/pop_5.wav" id="19_ocwh3"]
 [ext_resource type="AudioStream" uid="uid://brhl02qqgqvpc" path="res://Assets/SFX/UI/click_3.wav" id="20_shj5u"]
 
@@ -494,5 +494,5 @@ stream = ExtResource("20_shj5u")
 [connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_mouse_entered"]
-[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]

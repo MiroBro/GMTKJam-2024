@@ -24,7 +24,7 @@ func _ready() -> void:
 	if (target):
 		var sizeVec : Vector2 = target.get_parent_area_size()
 		targetYSize = sizeVec[1]
-		target.set_position(Vector2(0, targetYSize))
+		target.set_position(Vector2(0, 0))
 		print(target.name)
 
 	pass # Replace with function body.

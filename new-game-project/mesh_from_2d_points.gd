@@ -241,7 +241,7 @@ func find_and_delete_islands():
 			new_node.mesh = rb_mesh
 			
 			# Spawn per island
-			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, plank_mass)
+			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, 1)
 			any = true
 
 	# When plank falls off
@@ -305,7 +305,7 @@ func _process(delta: float) -> void:
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
 			var d = mouse_pos_in_plane - saw_pos
-			print(d.length())
+			#print(d.length())
 			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
@@ -736,3 +736,13 @@ func convert_points_and_cuts_to_mesh(polygon: Array[Vector2], mesh: ImmediateMes
 		mesh.surface_add_vertex(top_next)
 
 	mesh.surface_end()
+
+
+func _on_next_plank_pressed() -> void:
+	if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]-1:
+		var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+		Globals.cut_meshes.append(mesh)
+		get_tree().change_scene_to_file("res://Scenes/result.tscn")		
+	else:
+		reload_scene()
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://eof063ohd4ob"]
+[gd_scene load_steps=19 format=3 uid="uid://cm2cy6axpm0m6"]
 
 [ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="2_etoq4"]
@@ -158,12 +158,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HudUI"]
+[node name="Keybinds" type="RichTextLabel" parent="HudUI"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 20.0
-offset_right = 284.0
-offset_bottom = 171.0
+offset_right = 571.0
+offset_bottom = 348.0
+theme_override_font_sizes/normal_font_size = 40
 text = "Keybinds:
 
 - Turn on Gravity: Space
