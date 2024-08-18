@@ -38,6 +38,7 @@ var cell = Vector3(cell_size.x, thickness, cell_size.y)
 @export var rb_template: RigidBody3D
 
 var plank: MeshInstance3D
+@export var plank_collision_shape: CollisionShape3D
 
 func _ready() -> void:
 	plank = self.get_child(0)
@@ -114,6 +115,7 @@ func find_and_delete_islands():
 	print(island_lens)
 	print(island_indices.size())
 	var i = -1
+	var any = false
 	for l in island_lens:
 		var should_remove = true
 		for jjjj in l:
@@ -122,11 +124,13 @@ func find_and_delete_islands():
 			var grid_idx = island_indices[i]
 			if grid_idx == 0:
 				should_remove = false
+
 		if should_remove:
 			i -= l
 			var rb_grid = grid.duplicate();
 			for j in rb_grid.size():
 				rb_grid[j] = 0
+
 			for jjjj in l:
 				i += 1
 				var grid_idx = island_indices[i]
@@ -140,10 +144,11 @@ func find_and_delete_islands():
 			var new_node = plank.duplicate()
 			new_node.mesh = rb_mesh
 			spawn_rigidbody_version_of_mesh(new_node)
+			any = true
 
-			
-	
-	
+	if any:
+		plank_collision_shape.shape = plank.mesh.create_convex_shape()
+
 
 func fix_music():
 	if not drawing and not normal_bg.playing:
@@ -161,9 +166,6 @@ func fix_music():
 
 func _process(delta: float) -> void:
 	particles.emitting = false
-
-	find_and_delete_islands()
-
 
 	fix_music()
 
@@ -204,8 +206,8 @@ func _process(delta: float) -> void:
 				particles.emitting = true
 				points.pop_front()
 
+	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-
 
 # from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
