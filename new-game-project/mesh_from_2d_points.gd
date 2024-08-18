@@ -253,6 +253,7 @@ func _process(delta: float) -> void:
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
+		
 
 		if tool == TOOL_BANANA:
 			debug1.global_position = mouse_pos_in_plane
@@ -269,7 +270,7 @@ func _process(delta: float) -> void:
 
 			if points.size() > 0:
 				var old_p = points[0]
-				if old_p.distance_to(mouse_2d) > 0.05:
+				if old_p.distance_to(mouse_2d) > 0.1:
 					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 15*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
@@ -279,6 +280,13 @@ func _process(delta: float) -> void:
 
 
 			saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed)
+			var xlim = 0.8
+			var zlim = 0.6
+			saw_pos.x = clamp(saw_pos.x, -xlim, xlim)
+			saw_pos.z = clamp(saw_pos.z, -zlim, zlim)
+
+			
+			#saw_pos = clamp(saw_pos, -q, q)
 			var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
 			debug0.global_position = saw_pos
