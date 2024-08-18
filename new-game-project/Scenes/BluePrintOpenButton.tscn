@@ -1,10 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdldsdwvl51ux"]
+[gd_scene load_steps=12 format=3 uid="uid://cdldsdwvl51ux"]
 
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
 [ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
 [ext_resource type="Material" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
 [ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="4_uwtof"]
+[ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="6_w81bv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2tp6m"]
+blend_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_x7w3e"]
+viewport_path = NodePath("BlueprintUi/TextureRect/SubViewport")
+
+[sub_resource type="Environment" id="Environment_gjm4a"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+background_energy_multiplier = 0.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 0)
+ambient_light_energy = 1.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhs40"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_fog = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xdfgc"]
 
 [node name="BluePrintOpenButton" type="Control" node_paths=PackedStringArray("polygon")]
 layout_mode = 3
@@ -34,8 +58,12 @@ text = "Open Blueprint"
 [node name="BlueprintUi" parent="." instance=ExtResource("2_o7ptg")]
 custom_minimum_size = Vector2(1000, 100)
 layout_mode = 1
+offset_left = -84.0
+offset_top = -142.0
+offset_right = -84.0
+offset_bottom = -142.0
 
-[node name="Polygon" type="TextureRect" parent="BlueprintUi"]
+[node name="Polygon" type="TextureRect" parent="BlueprintUi" node_paths=PackedStringArray("reference_mesh", "reference_banana", "camera")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,6 +79,9 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 1
 script = ExtResource("3_nuaf2")
+reference_mesh = NodePath("../TextureRect/SubViewport/MeshInstance3D")
+reference_banana = NodePath("../TextureRect/SubViewport/debug1")
+camera = NodePath("../TextureRect/SubViewport/Camera3D")
 
 [node name="Close" type="Button" parent="BlueprintUi"]
 layout_mode = 1
@@ -68,10 +99,51 @@ grow_vertical = 0
 text = "Close blueprint
 "
 
+[node name="TextureRect" type="TextureRect" parent="BlueprintUi"]
+texture_filter = 2
+texture_repeat = 1
+material = SubResource("CanvasItemMaterial_2tp6m")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.216
+anchor_top = 0.038
+anchor_right = 0.774
+anchor_bottom = 0.824
+offset_left = 195.28
+offset_top = 148.96
+offset_right = -176.08
+offset_bottom = 0.0799561
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("ViewportTexture_x7w3e")
+
+[node name="SubViewport" type="SubViewport" parent="BlueprintUi/TextureRect"]
+size = Vector2i(700, 700)
+
+[node name="Camera3D" type="Camera3D" parent="BlueprintUi/TextureRect/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -8.99537, 0.468096, -0.637574)
+environment = SubResource("Environment_gjm4a")
+projection = 1
+size = 0.423
+
+[node name="debug1" type="Node3D" parent="BlueprintUi/TextureRect/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.987122, 0.159967, 0, -0.159967, 0.987122, -9.09276, -0.38918, -0.576508)
+
+[node name="BANANA" parent="BlueprintUi/TextureRect/SubViewport/debug1" instance=ExtResource("6_w81bv")]
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BlueprintUi/TextureRect/SubViewport"]
+transform = Transform3D(0.0837, 0, 0, 0, -3.65865e-09, 0.0837, 0, -0.0837, -3.65865e-09, -8.95168, -0.463142, -0.649589)
+material_override = SubResource("StandardMaterial3D_bhs40")
+mesh = SubResource("CapsuleMesh_xdfgc")
+
 [node name="Sprite2D" type="Sprite2D" parent="BlueprintUi"]
 visible = false
 material = ExtResource("4_rkj1k")
-position = Vector2(588, 346)
+position = Vector2(968.5, 507)
+scale = Vector2(6.94531, 5.25)
 texture = ExtResource("4_uwtof")
 
 [connection signal="pressed" from="Open_Blueprint" to="." method="_on_open_blueprint_pressed"]

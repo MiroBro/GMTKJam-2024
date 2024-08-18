@@ -11,8 +11,11 @@ var startOffset = Vector2(0,0)
 var endOffset = Vector2(0,0)
 var t = 2
 
+func set_banana_relative_pos(pos: Vector3):
+	polygon.set_banana_relative_pos(pos)
+
 func make_blueprint_from_mesh(mesh: MeshInstance3D):
-	polygon.make_thing(mesh)
+	polygon.make_thing(mesh.duplicate())
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

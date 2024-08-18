@@ -10,6 +10,7 @@ extends Node3D
 var scene_root: Node
 var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
 var saw_pos = Vector3(0.0, 0.0, 0.0)
+var saw_dir = Vector3.FORWARD
 
 var drawing = false
 
@@ -32,10 +33,16 @@ var plank_offset = -Vector3(plank_half_size.x, 0.0, plank_half_size.y)
 var grid_width
 var grid_height
 
+var TOOL_NOTHING = 0
+var TOOL_BANANA = 1
+var TOOL_SAW = 2
+
+var tool = TOOL_NOTHING
+
 var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
-@export var normal_bg: AudioStreamPlayer3D
-@export var cutting_bg: AudioStreamPlayer3D
+@export var regularAudio: AudioStreamPlayer
+@export var cutting_audio: AudioStreamPlayer
 
 @export var rb_template: RigidBody3D
 
@@ -57,6 +64,8 @@ func _ready() -> void:
 	add_child(bird)
 	print("BIRD", bird)
 	
+	tool = TOOL_NOTHING
+
 	plank = self.get_child(0)
 
 	scene_root = get_tree().current_scene
@@ -74,6 +83,7 @@ func _ready() -> void:
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
 	blueprint_ui.make_blueprint_from_mesh(plank)
+	blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -91,6 +101,21 @@ func _input(event):
 		if e.button_index == MOUSE_BUTTON_LEFT:
 			drawing = e.pressed
 			if drawing:
+				tool = TOOL_NOTHING
+
+				var radius = 0.1
+				
+				var tools = [TOOL_BANANA, TOOL_SAW]
+				var poss = [debug1.global_position, debug0.global_position]
+
+				var smallest = 10000.0
+				for i in range(tools.size()):
+					var d = mouse_pos_in_plane.distance_to(poss[i])
+					if d < smallest:
+						smallest = d
+						if d < radius:
+							tool = tools[i]
+
 				points.clear()
 
 		if e.button_index == MOUSE_BUTTON_RIGHT:
@@ -130,8 +155,8 @@ func load_result_scene():
 	pass
 	
 
-var speed = 10.0
-var target_speed = 20.0
+var speed = 2.5
+var target_speed = 5.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
@@ -143,11 +168,10 @@ func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
 
-
 	if grid_width < 10 || grid_height < 10:
 		print("delete islands skipping causre too small grid")
 		return
-	
+
 	var safe_indices: Array[int];
 	var W = 2
 	var H = 2
@@ -158,8 +182,6 @@ func find_and_delete_islands():
 			var h = bot_left.y + hi
 			var safe_idx = wh_to_index(w,h)
 			safe_indices.push_back(safe_idx)
-			
-			
 
 
 	find_islands(island_indices, island_lens)
@@ -194,73 +216,109 @@ func find_and_delete_islands():
 			convert_grid_to_mesh(rb_grid, rb_mesh)
 			var new_node = plank.duplicate()
 			new_node.mesh = rb_mesh
+			
+			# Spawn per island
 			spawn_rigidbody_version_of_mesh(new_node)
 			any = true
 
+	# When plank falls off
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
-
-
-func fix_music():
-	if not drawing and not normal_bg.playing:
-		normal_bg.play(normal_from)
-	if drawing and not cutting_bg.playing:
-		cutting_bg.play(cutting_from)
 		
-	if not drawing:
-		cutting_from = cutting_bg.get_playback_position()
-		cutting_bg.stop()
-	if drawing:
-		normal_from = cutting_bg.get_playback_position()
-		normal_bg.stop()
+		if randf() < 0.5:
+			$Audio/Plank_SFX_1.play()
+		else: 
+			$Audio/Plank_SFX_2.play()
+		
+
+func fix_music(delta: float):
+	var is_cutting = drawing && tool == TOOL_SAW
+	
+	if not is_cutting and not regularAudio.playing:
+		regularAudio.play(normal_from)
+	if is_cutting and not cutting_audio.playing:
+		cutting_audio.play(cutting_from)
+		$Audio/SawingSFX.play()
+
+
+	if not is_cutting:
+		cutting_from = cutting_audio.get_playback_position()
+		cutting_audio.stop()
+		$Audio/SawingSFX.stop()
+	if is_cutting:
+		normal_from = cutting_audio.get_playback_position()
+		regularAudio.stop()
+		
+		# Prevent saw sound from stopping
+		var sawPlaybackPos = $Audio/SawingSFX.get_playback_position()
+		if (sawPlaybackPos > 3.7):
+			$Audio/SawingSFX.play(1 + (randf() - 0.5))
+			
+
 
 func wh_to_index(w: int, h: int) -> int:
 	return w + h*grid_width;
 
+
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	find_and_delete_islands()
-	
-
-
-	#fix_music()
+	fix_music(delta)
 
 	var cut_any = false
 
 	if drawing:
-		camera.add_trauma(0.2)
 		speed = lerp(speed, target_speed, 5.0 * delta)
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
+		
 
-		var p = point_to_grid_space(saw_2dd)
-		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
-			var i = grid_space_to_index(p)
-			if grid[i] == 1:
-				speed = 0.5
+		if tool == TOOL_BANANA:
+			debug1.global_position = mouse_pos_in_plane
+			blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
-		if points.size() > 0:
-			var old_p = points[0]
-			if old_p.distance_to(mouse_2d) > 0.1:
-				debug0.look_at(mouse_pos_in_plane)
+		if tool == TOOL_SAW:
+			camera.add_trauma(0.2)
 
-		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
-		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
+			var p = point_to_grid_space(saw_2dd)
+			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
+				var i = grid_space_to_index(p)
+				if grid[i] == 1:
+					speed = 0.5
 
-		debug0.global_position = saw_pos
-		debug1.global_position = mouse_pos_in_plane
+			if points.size() > 0:
+				var old_p = points[0]
+				if old_p.distance_to(mouse_2d) > 0.1:
+					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 15*delta)
+					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
-		points.push_back(saw_2d)
-		var n =  points.size()
-		if n > 1:
-			for i in range(1, n-1):
-				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
+					saw_dir = saw_dir.normalized()
+					#debug0.look_at(mouse_pos_in_plane)					
+					debug0.look_at(saw_pos + saw_dir)
 
-			if cut_any:
-				particles.emitting = true
-				points.pop_front()
+
+			saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed)
+			var xlim = 0.8
+			var zlim = 0.6
+			saw_pos.x = clamp(saw_pos.x, -xlim, xlim)
+			saw_pos.z = clamp(saw_pos.z, -zlim, zlim)
+
+			
+			#saw_pos = clamp(saw_pos, -q, q)
+			var saw_2d = Vector2(saw_pos.x, saw_pos.z)
+
+			debug0.global_position = saw_pos
+
+			points.push_back(saw_2d)
+			var n =  points.size()
+			if n > 1:
+				for i in range(1, n-1):
+					cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
+
+				if cut_any:
+					particles.emitting = true
+					points.pop_front()
 
 	if cut_any:
 		find_and_delete_islands()
@@ -503,19 +561,19 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var w = i % grid_width;
 			var h = i / grid_width;
 			
-			var skip = true
+			var skip_sides = true
+			if w == 0 || w == grid_width-1 || h == 0 || h == grid_height-1:
+				skip_sides = false
 			for d in [Vector2i(-1,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(0,1)]:
 				var wi = w + d.x
 				var hi = h + d.y
-				if !(0 < wi && wi <= grid_width && 0 <= hi && hi < grid_height):
-					skip = false
+				if !(0 <= wi && wi < grid_width && 0 <= hi && hi < grid_height):
+					continue
+				var side_idx = wh_to_index(wi,hi)
+				if grid[side_idx] == 0:
+					skip_sides = false
 					break
-				#var side_idx = wh_to_index(w,h)
-				#if grid[side_idx] == 0:
-					#skip = false
-					#break
-			#if skip:
-				#continue
+			
 			
 			var middle = index_to_world_space(i)
 			var mp = Vector3(middle.x, 0.0, middle.y)
@@ -551,47 +609,47 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var tr_b = tr - thick
 			var br_b = br - thick
 			var tl_b = tl - thick
+			if !skip_sides:
+				#front facing side
+				mesh.surface_set_normal(back)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(bl_b)
+				
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(br)
+				
+				
+				# # back facing side
+				mesh.surface_set_normal(forward)
+				mesh.surface_add_vertex(tl)
+				mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(tr_b)
+				
+				mesh.surface_add_vertex(tr_b)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(tl)
 
-			#front facing side
-			mesh.surface_set_normal(back)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(bl_b)
-			
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(br)
-			
-			
-			# # back facing side
-			mesh.surface_set_normal(forward)
-			mesh.surface_add_vertex(tl)
-			mesh.surface_add_vertex(tl_b)
-			mesh.surface_add_vertex(tr_b)
-			
-			mesh.surface_add_vertex(tr_b)
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(tl)
+				# # left side
+				mesh.surface_set_normal(left)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(bl_b)
+				mesh.surface_add_vertex(tl_b)
 
-			# # left side
-			mesh.surface_set_normal(left)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(bl_b)
-			mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(tl)
 
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(tl_b)
-			mesh.surface_add_vertex(tl)
+				# # right side
+				mesh.surface_set_normal(right)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(tr_b)
+				mesh.surface_add_vertex(br_b)
 
-			# # right side
-			mesh.surface_set_normal(right)
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(tr_b)
-			mesh.surface_add_vertex(br_b)
-
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(br)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(br)
 
 			# add bottom
 			mesh.surface_set_normal(down)
