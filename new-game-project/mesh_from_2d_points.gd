@@ -48,18 +48,9 @@ var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
 var plank: MeshInstance3D
 @export var plank_collision_shape: CollisionShape3D
-
-
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
-	var reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
-	
-	var child = reference_root.get_child(Globals.cut_meshes.size())
-	if child is MeshInstance3D:
-		Globals.mesh_to_cut = child
-		blueprint_ui.make_blueprint_from_mesh(Globals.mesh_to_cut)
-	
 	tool = TOOL_NOTHING
 
 	plank = self.get_child(0)
@@ -78,7 +69,7 @@ func _ready() -> void:
 
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-	#blueprint_ui.make_blueprint_from_mesh(plank)
+	blueprint_ui.make_blueprint_from_mesh(plank)
 	blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 func _input(event):
@@ -236,7 +227,6 @@ func fix_music(delta: float):
 		cutting_audio.play(cutting_from)
 		$Audio/SawingSFX.play()
 
-
 	if not is_cutting:
 		cutting_from = cutting_audio.get_playback_position()
 		cutting_audio.stop()
@@ -328,7 +318,7 @@ func _process(delta: float) -> void:
 		convert_grid_to_mesh(grid, plank.mesh)
 		
 	if Input.is_key_label_pressed(KEY_E):		
-		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]-1:
+		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]:
 			var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
 			Globals.cut_meshes.append(mesh)
 			load_result_scene()			

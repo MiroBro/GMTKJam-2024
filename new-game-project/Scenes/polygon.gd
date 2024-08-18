@@ -24,7 +24,7 @@ func make_thing(mesh: MeshInstance3D):
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 
 	var w = max(aabb.size.x, aabb.size.z)
-	camera.size = clamp(w, 1.0, w * 1.1)
+	camera.size = max(w, max(3.0, w * 1.4))
 	mesh.global_position = camera.global_position + Vector3(0.0, -50.0, 0.0)
  
 # Called every frame. 'delta' is the elapsed time since the previous frame.
