@@ -67,6 +67,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="58755100-banana-simple-sign-white-section-of-icon-on-blueprint-template" type="Sprite2D" parent="Panel"]
+visible = false
 position = Vector2(198, 549)
 scale = Vector2(0.0911539, 0.0911539)
 texture = ExtResource("2_nav3w")
