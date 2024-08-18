@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqm1w51kg5jl2"]
+[gd_scene load_steps=8 format=3 uid="uid://cltun4q4jiwir"]
 
-[ext_resource type="PackedScene" uid="uid://5545kv3kraww" path="res://wall.tscn" id="1_5n8oc"]
-[ext_resource type="PackedScene" uid="uid://bqvbphnjc82pq" path="res://shortwall.tscn" id="1_puwg6"]
-[ext_resource type="PackedScene" uid="uid://d354efqjak5p" path="res://block.tscn" id="2_6m30c"]
-[ext_resource type="PackedScene" uid="uid://dd01fjk8c0wkr" path="res://frame.tscn" id="3_givlc"]
+[ext_resource type="PackedScene" path="res://wall.tscn" id="1_5n8oc"]
+[ext_resource type="PackedScene" path="res://shortwall.tscn" id="1_puwg6"]
+[ext_resource type="PackedScene" path="res://block.tscn" id="2_6m30c"]
+[ext_resource type="PackedScene" path="res://frame.tscn" id="3_givlc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_otv57"]
 

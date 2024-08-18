@@ -20,7 +20,7 @@ func add_trauma(amount):
 	trauma = min(trauma + amount, 1.0)
 	
 func add_impulse():
-		impulse = true
+	impulse = true
 
 func _process(delta: float):
 	var target_pos = original_pos + offset
@@ -36,13 +36,20 @@ func shake():
 	var amount = pow(trauma, trauma_power)
 	var angle = max_roll * amount * randf_range(-1, 1)
 	var T = 1
-	#if impulse:
+	var X = 0.003
+	if impulse:
+		angle *= 100
+		amount *= 100
+		T = 4
+		X = 0.02
+		impulse = false
+		
+		
 	angle = clamp(angle,-T,T)
 	#self.rotate_z(angle)
 	offset.x = max_offset.x * amount * randf_range(-1, 1)
 	offset.y = max_offset.y * amount * randf_range(-1, 1)
 	
-	var X = 0.03
 	
 	offset.x = clamp(offset.x, -X, X)
 	offset.y = clamp(offset.y, -X, X)

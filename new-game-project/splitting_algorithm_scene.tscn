@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=3 uid="uid://u617whog5up4"]
+[gd_scene load_steps=32 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
+[ext_resource type="Script" path="res://hud_ui.gd" id="1_iamy2"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
 [ext_resource type="PackedScene" uid="uid://cdldsdwvl51ux" path="res://Scenes/BluePrintOpenButton.tscn" id="1_rdmpu"]
 [ext_resource type="Shader" path="res://grid_shader.gdshader" id="2_w0i4a"]
@@ -93,7 +94,54 @@ albedo_color = Color(0.230315, 0.230315, 0.230315, 1)
 
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
-[node name="BluePrintOpenButton" parent="." instance=ExtResource("1_rdmpu")]
+[node name="HudUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iamy2")
+
+[node name="Planks Left" type="RichTextLabel" parent="HudUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -289.0
+offset_top = 40.0
+offset_right = -38.0
+offset_bottom = 145.0
+grow_horizontal = 0
+theme_override_font_sizes/normal_font_size = 30
+text = "Planks Left: 3 / 3"
+
+[node name="Keybinds" type="RichTextLabel" parent="HudUI"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 35.0
+offset_right = 503.0
+offset_bottom = 244.0
+theme_override_font_sizes/normal_font_size = 30
+text = "Keybinds
+
+- Next Plank: E"
+
+[node name="What to do" type="RichTextLabel" parent="HudUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -193.0
+offset_right = 551.0
+offset_bottom = 16.0
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 30
+text = "Use the blueprint and banana to
+figure out what shape and scale to cut the piece."
+
+[node name="BlueprintUI" parent="." instance=ExtResource("1_rdmpu")]
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
@@ -131,7 +179,7 @@ regularAudio = NodePath("Audio/RegularAudio")
 cutting_audio = NodePath("Audio/CuttingAudio")
 rb_template = NodePath("../rb_template")
 plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
-blueprint_ui = NodePath("../BluePrintOpenButton")
+blueprint_ui = NodePath("../BlueprintUI")
 
 [node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
 material_override = ExtResource("6_ekt3n")
@@ -158,11 +206,11 @@ volume_db = 1.868
 
 [node name="Plank_SFX_1" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("8_b7big")
-volume_db = 1.938
+volume_db = 16.928
 
 [node name="Plank_SFX_2" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("9_jpn46")
-volume_db = 1.868
+volume_db = 24.0
 
 [node name="Table" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)

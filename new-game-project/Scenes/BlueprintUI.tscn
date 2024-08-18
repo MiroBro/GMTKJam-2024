@@ -28,12 +28,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7f0gq")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -578.0
-offset_right = 575.0
-offset_bottom = 1150.0
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 1.0
+anchor_right = 0.506
+anchor_bottom = 1.0
+offset_left = -774.52
+offset_top = -963.0
+offset_right = 790.48
+offset_bottom = 602.0
 grow_horizontal = 2
 texture = ExtResource("1_yqbo5")
 expand_mode = 4
@@ -41,14 +44,17 @@ stretch_mode = 4
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -103.0
-offset_top = 101.0
-offset_right = 104.0
-offset_bottom = 156.0
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -823.0
+offset_right = 100.0
+offset_bottom = -725.0
 grow_horizontal = 2
+grow_vertical = 0
 theme_override_font_sizes/bold_italics_font_size = 5
 theme_override_font_sizes/italics_font_size = 5
 theme_override_font_sizes/mono_font_size = 5
@@ -74,12 +80,14 @@ texture = ExtResource("2_nav3w")
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Panel"]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 104.0
+offset_left = -453.0
 offset_top = -61.0
-offset_right = 288.0
+offset_right = -269.0
 offset_bottom = -21.0
 grow_vertical = 0
 bbcode_enabled = true

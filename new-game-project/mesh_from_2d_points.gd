@@ -48,12 +48,13 @@ var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
 var plank: MeshInstance3D
 @export var plank_collision_shape: CollisionShape3D
-
-
 @export var blueprint_ui: CanvasItem
 
+var pdb1;
+var pdb2
+
 func _ready() -> void:
-	
+
 	tool = TOOL_NOTHING
 
 	plank = self.get_child(0)
@@ -74,6 +75,9 @@ func _ready() -> void:
 	convert_grid_to_mesh(grid, plank.mesh)
 	blueprint_ui.make_blueprint_from_mesh(plank)
 	blueprint_ui.set_banana_relative_pos(debug1.global_position)
+	
+	pdb1 = $Audio/Plank_SFX_1.volume_db
+	pdb2 = $Audio/Plank_SFX_2.volume_db
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -177,6 +181,7 @@ func find_and_delete_islands():
 	find_islands(island_indices, island_lens)
 	var i = -1
 	var any = false
+	var plank_mass = 0
 	for l in island_lens:
 		var should_remove = true
 		for jjjj in l:
@@ -189,6 +194,7 @@ func find_and_delete_islands():
 
 
 		if should_remove:
+			plank_mass = float(l) / float((grid_width * grid_height))
 			camera.add_trauma(2.0)
 			i -= l
 			var rb_grid = grid.duplicate();
@@ -214,11 +220,17 @@ func find_and_delete_islands():
 	# When plank falls off
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
+		print(plank_mass)
+		camera.add_impulse()
 		
+		var magnitude = 1 - pow(plank_mass - 1, 4)
 		if randf() < 0.5:
+			$Audio/Plank_SFX_1.volume_db = pdb1 * magnitude
 			$Audio/Plank_SFX_1.play()
-		else: 
+		else:
+			$Audio/Plank_SFX_2.volume_db = pdb2 * magnitude
 			$Audio/Plank_SFX_2.play()
+
 		
 
 func fix_music(delta: float):
@@ -229,7 +241,6 @@ func fix_music(delta: float):
 	if is_cutting and not cutting_audio.playing:
 		cutting_audio.play(cutting_from)
 		$Audio/SawingSFX.play()
-
 
 	if not is_cutting:
 		cutting_from = cutting_audio.get_playback_position()
@@ -271,7 +282,6 @@ func _process(delta: float) -> void:
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
 			var d = mouse_pos_in_plane - saw_pos
-			print(d.length())
 			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
@@ -282,7 +292,7 @@ func _process(delta: float) -> void:
 			if points.size() > 0:
 				var old_p = points[0]
 				if old_p.distance_to(mouse_2d) > 0.00001:
-					saw_dir = lerp(saw_dir, d.normalized(), 15*delta)
+					saw_dir = lerp(saw_dir, d.normalized(), 30*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()

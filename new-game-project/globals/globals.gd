@@ -1,9 +1,11 @@
 extends Node
 
 var level = 0
+# var level = 2
+var mesh_to_cut: MeshInstance3D
 var mesh = ImmediateMesh.new()
 var cut_meshes: Array[ImmediateMesh]
-var number_of_pieces = [3, 5]
+var number_of_pieces = [3, 5, 5]
 
 ## Called when the node enters the scene tree for the first time.
 #func _ready() -> void:

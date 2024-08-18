@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://eof063ohd4ob"]
+[gd_scene load_steps=7 format=3 uid="uid://cm2cy6axpm0m6"]
 
 [ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
 
@@ -47,3 +47,22 @@ shape = SubResource("BoxShape3D_e5b8k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = SubResource("BoxMesh_un3l2")
+
+[node name="HudUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HudUI"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 20.0
+offset_right = 284.0
+offset_bottom = 171.0
+text = "Keybinds:
+
+- Turn on Gravity: Space
+- Next \"Day\": Enter"
