@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://btv6wlnl685i0"]
+[gd_scene load_steps=24 format=3 uid="uid://btv6wlnl685i0"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_7cfba"]
 [ext_resource type="Texture2D" uid="uid://qt8lm16kouyl" path="res://Assets/Images/MainMenu/Main_Menu_SmallRef.png" id="2_fjddb"]
@@ -16,7 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://58tb63dx7sqs" path="res://Assets/Images/MainMenu/Main_Menu_Singe_Banana_Background.png" id="12_oxomi"]
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="13_k8su5"]
 [ext_resource type="AudioStream" uid="uid://npl7xvb6rrny" path="res://Assets/Music/Banana (for Scale)_3_scale_the_banana.mp3" id="14_7twkx"]
-[ext_resource type="Theme" uid="uid://cqm6hj1bdqu8d" path="res://Assets/Other/Main_Menu_Button.tres" id="16_v34gm"]
+[ext_resource type="Script" path="res://Scenes/menu_buttons.gd" id="16_smit0"]
+[ext_resource type="Theme" uid="uid://cu4w2p7dumvr" path="res://Assets/Other/Main_Menu_Button.tres" id="16_v34gm"]
+[ext_resource type="AudioStream" uid="uid://y7dfgf507rea" path="res://Assets/SFX/UI/pop_5.wav" id="19_ocwh3"]
+[ext_resource type="AudioStream" uid="uid://brhl02qqgqvpc" path="res://Assets/SFX/UI/click_3.wav" id="20_shj5u"]
 
 [sub_resource type="Animation" id="Animation_tld11"]
 resource_name = "Main_Menu_Idle_Man"
@@ -455,6 +458,7 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.679362, 0.679362)
 theme_override_constants/separation = -30
+script = ExtResource("16_smit0")
 
 [node name="Play" type="Button" parent="UI_Canvas/Control/MenuButtons"]
 custom_minimum_size = Vector2(0, 158.285)
@@ -471,6 +475,7 @@ theme_override_font_sizes/font_size = 56
 text = "QUIT"
 
 [node name="Title" type="TextureRect" parent="UI_Canvas/Control"]
+layout_mode = 0
 offset_left = 91.0
 offset_top = -62.0
 offset_right = 4713.0
@@ -480,6 +485,14 @@ texture = ExtResource("2_psy3t")
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 
+[node name="HoverSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_ocwh3")
+
+[node name="ClickSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_shj5u")
+
+[connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_mouse_entered"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]

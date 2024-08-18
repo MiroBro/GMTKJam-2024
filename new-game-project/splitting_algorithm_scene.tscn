@@ -159,6 +159,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
 transform = Transform3D(0.976311, 0, 0.216371, 0, 0.0391266, 0, -0.216371, 0, 0.976311, 0.174079, -0.13239, 0.80818)
+visible = false
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
