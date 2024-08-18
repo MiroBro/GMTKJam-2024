@@ -102,6 +102,12 @@ func _input(event):
 
 		if intersection != null:
 			mouse_pos_in_plane = intersection
+	#if event is InputEventKey:
+		#var e: InputEventKey = event
+		#if e.pressed:
+			#if e.keycode == KEY_W:
+				#print("hi")
+			
 
 	if event is InputEventMouseButton:
 		var e: InputEventMouseButton = event
@@ -141,12 +147,15 @@ func _input(event):
 				# spawn_rigidbody_version_of_mesh(plank)
 
 
-func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
+func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D, center_of_mass: Vector3, mass_scale: float):
 	var it: RigidBody3D = rb_template.duplicate()
 	it.freeze = false
 	it.global_position = ref.global_position
+	it.center_of_mass = center_of_mass
+	it.mass *= mass_scale
 	var new_mesh = ref.duplicate()
 	ref.mesh = ref.mesh.duplicate()
+
 
 	var shape = ref.mesh.create_convex_shape()
 	var it2: CollisionShape3D = it.get_child(0)
@@ -213,11 +222,17 @@ func find_and_delete_islands():
 			for j in rb_grid.size():
 				rb_grid[j] = 0
 
+			var center_of_mass = Vector3.ZERO
 			for jjjj in l:
 				i += 1
 				var grid_idx = island_indices[i]
 				grid[grid_idx] = 0
 				rb_grid[grid_idx] = 1
+				
+				var pos = index_to_grid_space(grid_idx)
+				
+				center_of_mass += Vector3(pos.x, 0, pos.y)
+			center_of_mass /= float(l)
 
 			var rb_mesh = plank.mesh.duplicate()
 			rb_mesh.clear_surfaces()
@@ -226,12 +241,13 @@ func find_and_delete_islands():
 			new_node.mesh = rb_mesh
 			
 			# Spawn per island
-			spawn_rigidbody_version_of_mesh(new_node)
+			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, plank_mass)
 			any = true
 
 	# When plank falls off
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
+		camera.add_impulse()
 		
 		if randf() < 0.5:
 			$Audio/Plank_SFX_1.play()
@@ -271,7 +287,7 @@ func wh_to_index(w: int, h: int) -> int:
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	#fix_music(delta)
+	fix_music(delta)
 
 	var cut_any = false
 
