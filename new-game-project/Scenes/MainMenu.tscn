@@ -1,26 +1,164 @@
-[gd_scene load_steps=2 format=3 uid="uid://btv6wlnl685i0"]
+[gd_scene load_steps=16 format=3 uid="uid://btv6wlnl685i0"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_7cfba"]
+[ext_resource type="Texture2D" uid="uid://qt8lm16kouyl" path="res://Assets/Images/MainMenu/Main_Menu_SmallRef.png" id="2_fjddb"]
+[ext_resource type="Texture2D" uid="uid://b520bjp65rhlt" path="res://Assets/Images/MainMenu/Main_Menu_Art_Background.png" id="3_47dg0"]
+[ext_resource type="Texture2D" uid="uid://cxnol6gref66x" path="res://Assets/Images/MainMenu/Main_Menu_Art_Split_Glow.png" id="4_eyj0r"]
+[ext_resource type="Texture2D" uid="uid://d4msecpum76g5" path="res://Assets/Images/MainMenu/Main_Menu_Banana_Glow.png" id="5_n1qtj"]
+[ext_resource type="Texture2D" uid="uid://dhnc5o56jf533" path="res://Assets/Images/MainMenu/Main_Menu_Banana_Held.png" id="6_yyd2g"]
+[ext_resource type="Texture2D" uid="uid://ducfp4nmglxjy" path="res://Assets/Images/MainMenu/Main_Menu_Hand_L.png" id="7_rcicm"]
+[ext_resource type="Texture2D" uid="uid://b3e52xym4sayo" path="res://Assets/Images/MainMenu/Main_Menu_Hand_R.png" id="8_kbwxn"]
+[ext_resource type="Texture2D" uid="uid://ylq22so1die5" path="res://Assets/Images/MainMenu/Main_Menu_Hand_R_Front.png" id="9_4o41y"]
+[ext_resource type="Texture2D" uid="uid://dgggr3yrqidps" path="res://Assets/Images/MainMenu/Main_Menu_Ruler_1.png" id="10_yqhvv"]
+[ext_resource type="Texture2D" uid="uid://cdddry6fm6qs3" path="res://Assets/Images/MainMenu/Main_Menu_Ruler_2.png" id="11_3p2wy"]
+[ext_resource type="Texture2D" uid="uid://58tb63dx7sqs" path="res://Assets/Images/MainMenu/Main_Menu_Singe_Banana_Background.png" id="12_oxomi"]
+[ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="13_k8su5"]
+
+[sub_resource type="Animation" id="Animation_tld11"]
+resource_name = "Main_Menu_Idle_Man"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ecepg"]
+_data = {
+"Main_Menu_Idle_Man": SubResource("Animation_tld11")
+}
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_7cfba")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ecepg")
+}
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Ruler_Left2" type="Sprite2D" parent="Background"]
+position = Vector2(572.133, 325.303)
+scale = Vector2(0.695, 0.695)
+texture = ExtResource("2_fjddb")
+
+[node name="Background" type="Sprite2D" parent="Background"]
+position = Vector2(571.133, 327.753)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("3_47dg0")
+
+[node name="Banana_Background" type="Sprite2D" parent="Background"]
+position = Vector2(1146.13, -186.697)
+rotation = 0.786282
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background2" type="Sprite2D" parent="Background"]
+position = Vector2(982.133, -262.697)
+rotation = 1.50938
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background3" type="Sprite2D" parent="Background"]
+position = Vector2(646.133, -124.697)
+rotation = 2.12006
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background4" type="Sprite2D" parent="Background"]
+position = Vector2(252.133, -298.697)
+rotation = 2.90961
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background5" type="Sprite2D" parent="Background"]
+position = Vector2(750.133, -320.697)
+rotation = -2.68689
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background6" type="Sprite2D" parent="Background"]
+position = Vector2(92.1327, -186.697)
+rotation = -2.14872
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background7" type="Sprite2D" parent="Background"]
+position = Vector2(440.133, -242.697)
+rotation = -2.14872
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Man" type="Sprite2D" parent="Background"]
+position = Vector2(594.133, 347.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("13_k8su5")
+
+[node name="Banana_Shine" type="Sprite2D" parent="Background"]
+position = Vector2(910.133, 319.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("4_eyj0r")
+
+[node name="Banana_Sparkle" type="Sprite2D" parent="Background"]
+position = Vector2(895.133, 313.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("5_n1qtj")
+
+[node name="Arm_L" type="Sprite2D" parent="Background"]
+position = Vector2(285.133, 595.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("7_rcicm")
+
+[node name="Arm_R" type="Sprite2D" parent="Background"]
+position = Vector2(888.133, 595.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("8_kbwxn")
+
+[node name="Banana_Held" type="Sprite2D" parent="Background"]
+position = Vector2(852.133, 372.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("6_yyd2g")
+
+[node name="Hand_R_Front" type="Sprite2D" parent="Background"]
+position = Vector2(950.133, 467.303)
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("9_4o41y")
+
+[node name="Ruler_Right" type="Sprite2D" parent="Background"]
+position = Vector2(364.133, 327.303)
+rotation = -0.285684
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("10_yqhvv")
+
+[node name="Ruler_Left" type="Sprite2D" parent="Background"]
+position = Vector2(277.133, 369.303)
+rotation = 0.303879
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("11_3p2wy")
+
+[node name="Hand_R_Front2" type="Sprite2D" parent="Background"]
+position = Vector2(216.133, 463.303)
+rotation = 3.14159
+scale = Vector2(0.39, -0.39)
+texture = ExtResource("9_4o41y")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+offset_right = 46.0
+offset_bottom = 66.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
 layout_mode = 2
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="UI/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Start"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="UI/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit
 "
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UI/MarginContainer/VBoxContainer/Quit" to="." method="_on_play_pressed"]
