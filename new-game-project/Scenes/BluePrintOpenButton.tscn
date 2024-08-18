@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
 [ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
-[ext_resource type="Material" uid="uid://l0jpgn7cnn7r" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
+[ext_resource type="Material" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
 [ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="4_uwtof"]
 
 [node name="BluePrintOpenButton" type="Control" node_paths=PackedStringArray("polygon")]
