@@ -494,5 +494,5 @@ stream = ExtResource("20_shj5u")
 [connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="mouse_entered" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_mouse_entered"]
-[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_play_pressed"]
