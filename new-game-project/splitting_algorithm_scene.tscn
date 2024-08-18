@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=31 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
@@ -34,6 +34,7 @@ fog_depth_end = 6.5
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qhj0"]
 render_priority = 0
 shader = ExtResource("5_xsb4b")
+shader_parameter/scale = null
 shader_parameter/side_texture = ExtResource("8_pv7a3")
 shader_parameter/front_texture = ExtResource("7_32k7o")
 

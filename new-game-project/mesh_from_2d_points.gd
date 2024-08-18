@@ -13,7 +13,7 @@ var drawing = false
 
 var grid: PackedByteArray
 var cell_size = Vector2(0.013, 0.013)
-# var cell_size = Vector2(0.1, 0.1)
+# var cell_size = Vector2(0.3, 0.2)
 var plank_size = Vector2(1.05, 0.65)
 var plank_half_size = plank_size / 2.0
 
@@ -436,28 +436,27 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var mp = Vector3(middle.x, 0.15, middle.y)
 
 			var bl = mp - half
-
 			var tr = bl + f + r
 			var br = bl + r
 			var tl = bl + f
 
 
 			#add top
+			mesh.surface_set_normal(up)
+			# mesh.surface_set_normal(Vector3(0,0,1))
 			mesh.surface_add_vertex(br)
-			mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
-			mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tr)
-			mesh.surface_set_normal(up)
 
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(br)
-			mesh.surface_set_normal(up)
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(bl)
-			mesh.surface_set_normal(up)
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
-			mesh.surface_set_normal(up)
 			
-			var thick = 0.05 * Vector3.DOWN
+			# var thick = 0.05 * Vector3.DOWN
+			var thick = 0.3 * Vector3.DOWN
 			# add sides
 			# if we want to we can make sure to only add this if we do not have four filled neighbours
 
@@ -467,7 +466,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var br_b = br + thick
 			var tl_b = tl + thick
 
-			#front facing side
+			# #front facing side
+			mesh.surface_set_normal(back)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(br_b)
 			mesh.surface_add_vertex(bl_b)
@@ -477,7 +477,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br)
 			
 			
-			# back facing side
+			# # back facing side
+			mesh.surface_set_normal(forward)
 			mesh.surface_add_vertex(tl)
 			mesh.surface_add_vertex(tl_b)
 			mesh.surface_add_vertex(tr_b)
@@ -486,7 +487,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(tr)
 			mesh.surface_add_vertex(tl)
 
-			# left side
+			# # left side
+			mesh.surface_set_normal(left)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(bl_b)
 			mesh.surface_add_vertex(tl_b)
@@ -495,7 +497,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(tl_b)
 			mesh.surface_add_vertex(tl)
 
-			# right side
+			# # right side
+			mesh.surface_set_normal(right)
 			mesh.surface_add_vertex(tr)
 			mesh.surface_add_vertex(tr_b)
 			mesh.surface_add_vertex(br_b)
@@ -505,19 +508,19 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br)
 
 			# add bottom
+			mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(br_b)
-			mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(tr_b)
-			mesh.surface_set_normal(down)
+			# mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(tl_b)
-			mesh.surface_set_normal(down)
+			# mesh.surface_set_normal(down)
 #
 			mesh.surface_add_vertex(br_b)
-			mesh.surface_set_normal(down)
+			# mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(tl_b)
-			mesh.surface_set_normal(down)
+			# mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(bl_b)
-			mesh.surface_set_normal(down)
+			# mesh.surface_set_normal(down)
 
 	mesh.surface_end()
 
