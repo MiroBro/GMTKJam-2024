@@ -152,7 +152,7 @@ shape = SubResource("BoxShape3D_04bfi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(1.27107, -0.000476063, 0.226555, 0.0809712, 0.00859767, -0.0477878, -0.223317, 0.000407742, 1.27218, -0.0668707, -0.236419, 0.94054)
+transform = Transform3D(1.25902, -0.000456147, 0.286759, 0.0809712, 0.00859767, -0.0477878, -0.283472, 0.000429906, 1.25998, 0.208898, -0.180433, 0.92714)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
