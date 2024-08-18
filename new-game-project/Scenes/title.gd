@@ -3,7 +3,7 @@ extends RichTextLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	text = "[center]BLUEPRINT - PART " + str(Globals.cut_meshes.size()) + " / " + str(Globals.number_of_pieces[Globals.level])
+	text = "[center]BLUEPRINT - PART " + str(Globals.cut_meshes.size() + 1) + " / " + str(Globals.number_of_pieces[Globals.level])
 	pass # Replace with function body.
 
 
