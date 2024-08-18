@@ -41,6 +41,7 @@ _data = {
 }
 
 [node name="SceneTransition" type="CanvasLayer"]
+layer = 10
 script = ExtResource("1_fbvaj")
 
 [node name="Dissolve_Rect" type="ColorRect" parent="."]
