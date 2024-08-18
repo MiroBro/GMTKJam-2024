@@ -32,7 +32,7 @@ fog_depth_end = 6.5
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_cs28j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_04bfi"]
-size = Vector3(1, 0.0418701, 1)
+size = Vector3(1, 0.05, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v16nn"]
 render_priority = 0

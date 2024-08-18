@@ -10,33 +10,33 @@ func instantiate_piece(instance, counter):
 	child_mesh.mesh = Globals.mesh
 	
 	child_mesh.global_transform.origin = reference_root.get_child(counter).global_transform.origin
-	print("positon",child_mesh.global_transform.origin)
+	#child_mesh.global_transform.origin = 
+	#print("positon",child_mesh.global_transform.origin)
 	
 	#child_mesh.scale = Vector3(5,5,5)
-	#child_mesh.rotation = reference_root.get_child(counter).rotation
+	child_mesh.rotation = reference_root.get_child(counter).rotation
 	
 	var collision_shape = CollisionShape3D.new()
+	
 	collision_shape.shape = child_mesh.mesh.create_convex_shape()
-	#collision_shape.scale = reference_root.get_child(counter).scale
-	#child_mesh.rotation = Vector3(reference_root.get_child(counter).rotation., reference_root.get_child(counter).rotation.x,reference_root.get_child(counter).rotation.z )
-	child_mesh.global_rotation = Vector3(1, 1, 0 )
+	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin
+	collision_shape.rotation = reference_root.get_child(counter).rotation
 	
 	instance.add_child(child_mesh)
 	instance.add_child(collision_shape)
 			
-				#var box_shape: BoxShape3D = child.shape
-				#box_shape.size = reference_root.get_child(counter).scale
+	#var box_shape: BoxShape3D = child.shape
+	#box_shape.size = reference_root.get_child(counter).scale
 			
 				
 
 func turn_project_into_colliders():
 	var counter = 0
 	for root_child: Node3D in reference_root.get_children():
-		var scene = null
+		
 	
-		scene = load("res://building_blocks/wall.tscn")
-				
-		var instance = scene.instantiate()
+		var instance = RigidBody3D.new()
+	
 		instantiate_piece(instance, counter)		
 		
 				#child_mesh.scale = reference_root.get_child(counter).scale 

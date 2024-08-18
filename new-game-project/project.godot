@@ -28,6 +28,10 @@ mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
 
 Globals="*res://globals/globals.gd"
 
+[display]
+
+mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
