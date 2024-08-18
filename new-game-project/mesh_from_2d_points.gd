@@ -136,8 +136,8 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	scene_root.add_child(it)
 
 
-var speed = 5.0
-var target_speed = 10.0
+var speed = 2.5
+var target_speed = 5.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
