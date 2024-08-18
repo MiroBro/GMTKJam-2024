@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dtvyjupbpuhyo"]
+
+[ext_resource type="Texture2D" uid="uid://77exkv0rpl8q" path="res://Assets/Images/UI/UI_Box_Dark.png" id="1_l5a0n"]
+[ext_resource type="Texture2D" uid="uid://byfraku8irvt3" path="res://Assets/Images/UI/UI_Box_Light_Small.png" id="2_sba5l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cgrla"]
+texture = ExtResource("1_l5a0n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdb26"]
+texture = ExtResource("2_sba5l")
+texture_margin_left = 44.0
+texture_margin_top = 45.0
+texture_margin_right = 38.0
+texture_margin_bottom = 37.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 60, 61)
+
+[resource]
+Panel/styles/panel = SubResource("StyleBoxTexture_cgrla")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_gdb26")
