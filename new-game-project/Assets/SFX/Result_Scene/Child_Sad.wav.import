@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dxqqwyosc7v3h"
-path="res://.godot/imported/Child_Sad.wav-7a2b3aacebda32c6faa8be63908ce336.sample"
+path="res://.godot/imported/Child_Sad.wav-eda90aba1a467ddc9894a3f1c75c98bf.sample"
 
 [deps]
 
-source_file="res://Assets/SFX/Result_SFX/Child_Sad.wav"
-dest_files=["res://.godot/imported/Child_Sad.wav-7a2b3aacebda32c6faa8be63908ce336.sample"]
+source_file="res://Assets/SFX/Result_Scene/Child_Sad.wav"
+dest_files=["res://.godot/imported/Child_Sad.wav-eda90aba1a467ddc9894a3f1c75c98bf.sample"]
 
 [params]
 
