@@ -1,6 +1,7 @@
 extends Node
 
 var level = 0
+# var level = 2
 var mesh_to_cut: MeshInstance3D
 var mesh = ImmediateMesh.new()
 var cut_meshes: Array[ImmediateMesh]
