@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://btv6wlnl685i0"]
+[gd_scene load_steps=19 format=3 uid="uid://btv6wlnl685i0"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_7cfba"]
 [ext_resource type="Texture2D" uid="uid://qt8lm16kouyl" path="res://Assets/Images/MainMenu/Main_Menu_SmallRef.png" id="2_fjddb"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://58tb63dx7sqs" path="res://Assets/Images/MainMenu/Main_Menu_Singe_Banana_Background.png" id="12_oxomi"]
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="13_k8su5"]
 [ext_resource type="AudioStream" uid="uid://npl7xvb6rrny" path="res://Assets/Music/Banana (for Scale)_3_scale_the_banana.mp3" id="14_7twkx"]
+[ext_resource type="Theme" uid="uid://dtvyjupbpuhyo" path="res://Assets/Other/BluePrintUIBox.tres" id="16_ond62"]
 
 [sub_resource type="Animation" id="Animation_tld11"]
 resource_name = "Main_Menu_Idle_Man"
@@ -146,6 +147,122 @@ autoplay = true
 
 [node name="UI_Canvas" type="CanvasLayer" parent="."]
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI_Canvas"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control2" type="Control" parent="UI_Canvas"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="UI_Canvas/Control2"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -262.0
+offset_right = 884.0
+offset_bottom = 762.0
+grow_horizontal = 2
+scale = Vector2(0.410083, 0.497434)
+
+[node name="TextureRect" type="TextureRect" parent="UI_Canvas/Control2/CenterContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("6_yyd2g")
+
+[node name="Panel" type="Panel" parent="UI_Canvas/Control2"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -570.0
+offset_top = -113.0
+offset_right = -570.0
+offset_bottom = -113.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI_Canvas/Control2/Panel"]
+layout_mode = 0
+offset_right = 524.0
+offset_bottom = 762.0
+texture = ExtResource("6_yyd2g")
+
+[node name="Button" type="Button" parent="UI_Canvas/Control2/Panel"]
+layout_mode = 0
+offset_left = 604.0
+offset_top = 94.0
+offset_right = 778.0
+offset_bottom = 205.0
+
+[node name="Panel2" type="Panel" parent="UI_Canvas/Control2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="UI_Canvas/Control2/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.282
+anchor_top = 0.368
+anchor_right = 0.759
+anchor_bottom = 0.664
+offset_left = -0.090004
+offset_top = 0.0399933
+offset_right = 0.0449829
+offset_bottom = -0.0800018
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI_Canvas/Control2/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -257.0
+offset_top = -146.0
+offset_right = 257.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fjddb")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI_Canvas/Control2"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.012
+offset_top = -129.4
+offset_right = 179.012
+offset_bottom = 129.4
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_ond62")
+
+[node name="Label" type="Label" parent="UI_Canvas/Control2/PanelContainer"]
+layout_mode = 2
+text = "AAAAAAH!!!!"
+
 [node name="Control" type="Control" parent="UI_Canvas"]
 layout_mode = 3
 anchors_preset = 15
@@ -194,34 +311,6 @@ text = "Start"
 layout_mode = 2
 text = "Quit
 "
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI_Canvas"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Control2" type="Control" parent="UI_Canvas"]
-visible = false
-layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-grow_horizontal = 2
-size_flags_horizontal = 3
-
-[node name="CenterContainer" type="CenterContainer" parent="UI_Canvas/Control2"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -262.0
-offset_right = 262.0
-offset_bottom = 762.0
-grow_horizontal = 2
-scale = Vector2(0.410083, 0.497434)
-
-[node name="TextureRect" type="TextureRect" parent="UI_Canvas/Control2/CenterContainer"]
-layout_mode = 2
-texture = ExtResource("6_yyd2g")
 
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="UI_Canvas/Control/MenuButtons/Quit" to="." method="_on_quit_pressed"]
