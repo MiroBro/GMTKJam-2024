@@ -101,7 +101,11 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_ENTER):
 		Globals.level += 1
 		Globals.cut_meshes.clear()
-		get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
+
+		if Globals.level >= Globals.number_of_levels:
+			SceneTransition.change_scene("res://Scenes/Ending.tscn")
+		else:
+			get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
 		
 	if Input.is_key_pressed(KEY_SPACE):
 	#if Input.is_action_just_pressed("start_physics"):
