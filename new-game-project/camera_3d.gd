@@ -18,7 +18,6 @@ func add_trauma(amount):
 	trauma = min(trauma + amount, 1.0)
 
 func _process(delta: float):
-	print(position)
 	position = lerp(position, target_pos + offset, delta * 32.0)
 	self.quaternion = lerp(self.quaternion, target_rot, 32.0 * delta)
 

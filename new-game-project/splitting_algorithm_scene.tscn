@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://u617whog5up4"]
+[gd_scene load_steps=24 format=3 uid="uid://cwgaf6d14ubbf"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
@@ -9,12 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
 [ext_resource type="AudioStream" uid="uid://pjggloaabujq" path="res://Assets/Music/Cutting song_2.mp3" id="4_eajf0"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="5_pt3pa"]
+[ext_resource type="PackedScene" uid="uid://cftmk855cri6b" path="res://Meshes/M_Sawblade_1.glb" id="8_v0o3s"]
+[ext_resource type="Script" path="res://fly_away.gd" id="11_3hlxx"]
 
 [sub_resource type="Environment" id="Environment_afixl"]
 background_mode = 1
-background_color = Color(0.787355, 0.650491, 0.526024, 1)
-background_energy_multiplier = 0.71
-ambient_light_energy = 0.93
+background_color = Color(0.402521, 0.30571, 0.185434, 1)
+background_energy_multiplier = 1.06
+ambient_light_source = 2
+ambient_light_color = Color(0.453769, 0.358623, 9.62615e-08, 1)
+ambient_light_energy = 2.8
 tonemap_mode = 3
 glow_enabled = true
 fog_light_color = Color(0, 0.482293, 0.579114, 1)
@@ -24,20 +28,15 @@ fog_depth_curve = 0.231705
 fog_depth_begin = 1.0
 fog_depth_end = 6.5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sr1bg"]
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(0.817162, 0.582912, 0.427322, 1)
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_5gyxt"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_cs28j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v16nn"]
 render_priority = 0
 shader = ExtResource("2_w0i4a")
-shader_parameter/subdivisions = 26.0
-shader_parameter/grid_width = 0.0
-shader_parameter/background_color = Color(0.168871, 0.274112, 0.415687, 1)
-shader_parameter/background_color_two = Color(0.188626, 0.334457, 0.641399, 1)
+shader_parameter/subdivisions = 125.0
+shader_parameter/grid_width = 0.01
+shader_parameter/background_color = Color(0.054902, 0.384314, 0.690196, 1)
+shader_parameter/background_color_two = Color(0.0554471, 0.383653, 0.690074, 1)
 shader_parameter/grid_color = Color(1, 1, 1, 1)
 shader_parameter/dashed_scale_x = 0.02
 shader_parameter/dashed_scale_y = 0.02
@@ -57,11 +56,6 @@ shader_parameter/in_dashed_count_y = 6.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_7yi7t"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8io1f"]
-albedo_color = Color(0.959231, 5.77569e-07, 0.538349, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_jg71j"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7t182"]
 albedo_color = Color(0.918927, 0.531293, 0.174442, 1)
 
@@ -71,8 +65,20 @@ size = Vector3(0.005, 0.005, 0.005)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phvl4"]
 albedo_color = Color(0.192241, 0.643653, 0, 1)
 
+[sub_resource type="SphereMesh" id="SphereMesh_jg71j"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26d8k"]
 albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vfysp"]
+size = Vector3(1.815, 0.187, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcwg2"]
+friction = 0.1
+bounce = 0.28
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7tobc"]
+size = Vector3(0.84, 0.067, 0.75)
 
 [node name="Splitting Algorithm Scene" type="Node3D"]
 
@@ -82,17 +88,20 @@ albedo_color = Color(0.178882, 0.618604, 0.638497, 1)
 transform = Transform3D(1, -1.68737e-07, 3.21059e-08, 3.21059e-08, 0.367248, 0.930123, -1.68737e-07, -0.930123, 0.367248, 0.000753582, 1.06774, 0.545654)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
-fov = 46.7299
+transform = Transform3D(0.999015, 0, 0, 1.42109e-14, 0.999015, -2.98023e-08, 7.10543e-15, 2.98023e-08, 0.999015, 0, 0, 0)
+fov = 52.0304
 script = ExtResource("1_lws0k")
 
 [node name="NormalBG" type="AudioStreamPlayer3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -2.98023e-08, 7.10543e-15, 2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, -2.84217e-14, -7.10543e-15, 4.26326e-14, 1, -8.9407e-08, 1.42109e-14, 8.9407e-08, 1, 0.000240803, 0.001297, 0.00145829)
 stream = ExtResource("3_q8d4d")
+volume_db = -80.0
 autoplay = true
 
 [node name="CuttingBG" type="AudioStreamPlayer3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -2.98023e-08, 7.10543e-15, 2.98023e-08, 1, 0, 0, 0)
 stream = ExtResource("4_eajf0")
+volume_db = -80.0
 
 [node name="AudioListener3D" type="AudioListener3D" parent="Node3D"]
 
@@ -112,10 +121,7 @@ directional_shadow_fade_start = 0.795
 directional_shadow_max_distance = 2.0
 directional_shadow_pancake_size = 8.9
 
-[node name="GameManager" type="MeshInstance3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg")]
-material_override = SubResource("StandardMaterial3D_sr1bg")
-gi_mode = 2
-mesh = SubResource("ImmediateMesh_5gyxt")
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template")]
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
 thickness = 1.0
@@ -126,20 +132,28 @@ debug2 = NodePath("../debug2")
 particles = NodePath("../debug0/CPUParticles3D")
 normal_bg = NodePath("../Node3D/NormalBG")
 cutting_bg = NodePath("../Node3D/CuttingBG")
+rb_template = NodePath("../rb_template")
+
+[node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
+mesh = SubResource("ImmediateMesh_cs28j")
 
 [node name="Table" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.256385)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(0.492558, 0.000123576, -0.173012, -0.031802, 0.00604497, -0.0574962, 0.172318, 0.000762391, 0.483928, 0.680563, -0.152935, 0.16517)
+transform = Transform3D(1.27107, -0.000476063, 0.226555, 0.0809712, 0.00859767, -0.0477878, -0.223317, 0.000407742, 1.27218, -0.0668707, -0.236419, 0.94054)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")
 
-[node name="debug0" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, -0.499785, 0, 0.101566)
-material_override = SubResource("StandardMaterial3D_8io1f")
-mesh = SubResource("SphereMesh_jg71j")
+[node name="Node3D2" type="Node3D" parent="Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13239, -0.256385)
+
+[node name="SM_Table_1" parent="Table/Node3D2" instance=ExtResource("3_r1qx8")]
+transform = Transform3D(-8.33372e-09, 0, 0.271056, 0, 0.130476, 0, -0.190653, 0, -1.18483e-08, 0.00336978, -0.1, 0.0596759)
+
+[node name="debug0" type="Node3D" parent="."]
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, -0.60057, 0, 0.080593)
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="debug0"]
 transform = Transform3D(0.512484, -18.1746, -0.0208343, 18.1746, 0.51248, 0.00312934, -0.0025409, -0.0209142, 18.1818, 0, 0, 0)
@@ -160,8 +174,8 @@ damping_max = 5.556
 [node name="M_Sawbody_1" parent="debug0" instance=ExtResource("3_50jch")]
 transform = Transform3D(1.62864e-07, 0, -1.24197, 0, 1.24197, 0, 1.24197, 0, 1.62864e-07, 0.193109, 0.51864, 1.24737)
 
-[node name="SM_Table_1" parent="." instance=ExtResource("3_r1qx8")]
-transform = Transform3D(-5.70331e-09, 0, 0.198475, 0, 0.130476, 0, -0.130476, 0, -8.67563e-09, 0.00336978, -0.1, 0.044638)
+[node name="M_Sawblade_1" parent="debug0" instance=ExtResource("8_v0o3s")]
+transform = Transform3D(-5.00034e-08, -3.40922e-08, -0.320457, 4.06411e-15, 1.14394, -9.55037e-09, 1.14394, -5.55433e-15, -1.40076e-08, 0, 0.380099, 1.28478)
 
 [node name="debug1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 1.09107, 0, 0)
@@ -174,4 +188,21 @@ material_override = SubResource("StandardMaterial3D_26d8k")
 mesh = SubResource("SphereMesh_jg71j")
 
 [node name="SM_Banana_1" parent="." instance=ExtResource("5_pt3pa")]
-transform = Transform3D(0.0673544, 0, 0, 0, 0.00884046, 0.0667717, 0, -0.0667717, 0.00884046, -0.295976, -0.0546528, 0.335684)
+transform = Transform3D(0.0673544, 0, 0, 0, 0.00884046, 0.0667717, 0, -0.0667717, 0.00884046, -0.473678, -0.0680699, 0.373886)
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.503948, 0)
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.146484, 0.311644, 0)
+shape = SubResource("BoxShape3D_vfysp")
+
+[node name="rb_template" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.56695, 1.37052, 0)
+physics_material_override = SubResource("PhysicsMaterial_mcwg2")
+freeze = true
+script = ExtResource("11_3hlxx")
+
+[node name="shape" type="CollisionShape3D" parent="rb_template"]
+shape = SubResource("BoxShape3D_7tobc")

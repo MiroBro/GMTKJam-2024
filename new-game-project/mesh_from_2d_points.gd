@@ -1,4 +1,4 @@
-extends MeshInstance3D
+extends Node3D
 
 @export var points: Array[Vector2] = []
 @export var thickness: float = 0.3
@@ -12,9 +12,9 @@ var saw_pos = Vector3(0.0, 0.0, 0.0)
 var drawing = false
 
 var grid: PackedByteArray
-var cell_size = Vector2(0.01, 0.01)
+var cell_size = Vector2(0.013, 0.013)
 # var cell_size = Vector2(0.1, 0.1)
-var plank_size = Vector2(0.8, 0.5)
+var plank_size = Vector2(1.05, 0.65)
 var plank_half_size = plank_size / 2.0
 
 var plank_corrected = (plank_size - cell_size) / 2.0;
@@ -35,7 +35,15 @@ var cell = Vector3(cell_size.x, thickness, cell_size.y)
 @export var normal_bg: AudioStreamPlayer3D
 @export var cutting_bg: AudioStreamPlayer3D
 
+@export var rb_template: RigidBody3D
+
+var plank: MeshInstance3D
+
 func _ready() -> void:
+	plank = self.get_child(0)
+
+	scene_root = get_tree().current_scene
+
 	var grid_dims = plank_size / cell_size
 	grid_width = int(round(grid_dims.x))
 	grid_height = int(round(grid_dims.y))
@@ -48,43 +56,51 @@ func _ready() -> void:
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		# Step 1: Get the mouse position in the viewport
 		var mouse_pos = event.position
-
-		# Step 2: Convert the 2D mouse position to a 3D ray
 		var ray_origin = camera.project_ray_origin(mouse_pos)
 		var ray_direction = camera.project_ray_normal(mouse_pos)
-		
-		# Step 3: Define the plane to intersect with (e.g., a plane at y = 0)
 		var plane = Plane(Vector3(0, 1, 0), 0)  # A horizontal plane at y=0
-		
-		# Step 4: Intersect the ray with the plane
 		var intersection = plane.intersects_ray(ray_origin, ray_direction)
-		
+
 		if intersection != null:
 			mouse_pos_in_plane = intersection
-			
+
 	if event is InputEventMouseButton:
 		var e: InputEventMouseButton = event
 		if e.button_index == MOUSE_BUTTON_LEFT:
 			drawing = e.pressed
 			if drawing:
 				points.clear()
+
 		if e.button_index == MOUSE_BUTTON_RIGHT:
 			if e.pressed:
 				var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 				var pnorm = point_to_grid_space(mouse_2d)
 				var idx = grid_space_to_index(pnorm)
 
-				flood_fill_mesh_from_index(grid, idx)
-				
-				find_islands()
+				# flood_fill_mesh_from_index(grid, idx)
+				# find_islands()
+
+				spawn_rigidbody_version_of_mesh(plank.mesh.duplicate())
+
+
+func spawn_rigidbody_version_of_mesh(mesh: Mesh):
+	var it: RigidBody3D = rb_template.duplicate()
+	it.freeze = false
+	it.global_position = debug0.global_position
+	var new_mesh = plank.duplicate()
+	plank.mesh = plank.mesh.duplicate()
+	it.add_child(new_mesh)
+	scene_root.add_child(it)
+
 
 var speed = 10.0
 var target_speed = 20.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
+
+
 func fix_music():
 	if not drawing and not normal_bg.playing:
 		normal_bg.play(normal_from)
@@ -115,7 +131,7 @@ func _process(delta: float) -> void:
 			var i = grid_space_to_index(p)
 			if grid[i] == 1:
 				speed = 0.5
-		
+
 		debug0.look_at(mouse_pos_in_plane)
 		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 
@@ -136,7 +152,7 @@ func _process(delta: float) -> void:
 				particles.emitting = true
 				points.pop_front()
 
-	convert_grid_to_mesh(grid, self.mesh)
+	convert_grid_to_mesh(grid, plank.mesh)
 
 
 # from 0.0->1.0 in xy
@@ -361,7 +377,6 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var tr = bl + f + r
 			var br = bl + r
 			var tl = bl + f
-			
 
 
 			var normal = Vector3.UP
@@ -427,7 +442,6 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br_b)
 			mesh.surface_add_vertex(br)
 
-			
 			# add bottom
 			mesh.surface_add_vertex(br_b)
 			mesh.surface_add_vertex(tl_b)
@@ -436,7 +450,6 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br_b)
 			mesh.surface_add_vertex(bl_b)
 			mesh.surface_add_vertex(tl_b)
-
 
 	mesh.surface_end()
 
