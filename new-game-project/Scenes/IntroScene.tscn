@@ -1,10 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnmry3j8iccbj"]
+[gd_scene load_steps=18 format=3 uid="uid://bnmry3j8iccbj"]
 
 [ext_resource type="Texture2D" uid="uid://cxtkafe14ov1n" path="res://Assets/Images/Intro/Intro_Art_Background.png" id="1_wb0m4"]
 [ext_resource type="Texture2D" uid="uid://b6y74en7p8pqo" path="res://Assets/Images/Intro/Intro Art_Split_Smaller.png" id="2_18dg3"]
 [ext_resource type="Script" path="res://Scripts/intro_scene_controller.gd" id="3_27vic"]
 [ext_resource type="AudioStream" uid="uid://6orl8xmhrw8a" path="res://Assets/Music/Banana (for Scale)_3_derp.mp3" id="4_215nx"]
 [ext_resource type="AudioStream" uid="uid://bliibhagt1saq" path="res://Assets/SFX/Intro_Scene/ruler_snap.mp3" id="5_5b411"]
+[ext_resource type="Texture2D" uid="uid://cqpa34jljwtum" path="res://Assets/Images/Intro/UI_Worker_Dialog_Box.png" id="6_0kdd3"]
+[ext_resource type="Script" path="res://Scripts/intro_continuebutton.gd" id="7_gy1p6"]
+[ext_resource type="Texture2D" uid="uid://ct6pkn3g5j2vj" path="res://Assets/Images/Intro/UI_Boss_Dialog_Box.png" id="7_p807r"]
+[ext_resource type="Texture2D" uid="uid://dex1vxexl7xik" path="res://Assets/Images/Other/triangle.png" id="8_sb6i2"]
 
 [sub_resource type="Animation" id="Animation_wusuu"]
 resource_name = "Intro_Cutscene"
@@ -300,13 +304,109 @@ tracks/11/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/Oh:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/Oh/Button:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/Boss!:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CanvasLayer/Control/Notmyproblem:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CanvasLayer/Control/Banan:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CanvasLayer/Control/Boss!/Button:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CanvasLayer/Control/Notmyproblem/Button:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("CanvasLayer/Control/Banan/Button:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_mi5st"]
 resource_name = "Intro_Cutscene2"
 
 [sub_resource type="Animation" id="Animation_4dat0"]
 resource_name = "Intro_Cutscene_2"
-length = 2.4
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -446,6 +546,56 @@ tracks/11/path = NodePath("Cutscene/Worker/Boss_Aha:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sound/Snap")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(2.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/Oh:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 2.56667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/Oh/Button:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 2.63333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CanvasLayer/Control/Banan:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -599,6 +749,42 @@ tracks/11/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/Oh:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/Boss!:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/Boss!/Button:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.733333, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_f8hy2"]
 resource_name = "Intro_Cutscene_4"
@@ -670,10 +856,10 @@ tracks/5/path = NodePath("Cutscene/Boss:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(-1, 0, 0.233334, 1.46667, 2.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(-1, 0, 0.0333333, 0.233334, 1.46667, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(3176.03, 1110.29), Vector2(1560.92, 1110.29), Vector2(1495.88, 1110.29), Vector2(1495.88, 1110.29), Vector2(-978.669, 1110.29)]
+"values": [Vector2(3176.03, 1110.29), Vector2(1560.92, 1110.29), Vector2(1560.92, 1110.29), Vector2(1495.88, 1110.29), Vector2(1495.88, 1110.29), Vector2(-978.669, 1110.29)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -694,7 +880,7 @@ tracks/7/path = NodePath("Cutscene/Boss/Shouting:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(-4.13333, 4.76837e-07, 1.46667),
+"times": PackedFloat32Array(-4.13333, 0, 1.46667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -718,10 +904,10 @@ tracks/9/path = NodePath("Cutscene/Worker/Boss_Angry:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(-4.16667, 0, 0.1, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(-4.16667, 0, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false, false, true, false]
+"values": [false, true, false]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -746,6 +932,42 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/Boss!:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/Notmyproblem:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.0666667, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/Notmyproblem/Button:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.566667, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_sjau4"]
@@ -894,6 +1116,42 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/Notmyproblem:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/Banan:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(2.56667, 2.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/Banan/Button:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(2.8, 2.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_70d6j"]
@@ -1204,3 +1462,207 @@ parameters/looping = true
 position = Vector2(558, 568)
 stream = ExtResource("5_5b411")
 volume_db = 3.236
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Oh" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Oh"]
+layout_mode = 0
+offset_left = 546.0
+offset_right = 1240.0
+offset_bottom = 283.0
+scale = Vector2(0.46257, 0.889853)
+texture = ExtResource("6_0kdd3")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Oh"]
+layout_mode = 0
+offset_left = 657.0
+offset_top = 71.0
+offset_right = 871.0
+offset_bottom = 243.0
+theme_override_font_sizes/font_size = 51
+text = "Oh!"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Oh"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_gy1p6")
+
+[node name="ContImage" type="TextureRect" parent="CanvasLayer/Control/Oh/Button"]
+layout_mode = 0
+offset_left = 831.0
+offset_top = 143.0
+offset_right = 1087.0
+offset_bottom = 399.0
+rotation = 1.57276
+scale = Vector2(0.152282, 0.152282)
+texture = ExtResource("8_sb6i2")
+
+[node name="Boss!" type="Control" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Boss!"]
+layout_mode = 0
+offset_left = 618.0
+offset_top = 4.0
+offset_right = 1818.0
+offset_bottom = 287.0
+scale = Vector2(0.46257, 0.889853)
+texture = ExtResource("6_0kdd3")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Boss!"]
+layout_mode = 0
+offset_left = 698.0
+offset_top = 52.0
+offset_right = 1176.0
+offset_bottom = 247.0
+theme_override_font_sizes/font_size = 45
+text = "Boss, my ruler 
+broke"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Boss!"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContImage2" type="TextureRect" parent="CanvasLayer/Control/Boss!/Button"]
+layout_mode = 0
+offset_left = 1122.0
+offset_top = 147.0
+offset_right = 1378.0
+offset_bottom = 403.0
+rotation = 1.57276
+scale = Vector2(0.152282, 0.152282)
+texture = ExtResource("8_sb6i2")
+
+[node name="Notmyproblem" type="Control" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Notmyproblem"]
+layout_mode = 0
+offset_left = 1244.0
+offset_top = 102.0
+offset_right = 2493.0
+offset_bottom = 595.0
+scale = Vector2(-0.463, 0.89)
+texture = ExtResource("7_p807r")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Notmyproblem"]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 142.0
+offset_right = 1214.0
+offset_bottom = 337.0
+theme_override_font_sizes/font_size = 45
+text = "That's your problem.
+Now get to work 
+A.S.A.P!"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Notmyproblem"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContImage3" type="TextureRect" parent="CanvasLayer/Control/Notmyproblem/Button"]
+layout_mode = 0
+offset_left = 1141.0
+offset_top = 343.0
+offset_right = 1397.0
+offset_bottom = 599.0
+rotation = 1.57276
+scale = Vector2(0.152282, 0.152282)
+texture = ExtResource("8_sb6i2")
+
+[node name="Banan" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Banan"]
+layout_mode = 0
+offset_left = 618.0
+offset_top = 4.0
+offset_right = 2021.0
+offset_bottom = 325.0
+scale = Vector2(0.46257, 0.889853)
+texture = ExtResource("6_0kdd3")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Banan"]
+layout_mode = 0
+offset_left = 698.0
+offset_top = 52.0
+offset_right = 1176.0
+offset_bottom = 247.0
+theme_override_font_sizes/font_size = 45
+text = "Well, I guess I could use 
+my banana for scale"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Banan"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContImage4" type="TextureRect" parent="CanvasLayer/Control/Banan/Button"]
+layout_mode = 0
+offset_left = 1183.0
+offset_top = 173.0
+offset_right = 1439.0
+offset_bottom = 429.0
+rotation = 1.57276
+scale = Vector2(0.152282, 0.152282)
+texture = ExtResource("8_sb6i2")
+
+[connection signal="pressed" from="CanvasLayer/Control/Oh/Button" to="SceneController" method="_on_button1_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Boss!/Button" to="SceneController" method="_on_button2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Notmyproblem/Button" to="SceneController" method="_on_button3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Banan/Button" to="SceneController" method="_on_button4_pressed"]
