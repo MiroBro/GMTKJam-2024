@@ -90,7 +90,7 @@ func _input(event):
 func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	var it: RigidBody3D = rb_template.duplicate()
 	it.freeze = false
-	it.global_position = debug0.global_position
+	it.global_position = ref.global_position
 	var new_mesh = ref.duplicate()
 	ref.mesh = ref.mesh.duplicate()
 
@@ -134,13 +134,13 @@ func find_and_delete_islands():
 				grid[grid_idx] = 0
 				rb_grid[grid_idx] = 1
 
-			
-			
-			
+
 			var rb_mesh = plank.mesh.duplicate()
 			rb_mesh.clear_surfaces()
 			convert_grid_to_mesh(rb_grid, rb_mesh)
-			spawn_rigidbody_version_of_mesh(rb_mesh)
+			var new_node = plank.duplicate()
+			new_node.mesh = rb_mesh
+			spawn_rigidbody_version_of_mesh(new_node)
 
 			
 	

@@ -2,8 +2,12 @@ extends RigidBody3D
 
 
 # Called when the node enters the scene tree for the first time.
+var dir = Vector3(1.0, 0.0, 0.0)
 func _ready() -> void:
-	pass # Replace with function body.
+	randomize()
+	dir.x = randf_range(-1.0, 1.0)
+	dir.z = randf_range(-1.0, 1.0)
+	dir = dir.normalized()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +25,7 @@ func _process(delta: float) -> void:
 			self.queue_free()
 	
 	if !self.freeze:
-		var force = self.global_position
+		var force = dir
 		force.y = 0.0
 		force=  force.normalized() * 10.0
 		self.add_constant_central_force(force * 15.0 * delta)
