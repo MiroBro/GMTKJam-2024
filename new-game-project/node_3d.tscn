@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cltun4q4jiwir"]
 
 [ext_resource type="PackedScene" path="res://wall.tscn" id="1_5n8oc"]
-[ext_resource type="PackedScene" path="res://shortwall.tscn" id="1_puwg6"]
+[ext_resource type="PackedScene" uid="uid://bqvbphnjc82pq" path="res://shortwall.tscn" id="1_puwg6"]
 [ext_resource type="PackedScene" path="res://block.tscn" id="2_6m30c"]
 [ext_resource type="PackedScene" path="res://frame.tscn" id="3_givlc"]
 
