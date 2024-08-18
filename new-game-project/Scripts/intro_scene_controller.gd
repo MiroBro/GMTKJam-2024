@@ -53,4 +53,15 @@ func _on_button3_pressed() -> void:
 
 func _on_button4_pressed() -> void:
 	pass # Replace with function body.
+	$"../CanvasLayer/Control/Final explanation".visible = true
+	#SceneTransition.change_scene("res://splitting_algorithm_scene.tscn")
+
+
+func _load_cutting_scene() -> void:
+	pass # Replace with function body.
+	SceneTransition.change_scene("res://splitting_algorithm_scene.tscn")
+
+
+func _skip_pressed() -> void:
+	pass # Replace with function body.
 	SceneTransition.change_scene("res://splitting_algorithm_scene.tscn")

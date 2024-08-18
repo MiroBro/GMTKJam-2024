@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bnmry3j8iccbj"]
+[gd_scene load_steps=19 format=3 uid="uid://bnmry3j8iccbj"]
 
 [ext_resource type="Texture2D" uid="uid://cxtkafe14ov1n" path="res://Assets/Images/Intro/Intro_Art_Background.png" id="1_wb0m4"]
 [ext_resource type="Texture2D" uid="uid://b6y74en7p8pqo" path="res://Assets/Images/Intro/Intro Art_Split_Smaller.png" id="2_18dg3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/intro_continuebutton.gd" id="7_gy1p6"]
 [ext_resource type="Texture2D" uid="uid://ct6pkn3g5j2vj" path="res://Assets/Images/Intro/UI_Boss_Dialog_Box.png" id="7_p807r"]
 [ext_resource type="Texture2D" uid="uid://dex1vxexl7xik" path="res://Assets/Images/Other/triangle.png" id="8_sb6i2"]
+[ext_resource type="Texture2D" uid="uid://b8uu8ldwle1b" path="res://Assets/Images/UI/UI_Box_Medium.png" id="10_sm75o"]
 
 [sub_resource type="Animation" id="Animation_wusuu"]
 resource_name = "Intro_Cutscene"
@@ -1662,7 +1663,68 @@ rotation = 1.57276
 scale = Vector2(0.152282, 0.152282)
 texture = ExtResource("8_sb6i2")
 
+[node name="Final explanation" type="Control" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/Final explanation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Final explanation"]
+layout_mode = 0
+offset_left = 509.0
+offset_top = 76.0
+offset_right = 1604.0
+offset_bottom = 757.0
+scale = Vector2(0.785533, 0.785533)
+texture = ExtResource("10_sm75o")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/Final explanation"]
+layout_mode = 0
+offset_left = 651.0
+offset_top = 171.0
+offset_right = 1276.0
+offset_bottom = 515.0
+theme_override_font_sizes/normal_font_size = 30
+text = "Your need to cut building materials for work, but you only have a banana for scale....
+
+Check the banana's size in your blueprints. That way you can compare to your own banana and hopefully cut planks the right size and shape."
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Final explanation"]
+layout_mode = 0
+offset_left = 870.0
+offset_top = 561.0
+offset_right = 998.0
+offset_bottom = 636.0
+theme_override_font_sizes/font_size = 51
+text = "OK"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -167.0
+offset_top = 25.0
+offset_right = -23.0
+offset_bottom = 93.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 31
+text = "SKIP"
+
 [connection signal="pressed" from="CanvasLayer/Control/Oh/Button" to="SceneController" method="_on_button1_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Boss!/Button" to="SceneController" method="_on_button2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Notmyproblem/Button" to="SceneController" method="_on_button3_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Banan/Button" to="SceneController" method="_on_button4_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Final explanation/Button" to="SceneController" method="_load_cutting_scene"]
+[connection signal="pressed" from="CanvasLayer/Control/Button" to="SceneController" method="_skip_pressed"]
