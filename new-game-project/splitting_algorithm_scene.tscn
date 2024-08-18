@@ -139,7 +139,7 @@ directional_shadow_fade_start = 0.795
 directional_shadow_max_distance = 2.0
 directional_shadow_pancake_size = 8.9
 
-[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template", "plank_collision_shape")]
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template", "plank_collision_shape", "blueprint_ui")]
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
 thickness = 1.0
@@ -152,6 +152,7 @@ normal_bg = NodePath("../Node3D/NormalBG")
 cutting_bg = NodePath("../Node3D/CuttingBG")
 rb_template = NodePath("../rb_template")
 plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
+blueprint_ui = NodePath("../BluePrintOpenButton")
 
 [node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
 material_override = SubResource("ShaderMaterial_0qhj0")
