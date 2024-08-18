@@ -15,6 +15,7 @@ var saw_dir = Vector3.FORWARD
 var drawing = false
 
 var grid: PackedByteArray
+var drawn_grid: PackedByteArray
 
 # var cell_size = Vector2(0.3, 0.2)
 var plank_size = Vector2(1.05, 0.65)
@@ -92,6 +93,7 @@ func _input(event):
 					get_tree().change_scene_to_file("res://Scenes/result.tscn")		
 				else:
 					reload_scene()
+
 	
 	if event is InputEventMouseMotion:
 		var mouse_pos = event.position
@@ -188,7 +190,8 @@ func find_and_delete_islands():
 	if grid_width < 10 || grid_height < 10:
 		print("delete islands skipping causre too small grid")
 		return
-
+	
+	var plank_mass = 1
 	var safe_indices: Array[int];
 	var W = 2
 	var H = 2
@@ -216,6 +219,7 @@ func find_and_delete_islands():
 
 
 		if should_remove:
+			plank_mass = float(l) / (grid_width * grid_height)
 			camera.add_trauma(2.0)
 			i -= l
 			var rb_grid = grid.duplicate();
@@ -241,7 +245,8 @@ func find_and_delete_islands():
 			new_node.mesh = rb_mesh
 			
 			# Spawn per island
-			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, 1)
+			var magnitude = 1 - pow(plank_mass - 1, 4)
+			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, magnitude)
 			any = true
 
 	# When plank falls off
