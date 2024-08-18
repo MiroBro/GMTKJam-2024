@@ -124,11 +124,10 @@ func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
 
-
 	if grid_width < 10 || grid_height < 10:
 		print("delete islands skipping causre too small grid")
 		return
-	
+
 	var safe_indices: Array[int];
 	var W = 2
 	var H = 2
@@ -139,8 +138,6 @@ func find_and_delete_islands():
 			var h = bot_left.y + hi
 			var safe_idx = wh_to_index(w,h)
 			safe_indices.push_back(safe_idx)
-			
-			
 
 
 	find_islands(island_indices, island_lens)
@@ -195,8 +192,10 @@ func fix_music():
 		normal_from = cutting_bg.get_playback_position()
 		normal_bg.stop()
 
+
 func wh_to_index(w: int, h: int) -> int:
 	return w + h*grid_width;
+
 
 func _process(delta: float) -> void:
 	particles.emitting = false
