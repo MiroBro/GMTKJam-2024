@@ -32,10 +32,16 @@ var plank_offset = -Vector3(plank_half_size.x, 0.0, plank_half_size.y)
 var grid_width
 var grid_height
 
+var TOOL_NOTHING = 0
+var TOOL_BANANA = 1
+var TOOL_SAW = 2
+
+var tool = TOOL_NOTHING
+
 var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
-@export var normal_bg: AudioStreamPlayer3D
-@export var cutting_bg: AudioStreamPlayer3D
+@export var regularAudio: AudioStreamPlayer
+@export var cutting_audio: AudioStreamPlayer
 
 @export var rb_template: RigidBody3D
 
@@ -46,6 +52,8 @@ var plank: MeshInstance3D
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
+	tool = TOOL_NOTHING
+
 	plank = self.get_child(0)
 
 	scene_root = get_tree().current_scene
@@ -80,6 +88,21 @@ func _input(event):
 		if e.button_index == MOUSE_BUTTON_LEFT:
 			drawing = e.pressed
 			if drawing:
+				tool = TOOL_NOTHING
+
+				var radius = 0.2
+				
+				var tools = [TOOL_BANANA, TOOL_SAW]
+				var poss = [debug1.global_position, debug0.global_position]
+
+				var smallest = 10000.0
+				for i in range(tools.size()):
+					var d = mouse_pos_in_plane.distance_to(poss[i])
+					if d < smallest:
+						smallest = d
+						if d < radius:
+							tool = tools[i]
+
 				points.clear()
 
 		if e.button_index == MOUSE_BUTTON_RIGHT:
@@ -111,8 +134,8 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	scene_root.add_child(it)
 
 
-var speed = 10.0
-var target_speed = 20.0
+var speed = 5.0
+var target_speed = 15.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
@@ -124,11 +147,10 @@ func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
 
-
 	if grid_width < 10 || grid_height < 10:
 		print("delete islands skipping causre too small grid")
 		return
-	
+
 	var safe_indices: Array[int];
 	var W = 2
 	var H = 2
@@ -139,8 +161,6 @@ func find_and_delete_islands():
 			var h = bot_left.y + hi
 			var safe_idx = wh_to_index(w,h)
 			safe_indices.push_back(safe_idx)
-			
-			
 
 
 	find_islands(island_indices, island_lens)
@@ -181,22 +201,28 @@ func find_and_delete_islands():
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
 
-
 func fix_music():
-	if not drawing and not normal_bg.playing:
-		normal_bg.play(normal_from)
-	if drawing and not cutting_bg.playing:
-		cutting_bg.play(cutting_from)
-		
-	if not drawing:
-		cutting_from = cutting_bg.get_playback_position()
-		cutting_bg.stop()
-	if drawing:
-		normal_from = cutting_bg.get_playback_position()
-		normal_bg.stop()
+
+	var is_cutting = drawing && tool == TOOL_SAW
+	
+	if not is_cutting and not regularAudio.playing:
+		regularAudio.play(normal_from)
+	if is_cutting and not cutting_audio.playing:
+		cutting_audio.play(cutting_from)
+		$Audio/SawingSFX.play()
+
+	if not is_cutting:
+		cutting_from = cutting_audio.get_playback_position()
+		cutting_audio.stop()
+		$Audio/SawingSFX.stop()
+	if is_cutting:
+		normal_from = cutting_audio.get_playback_position()
+		regularAudio.stop()
+
 
 func wh_to_index(w: int, h: int) -> int:
 	return w + h*grid_width;
+
 
 func _process(delta: float) -> void:
 	particles.emitting = false
@@ -206,38 +232,42 @@ func _process(delta: float) -> void:
 	var cut_any = false
 
 	if drawing:
-		camera.add_trauma(0.2)
 		speed = lerp(speed, target_speed, 5.0 * delta)
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
 
-		var p = point_to_grid_space(saw_2dd)
-		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
-			var i = grid_space_to_index(p)
-			if grid[i] == 1:
-				speed = 0.5
+		if tool == TOOL_BANANA:
+			debug1.global_position = mouse_pos_in_plane
 
-		if points.size() > 0:
-			var old_p = points[0]
-			if old_p.distance_to(mouse_2d) > 0.1:
-				debug0.look_at(mouse_pos_in_plane)
+		if tool == TOOL_SAW:
+			camera.add_trauma(0.2)
 
-		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
-		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
+			var p = point_to_grid_space(saw_2dd)
+			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
+				var i = grid_space_to_index(p)
+				if grid[i] == 1:
+					speed = 0.5
 
-		debug0.global_position = saw_pos
-		debug1.global_position = mouse_pos_in_plane
+			if points.size() > 0:
+				var old_p = points[0]
+				if old_p.distance_to(mouse_2d) > 0.1:
+					debug0.look_at(mouse_pos_in_plane)
 
-		points.push_back(saw_2d)
-		var n =  points.size()
-		if n > 1:
-			for i in range(1, n-1):
-				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
+			saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
+			var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
-			if cut_any:
-				particles.emitting = true
-				points.pop_front()
+			debug0.global_position = saw_pos
+
+			points.push_back(saw_2d)
+			var n =  points.size()
+			if n > 1:
+				for i in range(1, n-1):
+					cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
+
+				if cut_any:
+					particles.emitting = true
+					points.pop_front()
 
 	if cut_any:
 		find_and_delete_islands()

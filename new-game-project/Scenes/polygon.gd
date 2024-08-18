@@ -43,6 +43,38 @@ func convex_hull(points: PackedVector2Array) -> PackedVector2Array:
 func _cross(a: Vector2, b: Vector2, c: Vector2) -> float:
 	return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)
 
+# Helper function to compute the cross product
+func cross_product(p1: Vector2, p2: Vector2, p3: Vector2) -> float:
+	return (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x)
+
+
+func find_discrete_outlines(points: PackedVector2Array, n: int = 20):
+	var dots: PackedFloat32Array
+	var dirs: PackedVector2Array
+	var output: PackedVector2Array
+
+	var dt = 1.0 / float(n)
+
+	for i in n:
+		dots.append(-1000.0)
+		var t = float(i) / float(n) 
+		var angle = 3.141502 * 2.0 * t
+		var x = cos(angle)
+		var y = sin(angle)
+		dirs.append(Vector2(x, y))
+		output.append(Vector2(0.0, 0.0))
+
+	for point in points:
+		var i = -1
+		for dir in dirs:
+			i = i + 1
+			var d = dir.dot(point)
+			if d > dots[i] && d > dt:
+				dots[i] = d
+				output[i] = point
+
+	return output
+
 func make_thing(mesh: MeshInstance3D):
 	maxX = -1000
 	maxY = -1000
@@ -64,10 +96,12 @@ func make_thing(mesh: MeshInstance3D):
 	for i in range(vert_count):
 		var vert = mdt.get_vertex(i)
 		var it = mesh.transform * vert
-		var p = Vector2(it.x, it.z) * 300.0
-		vectors.push_back(p)
+		vert.y = 0.0
+		vectors.append(Vector2(vert.x, vert.z) * 300.0)
 
 	vectors = convex_hull(vectors)
+	# vectors = find_discrete_outlines(vectors, 20)
+	# vectors = find_outline(vectors)
 
 	for n in vectors.size():
 		if vectors[n][0] > maxX:
