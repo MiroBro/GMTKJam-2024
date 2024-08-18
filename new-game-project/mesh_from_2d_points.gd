@@ -112,10 +112,11 @@ var target_speed = 20.0
 var normal_from = 0.0
 var cutting_from = 0.0
 
+
 func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
-	
+
 	find_islands(island_indices, island_lens)
 	var i = -1
 	var any = false
@@ -180,20 +181,19 @@ func _process(delta: float) -> void:
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
+
 		var p = point_to_grid_space(saw_2dd)
 		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
-			
 			var i = grid_space_to_index(p)
 			if grid[i] == 1:
 				speed = 0.5
-		
+
 		if points.size() > 0:
 			var old_p = points[0]
 			if old_p.distance_to(mouse_2d) > 0.1:
-				
 				debug0.look_at(mouse_pos_in_plane)
-		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 
+		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
 		debug0.global_position = saw_pos
@@ -201,7 +201,6 @@ func _process(delta: float) -> void:
 
 		points.push_back(saw_2d)
 		var n =  points.size()
-		#if n % 2 == 0 && n > 0:
 		if n > 1:
 			for i in range(1, n-1):
 				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
@@ -209,6 +208,7 @@ func _process(delta: float) -> void:
 			if cut_any:
 				particles.emitting = true
 				points.pop_front()
+
 	if cut_any:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
@@ -363,8 +363,6 @@ func find_islands(island_indices: PackedInt32Array, island_lens: Array[int]) :
 		island_indices.append_array(island)
 		island_lens.push_back(island.size())
 
-		
-	
 
 func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int) -> PackedInt32Array:
 	var visited = grid.duplicate()
