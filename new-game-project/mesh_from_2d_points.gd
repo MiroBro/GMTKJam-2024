@@ -53,6 +53,7 @@ var plank: MeshInstance3D
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
+	
 	tool = TOOL_NOTHING
 
 	plank = self.get_child(0)
@@ -92,7 +93,7 @@ func _input(event):
 			if drawing:
 				tool = TOOL_NOTHING
 
-				var radius = 0.1
+				var radius = 0.2
 				
 				var tools = [TOOL_BANANA, TOOL_SAW]
 				var poss = [debug1.global_position, debug0.global_position]
@@ -109,6 +110,7 @@ func _input(event):
 
 		if e.button_index == MOUSE_BUTTON_RIGHT:
 			if e.pressed:
+				
 				var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 				var pnorm = point_to_grid_space(mouse_2d)
 				var idx = grid_space_to_index(pnorm)
@@ -135,6 +137,13 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	it.add_child(new_mesh)
 	scene_root.add_child(it)
 
+
+				
+func load_result_scene():
+	Globals.mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())	
+	get_tree().change_scene_to_file("res://Scenes/result.tscn")
+	
+	
 
 var speed = 2.5
 var target_speed = 5.0
@@ -261,7 +270,9 @@ func _process(delta: float) -> void:
 
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
-
+			var d = mouse_pos_in_plane - saw_pos
+			print(d.length())
+			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
 				var i = grid_space_to_index(p)
@@ -270,16 +281,21 @@ func _process(delta: float) -> void:
 
 			if points.size() > 0:
 				var old_p = points[0]
-				if old_p.distance_to(mouse_2d) > 0.1:
-					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 15*delta)
+				if old_p.distance_to(mouse_2d) > 0.00001:
+					saw_dir = lerp(saw_dir, d.normalized(), 15*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()
 					#debug0.look_at(mouse_pos_in_plane)					
 					debug0.look_at(saw_pos + saw_dir)
 
+			if d.length() > 0.1:
+				
+				var l = 0.5 + 0.5 / (1.0 + exp(-d.length()))
+				var f = max(5 * delta * speed * l, 0.1)
+				saw_pos = lerp(saw_pos, saw_pos + 0.1*d, f)
 
-			saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed)
+				#saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed * d.length())
 			var xlim = 0.8
 			var zlim = 0.6
 			saw_pos.x = clamp(saw_pos.x, -xlim, xlim)
@@ -304,6 +320,20 @@ func _process(delta: float) -> void:
 	if cut_any:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
+		
+	if Input.is_key_label_pressed(KEY_E):		
+		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]:
+			var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+			Globals.cut_meshes.append(mesh)
+			load_result_scene()			
+		else:
+			reload_scene()
+
+func reload_scene():
+	var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+	Globals.cut_meshes.append(mesh)
+	get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
+	pass
 
 # from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
@@ -564,7 +594,9 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
 			
+
 			var thick = -plank_thickness * Vector3.DOWN
+
 			# add sides
 			# if we want to we can make sure to only add this if we do not have four filled neighbours
 
@@ -631,6 +663,7 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			# mesh.surface_set_normal(down)
 
 	mesh.surface_end()
+	return mesh
 
 
 func convert_points_and_cuts_to_mesh(polygon: Array[Vector2], mesh: ImmediateMesh):

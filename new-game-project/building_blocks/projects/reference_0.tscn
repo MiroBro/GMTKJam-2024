@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcmyh0454bl4b"]
+
+[ext_resource type="Material" uid="uid://dkbc2sv4tr610" path="res://Materials/material_Wood.tres" id="1_lgpw2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rew31"]
+
+[node name="reference" type="Node3D"]
+visible = false
+
+[node name="wall1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.5897e-08, -0.05, 0, 1.05, -2.18557e-09, 0, 0, 0, 0.65, 0.402606, 0, 0)
+material_override = ExtResource("1_lgpw2")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.04959, 0.00139695, 0, -0.029336, 0.0499805, 0, 0, 0, 0.65, 0.172077, 0.636898, 0)
+material_override = ExtResource("1_lgpw2")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall7" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.5897e-08, -0.05, 0, 1.05, -2.18557e-09, 0, 0, 0, 0.65, 0, 0, 0)
+material_override = ExtResource("1_lgpw2")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")

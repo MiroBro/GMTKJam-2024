@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b01llgxucrral"]
+
+[node name="project" type="Node3D"]
+
+[node name="0" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+
+[node name="1" type="Node3D" parent="."]
+
+[node name="2" type="Node3D" parent="."]
+
+[node name="3" type="Node3D" parent="."]
+
+[node name="4" type="Node3D" parent="."]

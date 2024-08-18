@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://eof063ohd4ob"]
+
+[ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
+
+[sub_resource type="Environment" id="Environment_egj3s"]
+background_mode = 1
+background_color = Color(0.533984, 0.6161, 0.888071, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v2a5n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e5b8k"]
+size = Vector3(10, 2, 10)
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_4jbka"]
+albedo_color = Color(0.205117, 0.205117, 0.205117, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_un3l2"]
+material = SubResource("ORMMaterial3D_4jbka")
+size = Vector3(10, 2, 10)
+
+[node name="Scene" type="Node3D"]
+script = ExtResource("1_6117w")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.929152, -0.105457, 0.354338, 0, 0.958452, 0.285253, -0.369698, -0.265043, 0.890548, 1.13364, 1.25681, 1.92326)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_egj3s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.280566, -0.900452, 0.33237, 0.725821, 0.0275506, 0.687332, -0.628066, 0.434082, 0.645837, -0.657248, 4.39438, 3.876)
+shadow_enabled = true
+shadow_bias = 0.057
+shadow_blur = 1.897
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.19
+directional_shadow_fade_start = 0.695
+directional_shadow_max_distance = 23.6
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+physics_material_override = SubResource("PhysicsMaterial_v2a5n")
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_e5b8k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_un3l2")

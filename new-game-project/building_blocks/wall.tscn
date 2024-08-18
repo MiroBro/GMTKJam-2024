@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bpj3yc28s4uje"]
+
+[node name="Wall" type="RigidBody3D"]

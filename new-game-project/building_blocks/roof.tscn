@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6u265cxhnqqx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rweju"]
+size = Vector3(2, 16, 24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ti0fx"]
+size = Vector3(2, 16, 24)
+
+[node name="Roof" type="RigidBody3D"]
+mass = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0198998, -9.53674e-07, 0.00830173)
+shape = SubResource("BoxShape3D_rweju")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ti0fx")
