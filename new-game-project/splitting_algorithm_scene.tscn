@@ -133,7 +133,6 @@ directional_shadow_pancake_size = 8.9
 [node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template", "plank_collision_shape")]
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
-thickness = 1.0
 camera = NodePath("../Node3D/Camera3D")
 debug0 = NodePath("../debug0")
 debug1 = NodePath("../debug1")
