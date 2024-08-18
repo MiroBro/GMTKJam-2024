@@ -192,11 +192,11 @@ volume_db = 1.868
 
 [node name="Plank_SFX_1" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("8_b7big")
-volume_db = 1.938
+volume_db = 16.928
 
 [node name="Plank_SFX_2" type="AudioStreamPlayer" parent="GameManager/Audio"]
 stream = ExtResource("9_jpn46")
-volume_db = 1.868
+volume_db = 24.0
 
 [node name="Table" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)

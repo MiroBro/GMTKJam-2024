@@ -214,6 +214,8 @@ func find_and_delete_islands():
 		
 		if randf() < 0.5:
 			$Audio/Plank_SFX_1.play()
+			$Audio/SawingSFX.pitch_scale *= 0.5
+
 		else: 
 			$Audio/Plank_SFX_2.play()
 		
@@ -278,7 +280,7 @@ func _process(delta: float) -> void:
 			if points.size() > 0:
 				var old_p = points[0]
 				if old_p.distance_to(mouse_2d) > 0.00001:
-					saw_dir = lerp(saw_dir, d.normalized(), 15*delta)
+					saw_dir = lerp(saw_dir, d.normalized(), 30*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()
