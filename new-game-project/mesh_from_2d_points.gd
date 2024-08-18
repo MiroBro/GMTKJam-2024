@@ -104,6 +104,29 @@ func _input(event):
 
 		if intersection != null:
 			mouse_pos_in_plane = intersection
+			
+		var mytool = TOOL_NOTHING
+
+		var radius = 0.05
+				
+		var tools = [TOOL_BANANA, TOOL_SAW]
+		var poss = [debug1.global_position, debug0.global_position]
+
+		var smallest = 10000.0
+		for i in range(tools.size()):
+			var d = mouse_pos_in_plane.distance_to(poss[i])
+			if d < smallest:
+				smallest = d
+				if d < radius:
+					mytool = tools[i]
+					
+		var cursor_hand = preload("res://Assets/Images/Other/cursor_hand_dark_32x32.png")
+		var custom_cursor = preload("res://Assets/Images/Other/custom_cursor_32x32.png")
+
+		if mytool != TOOL_NOTHING:
+			Input.set_custom_mouse_cursor(cursor_hand, Input.CURSOR_ARROW)
+		else:
+			Input.set_custom_mouse_cursor(custom_cursor, Input.CURSOR_ARROW)
 	#if event is InputEventKey:
 		#var e: InputEventKey = event
 		#if e.pressed:
