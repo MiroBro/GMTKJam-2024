@@ -241,7 +241,7 @@ func find_and_delete_islands():
 			new_node.mesh = rb_mesh
 			
 			# Spawn per island
-			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, plank_mass)
+			spawn_rigidbody_version_of_mesh(new_node, center_of_mass, 1)
 			any = true
 
 	# When plank falls off
