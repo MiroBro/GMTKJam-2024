@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=31 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
 [ext_resource type="AudioStream" uid="uid://pjggloaabujq" path="res://Assets/Music/Cutting song_2.mp3" id="4_eajf0"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="5_pt3pa"]
-[ext_resource type="Material" uid="uid://dkbc2sv4tr610" path="res://Materials/material_Wood.tres" id="6_au7t2"]
+[ext_resource type="Shader" path="res://Shaders/triplanar.gdshader" id="5_xsb4b"]
+[ext_resource type="Texture2D" uid="uid://6x5wws8o3boa" path="res://Meshes/T_Wood_Tileable_2.png" id="7_32k7o"]
+[ext_resource type="Texture2D" uid="uid://u0gjn4cqu7vn" path="res://Meshes/T_Wood_Tileable_1.png" id="8_pv7a3"]
 [ext_resource type="PackedScene" uid="uid://cftmk855cri6b" path="res://Meshes/M_Sawblade_1.glb" id="8_v0o3s"]
 [ext_resource type="Script" path="res://fly_away.gd" id="11_3hlxx"]
 
@@ -27,6 +29,16 @@ fog_density = 0.453
 fog_depth_curve = 0.231705
 fog_depth_begin = 1.0
 fog_depth_end = 6.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0qhj0"]
+render_priority = 0
+shader = ExtResource("5_xsb4b")
+shader_parameter/top_tint = null
+shader_parameter/front_tint = null
+shader_parameter/side_tint = null
+shader_parameter/scale = null
+shader_parameter/front_texture = ExtResource("7_32k7o")
+shader_parameter/side_texture = ExtResource("8_pv7a3")
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_cs28j"]
 
@@ -144,7 +156,7 @@ plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
 blueprint_ui = NodePath("../BluePrintOpenButton")
 
 [node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
-material_override = ExtResource("6_au7t2")
+material_override = SubResource("ShaderMaterial_0qhj0")
 mesh = SubResource("ImmediateMesh_cs28j")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="GameManager/plank_mesh"]
