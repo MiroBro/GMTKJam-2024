@@ -48,13 +48,18 @@ var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
 var plank: MeshInstance3D
 @export var plank_collision_shape: CollisionShape3D
+
+
 @export var blueprint_ui: CanvasItem
 
-var pdb1;
-var pdb2
-
 func _ready() -> void:
-
+	var reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
+	
+	var child = reference_root.get_child(Globals.cut_meshes.size())
+	if child is MeshInstance3D:
+		Globals.mesh_to_cut = child
+		blueprint_ui.make_blueprint_from_mesh(Globals.mesh_to_cut)
+	
 	tool = TOOL_NOTHING
 
 	plank = self.get_child(0)
@@ -73,13 +78,21 @@ func _ready() -> void:
 
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-	blueprint_ui.make_blueprint_from_mesh(plank)
+	#blueprint_ui.make_blueprint_from_mesh(plank)
 	blueprint_ui.set_banana_relative_pos(debug1.global_position)
-	
-	pdb1 = $Audio/Plank_SFX_1.volume_db
-	pdb2 = $Audio/Plank_SFX_2.volume_db
 
 func _input(event):
+	if event is InputEventKey:
+		var e: InputEventKey = event
+		if e.pressed:
+			if e.keycode == KEY_E:	   
+				if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]-1:
+					var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+					Globals.cut_meshes.append(mesh)
+					get_tree().change_scene_to_file("res://Scenes/result.tscn")		
+				else:
+					reload_scene()
+	
 	if event is InputEventMouseMotion:
 		var mouse_pos = event.position
 		var ray_origin = camera.project_ray_origin(mouse_pos)
@@ -123,7 +136,7 @@ func _input(event):
 				var island_indices: PackedInt32Array
 				var island_lens: Array[int]
 				find_islands(island_indices, island_lens)
-				blueprint_ui.make_blueprint_from_mesh(plank)
+				#blueprint_ui.make_blueprint_from_mesh(plank)
 
 				# spawn_rigidbody_version_of_mesh(plank)
 
@@ -144,7 +157,7 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 
 				
 func load_result_scene():
-	Globals.mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())	
+	
 	get_tree().change_scene_to_file("res://Scenes/result.tscn")
 	
 	
@@ -155,6 +168,7 @@ var target_speed = 5.0
 var normal_from = 0.0
 var cutting_from = 0.0
 
+var key_e_pressed = false
 #func grid_coord_to_idx(w: int, h: int):
 	
 
@@ -181,7 +195,6 @@ func find_and_delete_islands():
 	find_islands(island_indices, island_lens)
 	var i = -1
 	var any = false
-	var plank_mass = 0
 	for l in island_lens:
 		var should_remove = true
 		for jjjj in l:
@@ -194,7 +207,6 @@ func find_and_delete_islands():
 
 
 		if should_remove:
-			plank_mass = float(l) / float((grid_width * grid_height))
 			camera.add_trauma(2.0)
 			i -= l
 			var rb_grid = grid.duplicate();
@@ -220,17 +232,11 @@ func find_and_delete_islands():
 	# When plank falls off
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
-		print(plank_mass)
-		camera.add_impulse()
 		
-		var magnitude = 1 - pow(plank_mass - 1, 4)
 		if randf() < 0.5:
-			$Audio/Plank_SFX_1.volume_db = pdb1 * magnitude
 			$Audio/Plank_SFX_1.play()
-		else:
-			$Audio/Plank_SFX_2.volume_db = pdb2 * magnitude
+		else: 
 			$Audio/Plank_SFX_2.play()
-
 		
 
 func fix_music(delta: float):
@@ -241,6 +247,7 @@ func fix_music(delta: float):
 	if is_cutting and not cutting_audio.playing:
 		cutting_audio.play(cutting_from)
 		$Audio/SawingSFX.play()
+
 
 	if not is_cutting:
 		cutting_from = cutting_audio.get_playback_position()
@@ -264,7 +271,7 @@ func wh_to_index(w: int, h: int) -> int:
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	fix_music(delta)
+	#fix_music(delta)
 
 	var cut_any = false
 
@@ -282,6 +289,7 @@ func _process(delta: float) -> void:
 		if tool == TOOL_SAW:
 			camera.add_trauma(0.2)
 			var d = mouse_pos_in_plane - saw_pos
+			print(d.length())
 			
 			var p = point_to_grid_space(saw_2dd)
 			if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
@@ -292,7 +300,7 @@ func _process(delta: float) -> void:
 			if points.size() > 0:
 				var old_p = points[0]
 				if old_p.distance_to(mouse_2d) > 0.00001:
-					saw_dir = lerp(saw_dir, d.normalized(), 30*delta)
+					saw_dir = lerp(saw_dir, d.normalized(), 15*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()
@@ -330,18 +338,14 @@ func _process(delta: float) -> void:
 	if cut_any:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
-		
-	if Input.is_key_label_pressed(KEY_E):		
-		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]:
-			var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
-			Globals.cut_meshes.append(mesh)
-			load_result_scene()			
-		else:
-			reload_scene()
+	
 
+		
 func reload_scene():
+	print(Globals.cut_meshes.size())
 	var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
 	Globals.cut_meshes.append(mesh)
+	print(Globals.cut_meshes.size())
 	get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
 	pass
 
