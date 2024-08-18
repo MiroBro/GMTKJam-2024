@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=24 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]

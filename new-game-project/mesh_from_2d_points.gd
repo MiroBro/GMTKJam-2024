@@ -112,8 +112,6 @@ func find_and_delete_islands():
 	var island_lens: Array[int]
 	
 	find_islands(island_indices, island_lens)
-	print(island_lens)
-	print(island_indices.size())
 	var i = -1
 	var any = false
 	for l in island_lens:
@@ -126,6 +124,7 @@ func find_and_delete_islands():
 				should_remove = false
 
 		if should_remove:
+			camera.add_trauma(2.0)
 			i -= l
 			var rb_grid = grid.duplicate();
 			for j in rb_grid.size():
@@ -170,7 +169,7 @@ func _process(delta: float) -> void:
 	fix_music()
 
 	if drawing:
-		camera.add_trauma(0.1)
+		camera.add_trauma(0.2)
 		speed = lerp(speed, target_speed, 5.0 * delta)
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
