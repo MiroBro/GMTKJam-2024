@@ -10,6 +10,7 @@ extends Node3D
 var scene_root: Node
 var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
 var saw_pos = Vector3(0.0, 0.0, 0.0)
+var saw_dir = Vector3.FORWARD
 
 var drawing = false
 
@@ -90,7 +91,7 @@ func _input(event):
 			if drawing:
 				tool = TOOL_NOTHING
 
-				var radius = 0.2
+				var radius = 0.1
 				
 				var tools = [TOOL_BANANA, TOOL_SAW]
 				var poss = [debug1.global_position, debug0.global_position]
@@ -135,7 +136,7 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 
 
 var speed = 5.0
-var target_speed = 15.0
+var target_speed = 10.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
@@ -269,9 +270,15 @@ func _process(delta: float) -> void:
 			if points.size() > 0:
 				var old_p = points[0]
 				if old_p.distance_to(mouse_2d) > 0.1:
-					debug0.look_at(mouse_pos_in_plane)
+					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 10*delta)
+					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
-			saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
+					saw_dir = saw_dir.normalized()
+					#debug0.look_at(mouse_pos_in_plane)					
+					debug0.look_at(saw_pos + saw_dir)
+
+
+			saw_pos = lerp(saw_pos, mouse_pos_in_plane, 5 *delta * speed)
 			var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
 			debug0.global_position = saw_pos
