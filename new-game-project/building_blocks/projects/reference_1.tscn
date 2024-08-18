@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp0kovlwi5114"]
+
+[ext_resource type="Material" uid="uid://dkbc2sv4tr610" path="res://Materials/material_Wood.tres" id="1_hf4mb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rew31"]
+
+[node name="reference2" type="Node3D"]
+
+[node name="wall1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.5897e-08, -0.05, 0, 1.05, -2.18557e-09, 0, 0, 0, 0.65, 0.472346, 0, 0)
+material_override = ExtResource("1_hf4mb")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.5897e-08, -0.05, 0, 1.05, -2.18557e-09, 0, 0, 0, 0.65, -0.229165, 0, 0)
+material_override = ExtResource("1_hf4mb")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.26149e-09, -0.00137427, -0.649754, 1.05, -2.18557e-09, 1.37643e-22, -4.58797e-08, -0.0499811, 0.0178655, 0.114431, 0, -0.314581)
+material_override = ExtResource("1_hf4mb")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.26149e-09, -0.00137427, -0.649754, 1.05, -2.18557e-09, 1.37643e-22, -4.58797e-08, -0.0499811, 0.0178655, 0.114431, 0, 0.331606)
+material_override = ExtResource("1_hf4mb")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")
+
+[node name="wall5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.05, 4.37114e-09, 0, -9.17939e-08, -0.05, 3.78317e-24, 0, 1.94289e-16, 0.65, 0.108597, 0.559535, 2.98023e-08)
+material_override = ExtResource("1_hf4mb")
+mesh = SubResource("BoxMesh_rew31")
+skeleton = NodePath("../..")

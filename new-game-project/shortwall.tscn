@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqvbphnjc82pq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_surhm"]
-size = Vector3(4, 4, 1)
+size = Vector3(2, 16, 24)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6ud5o"]
+size = Vector3(2, 16, 24)
 
 [node name="frame" type="RigidBody3D"]
 
