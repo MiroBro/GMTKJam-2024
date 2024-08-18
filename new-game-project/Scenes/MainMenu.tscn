@@ -20,18 +20,103 @@
 
 [sub_resource type="Animation" id="Animation_tld11"]
 resource_name = "Main_Menu_Idle_Man"
+length = 3.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Background/Holder_Arm_L:rotation")
-tracks/0/interp = 1
+tracks/0/interp = 4
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
+"times": PackedFloat32Array(0, 1.56667, 3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, -0.356201, 0.0]
+"values": [0.0, 6.18035, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background/Holder_Arm_R:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.63333, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.00075586, 6.34413, 0.00075586]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background/Holder_Arm_L/Holder_Broken_Ruler:rotation")
+tracks/2/interp = 4
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.43333, 2.16667, 3.26667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.06306, 0.244571, 0.244571, 0.06306]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Background/Man:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.333333, 1.86667, 3.33237),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.39, 0.39), Vector2(0.41, 0.395), Vector2(0.39, 0.39)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Background/Holder_Arm_R/Banana_Shine:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.0333333, 0.7, 1.06667, 1.43333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.411765), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Background/Holder_Arm_R/Banana_Sparkle:scale")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.8, 1.13333, 1.5, 1.83333, 2.27751, 2.61084, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.39, 0.39), Vector2(0.37, 0.37), Vector2(0.39, 0.39), Vector2(0.37, 0.37), Vector2(0.39, 0.39), Vector2(0.37, 0.37), Vector2(0.39, 0.39), Vector2(0.37, 0.37), Vector2(0.39, 0.39)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Background/Holder_Bananas:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 2.9, 2.93333, 2.96667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-15.9363, 1474.99), Vector2(1319.17, 1497.42), Vector2(1263.69, -44.8576), Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Background/Holder_Bananas2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.0333333, 1.4, 1.43333, 1.46667, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1140.33, 32.4629), Vector2(1157.44, 823.963), Vector2(2471.3, 796.813), Vector2(2331.41, -757.857), Vector2(1227.68, -786.188), Vector2(1140.33, 32.4629)]
 }
 
 [sub_resource type="Animation" id="Animation_0u3ds"]
@@ -47,6 +132,90 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Background/Holder_Arm_R:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.00075586]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Background/Holder_Arm_L/Holder_Broken_Ruler:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Background/Man:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.39, 0.39)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Background/Holder_Arm_R/Banana_Shine:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Background/Holder_Arm_R/Banana_Sparkle:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.39, 0.39)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Background/Holder_Bananas:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Background/Holder_Bananas2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1140.33, 32.4629)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ecepg"]
@@ -122,6 +291,52 @@ rotation = -2.14872
 scale = Vector2(0.39, 0.39)
 texture = ExtResource("12_oxomi")
 
+[node name="Holder_Bananas2" type="Node2D" parent="Background"]
+position = Vector2(1140.33, 32.4629)
+rotation = -3.07239
+
+[node name="Banana_Background" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(1146.13, -186.697)
+rotation = 0.786282
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background2" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(966.799, -418.474)
+rotation = 1.50938
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background3" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(646.133, -124.697)
+rotation = 2.12006
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background4" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(169.396, -590.822)
+rotation = 2.90961
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background5" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(738.97, -615.021)
+rotation = -2.68689
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background6" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(56.6622, -188.874)
+rotation = -2.14872
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
+[node name="Banana_Background7" type="Sprite2D" parent="Background/Holder_Bananas2"]
+position = Vector2(462.151, -436.771)
+rotation = -2.14872
+scale = Vector2(0.39, 0.39)
+texture = ExtResource("12_oxomi")
+
 [node name="Man" type="Sprite2D" parent="Background"]
 position = Vector2(594.133, 347.303)
 scale = Vector2(0.39, 0.39)
@@ -161,8 +376,8 @@ position = Vector2(878.855, 769.662)
 rotation = 0.00075586
 
 [node name="Banana_Shine" type="Sprite2D" parent="Background/Holder_Arm_R"]
-position = Vector2(31.2783, -450.359)
-scale = Vector2(0.39, 0.39)
+position = Vector2(17.0874, -434.947)
+scale = Vector2(0.373726, 0.373726)
 texture = ExtResource("4_eyj0r")
 
 [node name="Banana_Sparkle" type="Sprite2D" parent="Background/Holder_Arm_R"]
