@@ -24,6 +24,9 @@ window/size/window_width_override=1090
 window/size/window_height_override=613
 window/stretch/mode="canvas_items"
 mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
+[autoload]
+
+Globals="*res://globals/globals.gd"
 
 [editor]
 

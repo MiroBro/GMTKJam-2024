@@ -84,6 +84,7 @@ func _input(event):
 
 		if e.button_index == MOUSE_BUTTON_RIGHT:
 			if e.pressed:
+				
 				var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 				var pnorm = point_to_grid_space(mouse_2d)
 				var idx = grid_space_to_index(pnorm)
@@ -110,6 +111,13 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	it.add_child(new_mesh)
 	scene_root.add_child(it)
 
+
+				
+func load_result_scene():
+	Globals.mesh = convert_grid_to_mesh(grid, mesh)
+	get_tree().change_scene_to_file("res://benja.tscn")
+	pass
+	
 
 var speed = 10.0
 var target_speed = 20.0
@@ -552,6 +560,7 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			# mesh.surface_set_normal(down)
 
 	mesh.surface_end()
+	return mesh
 
 
 func convert_points_and_cuts_to_mesh(polygon: Array[Vector2], mesh: ImmediateMesh):

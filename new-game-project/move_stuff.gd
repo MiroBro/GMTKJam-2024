@@ -5,21 +5,34 @@ extends Node3D
 
 func instantiate_piece(instance, counter):
 	
-		for child in instance.get_children():
-			if child is CollisionShape3D:
-				var box_shape: BoxShape3D = child.shape
-				box_shape.size = reference_root.get_child(counter).scale
-			if child is MeshInstance3D:
-				var child_mesh: MeshInstance3D = child
+	
+	var child_mesh: MeshInstance3D = MeshInstance3D.new()
+	child_mesh.mesh = Globals.mesh
+	
+	child_mesh.global_transform.origin = reference_root.get_child(counter).global_transform.origin
+	print("positon",child_mesh.global_transform.origin)
+
+	#child_mesh.scale = Vector3(5,5,5)
+	#child_mesh.rotation = reference_root.get_child(counter).rotation
+	
+	var collision_shape = CollisionShape3D.new()
+	collision_shape.shape = child_mesh.mesh.create_convex_shape()
+	#collision_shape.scale = reference_root.get_child(counter).scale
+	instance.add_child(child_mesh)
+	instance.add_child(collision_shape)
+			
+				#var box_shape: BoxShape3D = child.shape
+				#box_shape.size = reference_root.get_child(counter).scale
+			
+				
 
 func turn_project_into_colliders():
 	var counter = 0
 	for root_child: Node3D in reference_root.get_children():
 		var scene = null
-		if root_child.name.begins_with("roof") :
-			scene = load("res://building_blocks/roof.tscn")
-		elif root_child.name.begins_with("wall"):
-			scene = load("res://building_blocks/wall.tscn")	
+	
+		scene = load("res://building_blocks/wall.tscn")
+				
 		var instance = scene.instantiate()
 		instantiate_piece(instance, counter)		
 		
@@ -59,9 +72,9 @@ func _ready() -> void:
 		
 	   
 		#pr.global_transform.origin = ref.global_transform.origin
-		pr.position = ref.position
+		#pr.position = ref.position
 		#pr.scale = ref.scale
-		pr.rotation = ref.rotation
+		#pr.rotation = ref.rotation
 		
 		#pr.global_position = project_root.global_position + offset
 		#pr.quaternion = rot
@@ -69,9 +82,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("start_physics"):
+	
+	#var project_children = project_root.get_children()
+	#for project_child in project_children:
+		#print(project_child)	
+	
+	if Input.is_key_pressed(KEY_SPACE):
+	#if Input.is_action_just_pressed("start_physics"):
 		freeze_physics(false);
 	pass
+
 
 	pass # Replace with function body.
 
@@ -82,7 +102,6 @@ func freeze_physics(frozen: bool) -> void:
 	for node in nodes:
 		
 		for child in node.get_children():
-			print("CHILD NAME ",child.name)
 			if child is RigidBody3D:
 				child.freeze = frozen;
 		pass # Replace with function body.

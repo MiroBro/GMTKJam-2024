@@ -1,17 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://8m4qv0hqc0em"]
+[gd_scene load_steps=8 format=3 uid="uid://t3ccr4445yja"]
 
-[ext_resource type="Script" path="res://move_stuff.gd" id="1_w5cx0"]
-[ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="2_7go7d"]
-[ext_resource type="Script" path="res://results_camera.gd" id="2_erobn"]
-[ext_resource type="Texture2D" uid="uid://d4msecpum76g5" path="res://Assets/Images/MainMenu/Main_Menu_Banana_Glow.png" id="3_n7rx7"]
-[ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="4_7wts8"]
-[ext_resource type="Texture2D" uid="uid://dgdqlr52iwa2u" path="res://Assets/Images/Results/Result_Family_Sad.png" id="4_72m3m"]
-[ext_resource type="Texture2D" uid="uid://dpyfbptvm7daq" path="res://Assets/Images/Results/Result_Family_Excited.png" id="4_v3jeb"]
-[ext_resource type="Texture2D" uid="uid://k0gsdj5bqvsq" path="res://Assets/Images/Results/Result_Family_Happy.png" id="5_xrq32"]
+[ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
 
 [sub_resource type="Environment" id="Environment_egj3s"]
 background_mode = 1
-background_color = Color(0.348477, 0.712873, 0.558233, 1)
+background_color = Color(0.533984, 0.6161, 0.888071, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v2a5n"]
 
@@ -27,44 +20,8 @@ size = Vector3(100, 1, 100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_rew31"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wdcsf"]
-transparency = 2
-alpha_scissor_threshold = 0.888
-alpha_antialiasing_mode = 1
-alpha_antialiasing_edge = 0.96
-albedo_texture = ExtResource("2_7go7d")
-
-[sub_resource type="QuadMesh" id="QuadMesh_o7vui"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qemd"]
-transparency = 2
-alpha_scissor_threshold = 0.888
-alpha_antialiasing_mode = 1
-alpha_antialiasing_edge = 0.96
-albedo_texture = ExtResource("4_v3jeb")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtfxf"]
-transparency = 2
-alpha_scissor_threshold = 0.888
-alpha_antialiasing_mode = 1
-alpha_antialiasing_edge = 0.96
-albedo_texture = ExtResource("5_xrq32")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3dkn8"]
-transparency = 2
-alpha_scissor_threshold = 0.888
-alpha_antialiasing_mode = 1
-alpha_antialiasing_edge = 0.96
-albedo_texture = ExtResource("4_72m3m")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pdbf"]
-transparency = 2
-alpha_scissor_threshold = 0.913
-alpha_antialiasing_mode = 0
-albedo_texture = ExtResource("3_n7rx7")
-
 [node name="Scene" type="Node3D"]
-script = ExtResource("1_w5cx0")
+script = ExtResource("1_6117w")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.958452, 0.285253, 0, -0.285253, 0.958452, 2.11621, 4.88972, 12.6086)
@@ -168,51 +125,3 @@ transform = Transform3D(3.82137e-15, 6.99382e-07, 24, 2, -6.99382e-07, -1.83096e
 visible = false
 mesh = SubResource("BoxMesh_rew31")
 skeleton = NodePath("../..")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.02853, 0, 2.18465, -0.449067, 2.3631, 0.21142, -2.138, -0.496346, 1.00657, 2.04758, 2.98333, 6.53379)
-material_override = SubResource("StandardMaterial3D_wdcsf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.3223, 0.481853, -0.453105, -0.449067, 2.3631, 0.21142, 0.485614, -0.119068, 2.36232, 6.17305, 2.99412, 6.99554)
-material_override = SubResource("StandardMaterial3D_7qemd")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.32509, 0.395522, 0.517762, -0.449067, 2.3631, 0.21142, -0.47208, -0.29987, 2.349, 4.98913, 2.7444, 4.83738)
-material_override = SubResource("StandardMaterial3D_xtfxf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.18231, 0.176895, 1.01824, -0.319866, 2.37783, 0.27245, -0.982748, -0.381118, 2.17245, 3.6567, 2.75974, 0.816701)
-material_override = SubResource("StandardMaterial3D_3dkn8")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.59868, 0, 1.80965, 0, 2.41466, 0, -1.80965, 0, 1.59868, -0.297114, 4.11239, 3.54378)
-material_override = SubResource("StandardMaterial3D_3pdbf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.9042, 0, 1.93679, 0, 4.3582, 0, -1.93679, 0, 3.9042, 1.18836, 4.11239, -3.77907)
-material_override = SubResource("StandardMaterial3D_3pdbf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.83275, 0, 3.9541, 0, 4.3582, 0, -3.9541, 0, 1.83275, -4.83375, 3.47048, 2.33483)
-material_override = SubResource("StandardMaterial3D_3pdbf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.16312, 0, 1.07308, 0, 2.41466, 0, -1.07308, 0, 2.16312, 4.21677, 2.97345, 2.33005)
-material_override = SubResource("StandardMaterial3D_3pdbf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.26417, 0, 2.05729, 0, 2.41466, 0, -2.05729, 0, 1.26417, -2.02733, 4.11239, -1.44154)
-material_override = SubResource("StandardMaterial3D_3pdbf")
-mesh = SubResource("QuadMesh_o7vui")
-
-[node name="SM_Banana_1" parent="." instance=ExtResource("4_7wts8")]
-transform = Transform3D(0.158235, -0.167601, 0.215167, 0.0992954, 0.267086, 0.135021, -0.254023, 0, 0.18681, 1.62267, 0.403883, 1.84161)
