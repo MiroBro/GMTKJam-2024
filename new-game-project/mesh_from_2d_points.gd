@@ -84,7 +84,7 @@ func _input(event):
 				find_islands(island_indices, island_lens)
 				
 
-				spawn_rigidbody_version_of_mesh(plank)
+				# spawn_rigidbody_version_of_mesh(plank)
 
 
 func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):

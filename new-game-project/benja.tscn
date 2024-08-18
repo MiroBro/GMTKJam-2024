@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bv1yvqg0l3r17"]
+[gd_scene load_steps=20 format=3 uid="uid://bv1yvqg0l3r17"]
 
 [ext_resource type="Script" path="res://move_stuff.gd" id="1_w5cx0"]
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="2_7go7d"]
 [ext_resource type="Script" path="res://results_camera.gd" id="2_erobn"]
 [ext_resource type="Texture2D" uid="uid://d4msecpum76g5" path="res://Assets/Images/MainMenu/Main_Menu_Banana_Glow.png" id="3_n7rx7"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="4_7wts8"]
+[ext_resource type="Texture2D" uid="uid://dgdqlr52iwa2u" path="res://Assets/Images/Results/Result_Family_Sad.png" id="4_72m3m"]
+[ext_resource type="Texture2D" uid="uid://dpyfbptvm7daq" path="res://Assets/Images/Results/Result_Family_Excited.png" id="4_v3jeb"]
+[ext_resource type="Texture2D" uid="uid://k0gsdj5bqvsq" path="res://Assets/Images/Results/Result_Family_Happy.png" id="5_xrq32"]
 
 [sub_resource type="Environment" id="Environment_egj3s"]
 background_mode = 1
@@ -28,6 +31,27 @@ albedo_texture = ExtResource("2_7go7d")
 
 [sub_resource type="QuadMesh" id="QuadMesh_o7vui"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7qemd"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("4_v3jeb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtfxf"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("5_xrq32")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3dkn8"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("4_72m3m")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pdbf"]
 transparency = 2
 alpha_scissor_threshold = 0.913
@@ -42,10 +66,11 @@ script = ExtResource("1_w5cx0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.678087, 2.0087, -0.878517)
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("look_thing")]
-transform = Transform3D(0.871877, -0.106988, 0.477895, 0.0475466, 0.989727, 0.134829, -0.487411, -0.0948318, 0.868008, 6.5845, 4.65348, 9.72111)
+transform = Transform3D(0.871877, -0.106988, 0.477895, 0.0475466, 0.989727, 0.134829, -0.487411, -0.0948319, 0.868008, 7.39035, 4.96981, 10.2085)
 fov = 54.9789
 script = ExtResource("2_erobn")
 look_thing = NodePath("../lookpos")
+distance = 7.645
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_egj3s")
@@ -140,8 +165,23 @@ mesh = SubResource("BoxMesh_rew31")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.02853, 0, 2.18465, -0.449067, 2.3631, 0.21142, -2.138, -0.496346, 1.00657, 2.99668, 2.98333, 7.52695)
+transform = Transform3D(1.02853, 0, 2.18465, -0.449067, 2.3631, 0.21142, -2.138, -0.496346, 1.00657, 2.04758, 2.98333, 6.53379)
 material_override = SubResource("StandardMaterial3D_wdcsf")
+mesh = SubResource("QuadMesh_o7vui")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.3223, 0.481853, -0.453105, -0.449067, 2.3631, 0.21142, 0.485614, -0.119068, 2.36232, 6.17305, 2.99412, 6.99554)
+material_override = SubResource("StandardMaterial3D_7qemd")
+mesh = SubResource("QuadMesh_o7vui")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.32509, 0.395522, 0.517762, -0.449067, 2.3631, 0.21142, -0.47208, -0.29987, 2.349, 4.98913, 2.7444, 4.83738)
+material_override = SubResource("StandardMaterial3D_xtfxf")
+mesh = SubResource("QuadMesh_o7vui")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.18231, 0.176895, 1.01824, -0.319866, 2.37783, 0.27245, -0.982748, -0.381118, 2.17245, 3.6567, 2.75974, 0.816701)
+material_override = SubResource("StandardMaterial3D_3dkn8")
 mesh = SubResource("QuadMesh_o7vui")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
