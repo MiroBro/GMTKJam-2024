@@ -82,7 +82,6 @@ func _input(event):
 				var island_indices: PackedInt32Array
 				var island_lens: Array[int]
 				find_islands(island_indices, island_lens)
-				
 
 				# spawn_rigidbody_version_of_mesh(plank)
 
