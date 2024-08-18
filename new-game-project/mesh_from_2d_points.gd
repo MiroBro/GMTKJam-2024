@@ -90,7 +90,7 @@ func _input(event):
 			if drawing:
 				tool = TOOL_NOTHING
 
-				var radius = 0.5
+				var radius = 0.2
 				
 				var tools = [TOOL_BANANA, TOOL_SAW]
 				var poss = [debug1.global_position, debug0.global_position]
@@ -134,8 +134,8 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 	scene_root.add_child(it)
 
 
-var speed = 10.0
-var target_speed = 20.0
+var speed = 5.0
+var target_speed = 15.0
 
 var normal_from = 0.0
 var cutting_from = 0.0
