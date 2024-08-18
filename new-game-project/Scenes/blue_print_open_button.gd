@@ -35,7 +35,7 @@ func close_blueprint() -> void:
 		t = 0
 		startOffset = Vector2(0,0)
 		endOffset = Vector2(0, targetYSize)
-		
+
 		#target.set_position(Vector2(0, targetYSize))
 	pass
 
