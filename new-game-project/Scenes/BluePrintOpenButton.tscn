@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="6_w81bv"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2tp6m"]
-blend_mode = 1
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_x7w3e"]
 viewport_path = NodePath("BlueprintUi/TextureRect/SubViewport")
@@ -17,7 +16,7 @@ background_color = Color(0, 0, 0, 0)
 background_energy_multiplier = 0.0
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 0)
-ambient_light_energy = 1.03
+ambient_light_energy = 2.9
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oncup"]
 albedo_color = Color(0, 0, 0, 1)
@@ -98,6 +97,9 @@ size_flags_vertical = 4
 texture = SubResource("ViewportTexture_x7w3e")
 
 [node name="SubViewport" type="SubViewport" parent="BlueprintUi/TextureRect"]
+transparent_bg = true
+msaa_2d = 2
+msaa_3d = 2
 size = Vector2i(700, 700)
 
 [node name="Camera3D" type="Camera3D" parent="BlueprintUi/TextureRect/SubViewport"]
