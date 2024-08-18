@@ -1,6 +1,7 @@
 extends Node
 
 var level = 0
+var mesh_to_cut: MeshInstance3D
 var mesh = ImmediateMesh.new()
 var cut_meshes: Array[ImmediateMesh]
 var number_of_pieces = [3, 5]

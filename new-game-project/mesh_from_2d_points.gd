@@ -53,6 +53,12 @@ var plank: MeshInstance3D
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
+	var reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
+	
+	var child = reference_root.get_child(0)
+	if child is MeshInstance3D:
+		Globals.mesh_to_cut = child
+		blueprint_ui.make_blueprint_from_mesh(Globals.mesh_to_cut)
 	
 	tool = TOOL_NOTHING
 
@@ -315,7 +321,7 @@ func _process(delta: float) -> void:
 		convert_grid_to_mesh(grid, plank.mesh)
 		
 	if Input.is_key_label_pressed(KEY_E):		
-		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]:
+		if Globals.cut_meshes.size() == Globals.number_of_pieces[Globals.level]-1:
 			var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
 			Globals.cut_meshes.append(mesh)
 			load_result_scene()			
