@@ -13,18 +13,13 @@ func instantiate_piece(instance, counter):
 	var mesh_instance: MeshInstance3D = MeshInstance3D.new()
 	mesh_instance.mesh = Globals.cut_meshes[counter]
 	mesh_instance.material_override = load("res://Materials/material_Wood.tres")
-	
 	mesh_instance.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
 	
-	print("Mesh transform",mesh_instance.global_transform.origin)
-
 	mesh_instance.rotation = reference_root.get_child(counter).rotation
-	
 	var collision_shape = CollisionShape3D.new()
 	
 	collision_shape.shape = mesh_instance.mesh.create_convex_shape()
 	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
-	
 	collision_shape.rotation = reference_root.get_child(counter).rotation
 	
 	instance.add_child(mesh_instance)
@@ -40,7 +35,7 @@ func turn_project_into_colliders():
 		instantiate_piece(instance, counter)			
 				#child_mesh.scale = reference_root.get_child(counter).scale 
 		project_root.get_child(counter).add_child(instance)
-		project_root.scale = Vector3(0.01,0.01,0.01)
+		
 		counter += 1	
 		#var rb = RigidBody3D.new()
 		#rb.name = child.name
@@ -62,7 +57,7 @@ func _ready() -> void:
 
 	reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
 	add_child(reference_root)
-	project_root = load("res://building_blocks/projects/bird.tscn").instantiate()
+	project_root = load("res://building_blocks/projects/project_" + str(Globals.level) + ".tscn").instantiate()
 	add_child(project_root)
 	#reference_root.global_transform.origin = Vector3(0,0,0)
 	#project_root.global_transform.origin = Vector3(0,0,0)

@@ -158,7 +158,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ic3pj")
 
-[node name="reference_2" type="Node3D"]
+[node name="reference_4" type="Node3D"]
 
 [node name="bird" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.283837, 0.74827, -1.11022e-18)

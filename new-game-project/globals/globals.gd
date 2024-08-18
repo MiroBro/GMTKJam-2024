@@ -1,9 +1,9 @@
 extends Node
 
-var level = 2
+var level = 0
 var mesh = ImmediateMesh.new()
 var cut_meshes: Array[ImmediateMesh]
-var number_of_pieces = [3, 5, 4]
+var number_of_pieces = [3, 5]
 
 ## Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
