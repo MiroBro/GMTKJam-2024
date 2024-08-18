@@ -1,6 +1,7 @@
 extends Control
 
 @export var xOffset : float = 0
+@export var polygon: CanvasItem
 
 var target : Control
 
@@ -9,6 +10,9 @@ var targetYSize = 0
 var startOffset = Vector2(0,0)
 var endOffset = Vector2(0,0)
 var t = 2
+
+func make_blueprint_from_mesh(mesh: MeshInstance3D):
+	polygon.make_thing(mesh)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,7 +35,7 @@ func close_blueprint() -> void:
 		
 		#target.set_position(Vector2(0, targetYSize))
 	pass
-	
+
 # Dismiss the blueprint
 func open_blueprint() -> void:
 	if (target):

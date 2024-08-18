@@ -41,6 +41,8 @@ var plank: MeshInstance3D
 @export var plank_collision_shape: CollisionShape3D
 
 
+@export var blueprint_ui: CanvasItem
+
 func _ready() -> void:
 	plank = self.get_child(0)
 
@@ -58,7 +60,7 @@ func _ready() -> void:
 
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-
+	blueprint_ui.make_blueprint_from_mesh(plank)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -88,6 +90,7 @@ func _input(event):
 				var island_indices: PackedInt32Array
 				var island_lens: Array[int]
 				find_islands(island_indices, island_lens)
+				blueprint_ui.make_blueprint_from_mesh(plank)
 
 				# spawn_rigidbody_version_of_mesh(plank)
 

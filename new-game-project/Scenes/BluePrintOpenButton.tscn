@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
 [ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
-[ext_resource type="Material" uid="uid://l0jpgn7cnn7r" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
+[ext_resource type="Material" path="res://Shaders/blueprint_ouline.tres" id="4_rkj1k"]
 [ext_resource type="Texture2D" uid="uid://lskx2tay3de5" path="res://icon.svg" id="4_uwtof"]
 
-[node name="BluePrintOpenButton" type="Control"]
+[node name="BluePrintOpenButton" type="Control" node_paths=PackedStringArray("polygon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ur85g")
+polygon = NodePath("BlueprintUi/Polygon")
 
 [node name="Open_Blueprint" type="Button" parent="."]
 layout_mode = 1
@@ -34,7 +35,7 @@ text = "Open Blueprint"
 custom_minimum_size = Vector2(1000, 100)
 layout_mode = 1
 
-[node name="Polygon" type="TextureRect" parent="BlueprintUi"]
+[node name="Polygon" type="TextureRect" parent="BlueprintUi" node_paths=PackedStringArray("reference_mesh")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -50,6 +51,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 1
 script = ExtResource("3_nuaf2")
+reference_mesh = NodePath("")
 
 [node name="Close" type="Button" parent="BlueprintUi"]
 layout_mode = 1
