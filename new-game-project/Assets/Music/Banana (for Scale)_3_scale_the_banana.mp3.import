@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://npl7xvb6rrny"
+path="res://.godot/imported/Banana (for Scale)_3_scale_the_banana.mp3-d237903ecf81d91e01c3d3dafbed0be3.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Banana (for Scale)_3_scale_the_banana.mp3"
+dest_files=["res://.godot/imported/Banana (for Scale)_3_scale_the_banana.mp3-d237903ecf81d91e01c3d3dafbed0be3.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

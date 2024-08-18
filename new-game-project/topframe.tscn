@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbdh2ak2pcino"]
+
+[ext_resource type="PackedScene" uid="uid://ba45hq62mhhb4" path="res://rigid_body_3d.tscn" id="1_bdd54"]
+
+[node name="frame" type="Node3D"]
+transform = Transform3D(4, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="RigidBody3D" parent="." instance=ExtResource("1_bdd54")]

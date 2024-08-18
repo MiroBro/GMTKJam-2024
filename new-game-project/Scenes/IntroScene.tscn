@@ -1,3 +1,9 @@
 [gd_scene format=3 uid="uid://bnmry3j8iccbj"]
 
 [node name="IntroScene" type="Node2D"]
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_right = 218.0
+offset_bottom = 54.0
+text = "Intro scene"
+editable = false

@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdldsdwvl51ux"]
+
+[ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
+[ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
+[ext_resource type="Script" path="res://Scenes/polygon.gd" id="3_nuaf2"]
+
+[node name="BluePrintOpenButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ur85g")
+
+[node name="Open_Blueprint" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -67.0
+offset_right = 60.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Open Blueprint"
+
+[node name="BlueprintUi" parent="." instance=ExtResource("2_o7ptg")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 1
+
+[node name="Polygon" type="TextureRect" parent="BlueprintUi"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -468.0
+offset_top = 109.0
+offset_right = 487.0
+offset_bottom = 633.0
+grow_horizontal = 2
+expand_mode = 2
+stretch_mode = 1
+script = ExtResource("3_nuaf2")
+
+[node name="Close" type="Button" parent="BlueprintUi"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -66.0
+offset_right = 62.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Close blueprint
+"
+
+[connection signal="pressed" from="Open_Blueprint" to="." method="_on_open_blueprint_pressed"]
+[connection signal="gui_input" from="BlueprintUi" to="." method="_on_blueprint_ui_gui_input"]
+[connection signal="mouse_exited" from="BlueprintUi" to="." method="_on_blueprint_ui_mouse_exited"]
+[connection signal="pressed" from="BlueprintUi/Close" to="." method="_on_close_pressed"]
