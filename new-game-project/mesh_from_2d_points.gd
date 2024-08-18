@@ -269,8 +269,8 @@ func _process(delta: float) -> void:
 
 			if points.size() > 0:
 				var old_p = points[0]
-				if old_p.distance_to(mouse_2d) > 0.1:
-					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 10*delta)
+				if old_p.distance_to(mouse_2d) > 0.05:
+					saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), 15*delta)
 					#saw_dir = lerp(saw_dir, (mouse_pos_in_plane - saw_pos).normalized(), t)
 
 					saw_dir = saw_dir.normalized()
