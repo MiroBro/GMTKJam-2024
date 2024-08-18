@@ -55,7 +55,7 @@ var plank: MeshInstance3D
 func _ready() -> void:
 	var reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
 	
-	var child = reference_root.get_child(0)
+	var child = reference_root.get_child(Globals.cut_meshes.size())
 	if child is MeshInstance3D:
 		Globals.mesh_to_cut = child
 		blueprint_ui.make_blueprint_from_mesh(Globals.mesh_to_cut)
@@ -78,7 +78,7 @@ func _ready() -> void:
 
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-	blueprint_ui.make_blueprint_from_mesh(plank)
+	#blueprint_ui.make_blueprint_from_mesh(plank)
 	blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 func _input(event):
