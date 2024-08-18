@@ -54,7 +54,7 @@ var plank: MeshInstance3D
 @export var blueprint_ui: CanvasItem
 
 func _ready() -> void:
-	var reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
+	var reference_root = load("res://building_blocks/projects/blue_print_reference.tscn").instantiate()
 	
 	var child = reference_root.get_child(Globals.cut_meshes.size())
 	if child is MeshInstance3D:
