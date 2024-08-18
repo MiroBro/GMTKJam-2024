@@ -64,7 +64,7 @@ albedo_texture = ExtResource("6_vmog1")
 script = ExtResource("1_6117w")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.546065, -0.139907, 0.825977, 0.0256682, 0.988287, 0.15043, -0.837349, -0.0609434, 0.543261, 3.29806, 0.817641, 2.28934)
+transform = Transform3D(0.546065, -0.139907, 0.825978, 0.0256682, 0.988287, 0.15043, -0.837349, -0.0609433, 0.543261, 1.85891, 0.667374, 1.23961)
 
 [node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e7igb")
@@ -80,7 +80,7 @@ directional_shadow_fade_start = 0.695
 directional_shadow_max_distance = 23.6
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.24437, 0)
 physics_material_override = SubResource("PhysicsMaterial_v2a5n")
 freeze = true
 
@@ -92,6 +92,7 @@ mesh = SubResource("BoxMesh_un3l2")
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(0.48, 0, 0, 0, 0.48, 0, 0, 0, 0.48, 0.0601637, -1.68895, -0.840312)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1.02853, 0, 2.18465, -0.449067, 2.3631, 0.21142, -2.138, -0.496346, 1.00657, 2.04758, 4.98333, 6.53379)

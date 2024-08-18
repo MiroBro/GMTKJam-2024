@@ -55,13 +55,12 @@ func turn_project_into_colliders():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 
-	reference_root = load("res://building_blocks/projects/reference_"  + str(Globals.level) + ".tscn").instantiate()
+	reference_root = load("res://building_blocks/projects/reference.tscn").instantiate()
 	add_child(reference_root)
-	project_root = load("res://building_blocks/projects/project_" + str(Globals.level) + ".tscn").instantiate()
+	project_root = load("res://building_blocks/projects/project.tscn").instantiate()
 	add_child(project_root)
 	#reference_root.global_transform.origin = Vector3(0,0,0)
 	#project_root.global_transform.origin = Vector3(0,0,0)
-	print(project_root.global_transform.origin)
 	
 	turn_project_into_colliders()
 
