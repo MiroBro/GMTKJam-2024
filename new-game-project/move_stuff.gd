@@ -11,13 +11,16 @@ func instantiate_piece(instance, counter):
 	
 	child_mesh.global_transform.origin = reference_root.get_child(counter).global_transform.origin
 	print("positon",child_mesh.global_transform.origin)
-
+	
 	#child_mesh.scale = Vector3(5,5,5)
 	#child_mesh.rotation = reference_root.get_child(counter).rotation
 	
 	var collision_shape = CollisionShape3D.new()
 	collision_shape.shape = child_mesh.mesh.create_convex_shape()
 	#collision_shape.scale = reference_root.get_child(counter).scale
+	#child_mesh.rotation = Vector3(reference_root.get_child(counter).rotation., reference_root.get_child(counter).rotation.x,reference_root.get_child(counter).rotation.z )
+	child_mesh.global_rotation = Vector3(1, 1, 0 )
+	
 	instance.add_child(child_mesh)
 	instance.add_child(collision_shape)
 			

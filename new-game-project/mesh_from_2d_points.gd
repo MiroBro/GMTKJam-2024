@@ -114,8 +114,8 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 
 				
 func load_result_scene():
-	Globals.mesh = convert_grid_to_mesh(grid, mesh)
-	get_tree().change_scene_to_file("res://benja.tscn")
+	Globals.mesh = plank.mesh
+	get_tree().change_scene_to_file("res://Scenes/result.tscn")
 	pass
 	
 
@@ -209,7 +209,12 @@ func wh_to_index(w: int, h: int) -> int:
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	fix_music()
+	find_and_delete_islands()
+	
+	if Input.is_key_pressed(KEY_E):
+		load_result_scene()
+
+	#fix_music()
 
 	var cut_any = false
 
