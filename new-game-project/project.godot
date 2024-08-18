@@ -16,6 +16,10 @@ run/main_scene="res://splitting_algorithm_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+mouse_cursor/custom_image="res://Assets/Images/Other/custom_cursor_32x32.png"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
