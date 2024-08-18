@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dkbc2sv4tr610"]
+
+[ext_resource type="Shader" path="res://Shaders/triplanar.gdshader" id="1_ie0fs"]
+[ext_resource type="Texture2D" uid="uid://6x5wws8o3boa" path="res://Meshes/T_Wood_Tileable_2.png" id="2_lv8qh"]
+[ext_resource type="Texture2D" uid="uid://u0gjn4cqu7vn" path="res://Meshes/T_Wood_Tileable_1.png" id="3_iulmx"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ie0fs")
+shader_parameter/scale = 1.0
+shader_parameter/side_texture = ExtResource("3_iulmx")
+shader_parameter/front_texture = ExtResource("2_lv8qh")

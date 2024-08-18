@@ -13,7 +13,7 @@ var drawing = false
 
 var grid: PackedByteArray
 var cell_size = Vector2(0.013, 0.013)
-# var cell_size = Vector2(0.1, 0.1)
+# var cell_size = Vector2(0.3, 0.2)
 var plank_size = Vector2(1.05, 0.65)
 var plank_half_size = plank_size / 2.0
 
@@ -38,6 +38,8 @@ var cell = Vector3(cell_size.x, thickness, cell_size.y)
 @export var rb_template: RigidBody3D
 
 var plank: MeshInstance3D
+@export var plank_collision_shape: CollisionShape3D
+
 
 func _ready() -> void:
 	plank = self.get_child(0)
@@ -53,6 +55,10 @@ func _ready() -> void:
 
 	for i in range(grid_width * grid_height):
 		grid.append(1)
+
+	find_and_delete_islands()
+	convert_grid_to_mesh(grid, plank.mesh)
+
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -82,7 +88,6 @@ func _input(event):
 				var island_indices: PackedInt32Array
 				var island_lens: Array[int]
 				find_islands(island_indices, island_lens)
-				
 
 				# spawn_rigidbody_version_of_mesh(plank)
 
@@ -107,14 +112,14 @@ var target_speed = 20.0
 var normal_from = 0.0
 var cutting_from = 0.0
 
+
 func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
-	
+
 	find_islands(island_indices, island_lens)
-	print(island_lens)
-	print(island_indices.size())
 	var i = -1
+	var any = false
 	for l in island_lens:
 		var should_remove = true
 		for jjjj in l:
@@ -123,17 +128,19 @@ func find_and_delete_islands():
 			var grid_idx = island_indices[i]
 			if grid_idx == 0:
 				should_remove = false
+
 		if should_remove:
+			camera.add_trauma(2.0)
 			i -= l
 			var rb_grid = grid.duplicate();
 			for j in rb_grid.size():
 				rb_grid[j] = 0
+
 			for jjjj in l:
 				i += 1
 				var grid_idx = island_indices[i]
 				grid[grid_idx] = 0
 				rb_grid[grid_idx] = 1
-
 
 			var rb_mesh = plank.mesh.duplicate()
 			rb_mesh.clear_surfaces()
@@ -141,10 +148,11 @@ func find_and_delete_islands():
 			var new_node = plank.duplicate()
 			new_node.mesh = rb_mesh
 			spawn_rigidbody_version_of_mesh(new_node)
+			any = true
 
-			
-	
-	
+	if any:
+		plank_collision_shape.shape = plank.mesh.create_convex_shape()
+
 
 func fix_music():
 	if not drawing and not normal_bg.playing:
@@ -163,31 +171,29 @@ func fix_music():
 func _process(delta: float) -> void:
 	particles.emitting = false
 
-	find_and_delete_islands()
-
-
 	fix_music()
 
+	var cut_any = false
+
 	if drawing:
-		camera.add_trauma(0.1)
+		camera.add_trauma(0.2)
 		speed = lerp(speed, target_speed, 5.0 * delta)
 
 		var mouse_2d = Vector2(mouse_pos_in_plane.x, mouse_pos_in_plane.z)
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
+
 		var p = point_to_grid_space(saw_2dd)
 		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
-			
 			var i = grid_space_to_index(p)
 			if grid[i] == 1:
 				speed = 0.5
-		
+
 		if points.size() > 0:
 			var old_p = points[0]
 			if old_p.distance_to(mouse_2d) > 0.1:
-				
 				debug0.look_at(mouse_pos_in_plane)
-		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 
+		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
 
 		debug0.global_position = saw_pos
@@ -195,9 +201,7 @@ func _process(delta: float) -> void:
 
 		points.push_back(saw_2d)
 		var n =  points.size()
-		#if n % 2 == 0 && n > 0:
 		if n > 1:
-			var cut_any = false
 			for i in range(1, n-1):
 				cut_any = cut_any or cut_grid_with_points(points[i-1], points[i])
 
@@ -205,8 +209,9 @@ func _process(delta: float) -> void:
 				particles.emitting = true
 				points.pop_front()
 
-	convert_grid_to_mesh(grid, plank.mesh)
-
+	if cut_any:
+		find_and_delete_islands()
+		convert_grid_to_mesh(grid, plank.mesh)
 
 # from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
@@ -358,8 +363,6 @@ func find_islands(island_indices: PackedInt32Array, island_lens: Array[int]) :
 		island_indices.append_array(island)
 		island_lens.push_back(island.size())
 
-		
-	
 
 func flood_fill_mesh_from_index(grid: PackedByteArray, idx: int) -> PackedInt32Array:
 	var visited = grid.duplicate()
@@ -417,6 +420,14 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	var f = cell * -Vector3(0.0, 0.0, 1.0)
 	var r = cell * Vector3(1.0, 0.0, 0.0)
 
+	var up = Vector3.UP;
+	var right = Vector3.RIGHT
+	var forward = Vector3.FORWARD
+	var down = -up;
+	var left = -right
+	var back = - forward
+	
+
 	var i = -1
 	for value in grid:
 		i = i + 1
@@ -425,29 +436,27 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var mp = Vector3(middle.x, 0.15, middle.y)
 
 			var bl = mp - half
-
 			var tr = bl + f + r
 			var br = bl + r
 			var tl = bl + f
 
 
-			var normal = Vector3.UP
 			#add top
+			mesh.surface_set_normal(up)
+			# mesh.surface_set_normal(Vector3(0,0,1))
 			mesh.surface_add_vertex(br)
-			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(tl)
-			mesh.surface_set_normal(normal)
 			mesh.surface_add_vertex(tr)
-			mesh.surface_set_normal(normal)
 
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(br)
-			mesh.surface_set_normal(normal)
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(bl)
-			mesh.surface_set_normal(normal)
+			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
-			mesh.surface_set_normal(normal)
 			
-			var thick = 0.05 * Vector3.DOWN
+			# var thick = 0.05 * Vector3.DOWN
+			var thick = 0.3 * Vector3.DOWN
 			# add sides
 			# if we want to we can make sure to only add this if we do not have four filled neighbours
 
@@ -457,7 +466,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var br_b = br + thick
 			var tl_b = tl + thick
 
-			#front facing side
+			# #front facing side
+			mesh.surface_set_normal(back)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(br_b)
 			mesh.surface_add_vertex(bl_b)
@@ -467,7 +477,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br)
 			
 			
-			# back facing side
+			# # back facing side
+			mesh.surface_set_normal(forward)
 			mesh.surface_add_vertex(tl)
 			mesh.surface_add_vertex(tl_b)
 			mesh.surface_add_vertex(tr_b)
@@ -476,7 +487,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(tr)
 			mesh.surface_add_vertex(tl)
 
-			# left side
+			# # left side
+			mesh.surface_set_normal(left)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(bl_b)
 			mesh.surface_add_vertex(tl_b)
@@ -485,7 +497,8 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(tl_b)
 			mesh.surface_add_vertex(tl)
 
-			# right side
+			# # right side
+			mesh.surface_set_normal(right)
 			mesh.surface_add_vertex(tr)
 			mesh.surface_add_vertex(tr_b)
 			mesh.surface_add_vertex(br_b)
@@ -495,13 +508,19 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			mesh.surface_add_vertex(br)
 
 			# add bottom
+			mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(tl_b)
 			mesh.surface_add_vertex(tr_b)
-
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(bl_b)
+			# mesh.surface_set_normal(down)
 			mesh.surface_add_vertex(tl_b)
+			# mesh.surface_set_normal(down)
+#
+			mesh.surface_add_vertex(br_b)
+			# mesh.surface_set_normal(down)
+			mesh.surface_add_vertex(tl_b)
+			# mesh.surface_set_normal(down)
+			mesh.surface_add_vertex(bl_b)
+			# mesh.surface_set_normal(down)
 
 	mesh.surface_end()
 

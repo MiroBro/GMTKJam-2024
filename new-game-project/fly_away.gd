@@ -16,7 +16,9 @@ var count_down = 10.0
 var start_count = false
 func _process(delta: float) -> void:
 	if prev_freeze != self.freeze:
-		self.add_constant_central_force(Vector3(0.0, 18.0, 0.0))
+		#self.add_constant_central_force(Vector3(0.0, 18.0, 0.0))
+		self.add_constant_central_force(Vector3(0.0, 0.0, 0.0))
+		#self.add_constant_torque(Vector3.UP)
 		start_count = true
 
 	if start_count:
@@ -28,5 +30,5 @@ func _process(delta: float) -> void:
 		var force = dir
 		force.y = 0.0
 		force=  force.normalized() * 10.0
-		self.add_constant_central_force(force * 15.0 * delta)
+		#self.add_constant_central_force(force * 15.0 * delta)
 	prev_freeze = self.freeze
