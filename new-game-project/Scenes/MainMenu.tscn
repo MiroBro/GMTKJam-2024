@@ -471,6 +471,7 @@ theme_override_font_sizes/font_size = 56
 text = "QUIT"
 
 [node name="Title" type="TextureRect" parent="UI_Canvas/Control"]
+layout_mode = 0
 offset_left = 91.0
 offset_top = -62.0
 offset_right = 4713.0
