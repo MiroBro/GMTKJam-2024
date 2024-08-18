@@ -128,11 +128,16 @@ func _process(delta: float) -> void:
 		var saw_2dd = Vector2(saw_pos.x, saw_pos.z)
 		var p = point_to_grid_space(saw_2dd)
 		if p.x > 0.0 && p.x < 1.0 && p.y > 0.0 && p.y < 1.0:
+			
 			var i = grid_space_to_index(p)
 			if grid[i] == 1:
 				speed = 0.5
-
-		debug0.look_at(mouse_pos_in_plane)
+		
+		if points.size() > 0:
+			var old_p = points[0]
+			if old_p.distance_to(mouse_2d) > 0.1:
+				
+				debug0.look_at(mouse_pos_in_plane)
 		saw_pos = lerp(saw_pos, mouse_pos_in_plane, delta * speed)
 
 		var saw_2d = Vector2(saw_pos.x, saw_pos.z)
@@ -284,7 +289,6 @@ func is_point_in_rect(point: Vector2, rect_position: Vector2, rect_size: Vector2
 	return (point.x >= rect_position.x and point.x <= rect_position.x + rect_size.x and point.y >= rect_position.y and point.y <= rect_position.y + rect_size.y)
 
 func find_islands():
-	print("called")
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
 	var all_visited = grid.duplicate()
