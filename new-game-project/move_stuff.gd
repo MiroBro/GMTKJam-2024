@@ -15,6 +15,7 @@ func instantiate_piece(instance, counter):
 	mesh_instance.material_override = load("res://Materials/material_Wood.tres")
 	mesh_instance.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
 	
+	
 	mesh_instance.rotation = reference_root.get_child(counter).rotation
 	var collision_shape = CollisionShape3D.new()
 	
@@ -22,6 +23,8 @@ func instantiate_piece(instance, counter):
 	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin 
 	collision_shape.rotation = reference_root.get_child(counter).rotation
 	
+
+
 	instance.add_child(mesh_instance)
 	instance.add_child(collision_shape)
 			
@@ -34,7 +37,10 @@ func turn_project_into_colliders():
 		var instance = RigidBody3D.new()	
 		instantiate_piece(instance, counter)			
 				#child_mesh.scale = reference_root.get_child(counter).scale 
+		var child: Node3D = project_root.get_child(counter)
+		child.global_transform = Transform3D.IDENTITY
 		project_root.get_child(counter).add_child(instance)
+		
 		
 		counter += 1	
 		#var rb = RigidBody3D.new()
