@@ -472,10 +472,10 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 				if !(0 < wi && wi <= grid_width && 0 <= hi && hi < grid_height):
 					skip = false
 					break
-				var side_idx = wh_to_index(w,h)
-				if grid[side_idx] == 0:
-					skip = false
-					break
+				#var side_idx = wh_to_index(w,h)
+				#if grid[side_idx] == 0:
+					#skip = false
+					#break
 			#if skip:
 				#continue
 			
