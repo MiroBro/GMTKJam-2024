@@ -17,7 +17,7 @@ void fragment() {
 	mat4 INV_MODEL_MATRIX = inverse(MODEL_MATRIX);
 	vec3 extracted_scale = vec3(length(MODEL_MATRIX[0]), length(MODEL_MATRIX[1]), length(MODEL_MATRIX[2]));
 	vec3 projected_coords = (INV_MODEL_MATRIX * (INV_VIEW_MATRIX * vec4(VERTEX, 1.0))).xyz * extracted_scale;
-	
+
 	vec3 albedoX = texture(side_texture, projected_coords.zy * scale).rgb * side_tint;
 	vec3 albedoY = texture(top_texture, projected_coords.xz * scale).rgb * top_tint;
 	vec3 albedoZ = texture(front_texture, projected_coords.xy * scale).rgb * front_tint;

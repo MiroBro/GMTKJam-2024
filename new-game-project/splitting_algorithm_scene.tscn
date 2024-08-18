@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwgaf6d14ubbf"]
+[gd_scene load_steps=28 format=3 uid="uid://u617whog5up4"]
 
 [ext_resource type="Script" path="res://mesh_from_2d_points.gd" id="1_gb60y"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="1_lws0k"]
@@ -9,19 +9,18 @@
 [ext_resource type="PackedScene" uid="uid://bp6bmk2qgjcmv" path="res://Meshes/SM_Table_1.fbx" id="3_r1qx8"]
 [ext_resource type="AudioStream" uid="uid://pjggloaabujq" path="res://Assets/Music/Cutting song_2.mp3" id="4_eajf0"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="5_pt3pa"]
-[ext_resource type="Material" uid="uid://dkbc2sv4tr610" path="res://Materials/material_Wood.tres" id="6_au7t2"]
+[ext_resource type="Material" uid="uid://dkbc2sv4tr610" path="res://Materials/material_Wood.tres" id="6_ekt3n"]
 [ext_resource type="PackedScene" uid="uid://cftmk855cri6b" path="res://Meshes/M_Sawblade_1.glb" id="8_v0o3s"]
 [ext_resource type="Script" path="res://fly_away.gd" id="11_3hlxx"]
 
 [sub_resource type="Environment" id="Environment_afixl"]
 background_mode = 1
-background_color = Color(0.402521, 0.30571, 0.185434, 1)
-background_energy_multiplier = 1.06
+background_color = Color(0.775195, 0.426857, 0.249102, 1)
+background_energy_multiplier = 0.88
 ambient_light_source = 2
-ambient_light_color = Color(0.453769, 0.358623, 9.62615e-08, 1)
-ambient_light_energy = 2.8
+ambient_light_color = Color(0.790796, 0.490904, 0.260902, 1)
+ambient_light_energy = 1.04
 tonemap_mode = 3
-glow_enabled = true
 fog_light_color = Color(0, 0.482293, 0.579114, 1)
 fog_sun_scatter = 0.31
 fog_density = 0.453
@@ -120,7 +119,7 @@ environment = SubResource("Environment_afixl")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(0.932134, -0.181056, 0.313599, -0.362113, -0.466067, 0.807252, -2.16227e-09, -0.866025, -0.5, 0, 0.421738, 0)
 shadow_enabled = true
-shadow_bias = 0.062
+shadow_bias = 0.152
 shadow_normal_bias = 0.0
 shadow_transmittance_bias = 0.225
 shadow_blur = 0.568
@@ -130,10 +129,9 @@ directional_shadow_fade_start = 0.795
 directional_shadow_max_distance = 2.0
 directional_shadow_pancake_size = 8.9
 
-[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template", "plank_collision_shape")]
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "normal_bg", "cutting_bg", "rb_template", "plank_collision_shape", "blueprint_ui")]
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
-thickness = 1.0
 camera = NodePath("../Node3D/Camera3D")
 debug0 = NodePath("../debug0")
 debug1 = NodePath("../debug1")
@@ -143,9 +141,10 @@ normal_bg = NodePath("../Node3D/NormalBG")
 cutting_bg = NodePath("../Node3D/CuttingBG")
 rb_template = NodePath("../rb_template")
 plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
+blueprint_ui = NodePath("../BluePrintOpenButton")
 
 [node name="plank_mesh" type="MeshInstance3D" parent="GameManager"]
-material_override = ExtResource("6_au7t2")
+material_override = ExtResource("6_ekt3n")
 mesh = SubResource("ImmediateMesh_cs28j")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="GameManager/plank_mesh"]
@@ -159,7 +158,7 @@ shape = SubResource("BoxShape3D_04bfi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
-transform = Transform3D(1.25902, -0.000456147, 0.286759, 0.0809712, 0.00859767, -0.0477878, -0.283472, 0.000429906, 1.25998, 0.208898, -0.180433, 0.92714)
+transform = Transform3D(0.976311, 0, 0.216371, 0, 0.0391266, 0, -0.216371, 0, 0.976311, 0.174079, -0.13239, 0.80818)
 material_override = SubResource("ShaderMaterial_v16nn")
 mesh = SubResource("BoxMesh_7yi7t")
 skeleton = NodePath("../..")

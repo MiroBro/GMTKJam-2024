@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bx126xs7g72v6"
-path="res://.godot/imported/Old_Woman_Sad.wav-e12613961bddd689d9052aada1e90b61.sample"
+path="res://.godot/imported/Old_Woman_Sad.wav-3b5b4dd7c726f6d10c57d86b5c9897be.sample"
 
 [deps]
 
-source_file="res://Assets/SFX/Result_SFX/Old_Woman_Sad.wav"
-dest_files=["res://.godot/imported/Old_Woman_Sad.wav-e12613961bddd689d9052aada1e90b61.sample"]
+source_file="res://Assets/SFX/Result_Scene/Old_Woman_Sad.wav"
+dest_files=["res://.godot/imported/Old_Woman_Sad.wav-3b5b4dd7c726f6d10c57d86b5c9897be.sample"]
 
 [params]
 

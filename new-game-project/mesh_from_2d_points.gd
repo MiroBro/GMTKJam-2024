@@ -1,9 +1,11 @@
 extends Node3D
 
 @export var points: Array[Vector2] = []
-@export var thickness: float = 0.3
 
 @export var camera: Camera3D
+
+@export var cell_size = Vector2(0.013, 0.013)
+@export var plank_thickness = 0.05;
 
 var scene_root: Node
 var mouse_pos_in_plane = Vector3(0.0, 0.0, 0.0)
@@ -12,7 +14,7 @@ var saw_pos = Vector3(0.0, 0.0, 0.0)
 var drawing = false
 
 var grid: PackedByteArray
-var cell_size = Vector2(0.013, 0.013)
+
 # var cell_size = Vector2(0.3, 0.2)
 var plank_size = Vector2(1.05, 0.65)
 var plank_half_size = plank_size / 2.0
@@ -30,7 +32,7 @@ var plank_offset = -Vector3(plank_half_size.x, 0.0, plank_half_size.y)
 var grid_width
 var grid_height
 
-var cell = Vector3(cell_size.x, thickness, cell_size.y)
+var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
 @export var normal_bg: AudioStreamPlayer3D
 @export var cutting_bg: AudioStreamPlayer3D
@@ -115,10 +117,31 @@ var target_speed = 20.0
 var normal_from = 0.0
 var cutting_from = 0.0
 
+#func grid_coord_to_idx(w: int, h: int):
+	
 
 func find_and_delete_islands():
 	var island_indices: PackedInt32Array
 	var island_lens: Array[int]
+
+
+	if grid_width < 10 || grid_height < 10:
+		print("delete islands skipping causre too small grid")
+		return
+	
+	var safe_indices: Array[int];
+	var W = 2
+	var H = 2
+	var bot_left = Vector2i(grid_width/2, grid_height/2)
+	for wi in W:
+		for hi in H:
+			var w = bot_left.x + wi
+			var h = bot_left.y + hi
+			var safe_idx = wh_to_index(w,h)
+			safe_indices.push_back(safe_idx)
+			
+			
+
 
 	find_islands(island_indices, island_lens)
 	var i = -1
@@ -129,8 +152,10 @@ func find_and_delete_islands():
 			i += 1
 			i = int(i)
 			var grid_idx = island_indices[i]
-			if grid_idx == 0:
-				should_remove = false
+			for safe in safe_indices:
+				if grid_idx == safe:
+					should_remove = false
+
 
 		if should_remove:
 			camera.add_trauma(2.0)
@@ -170,6 +195,8 @@ func fix_music():
 		normal_from = cutting_bg.get_playback_position()
 		normal_bg.stop()
 
+func wh_to_index(w: int, h: int) -> int:
+	return w + h*grid_width;
 
 func _process(delta: float) -> void:
 	particles.emitting = false
@@ -418,7 +445,7 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 
 
-	var half = cell / 2.0
+	var half = Vector3(cell.x, 0, cell.z)/ 2.0
 
 	var f = cell * -Vector3(0.0, 0.0, 1.0)
 	var r = cell * Vector3(1.0, 0.0, 0.0)
@@ -435,8 +462,25 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 	for value in grid:
 		i = i + 1
 		if value == 1:
+			var w = i % grid_width;
+			var h = i / grid_width;
+			
+			var skip = true
+			for d in [Vector2i(-1,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(0,1)]:
+				var wi = w + d.x
+				var hi = h + d.y
+				if !(0 < wi && wi <= grid_width && 0 <= hi && hi < grid_height):
+					skip = false
+					break
+				#var side_idx = wh_to_index(w,h)
+				#if grid[side_idx] == 0:
+					#skip = false
+					#break
+			#if skip:
+				#continue
+			
 			var middle = index_to_world_space(i)
-			var mp = Vector3(middle.x, 0.15, middle.y)
+			var mp = Vector3(middle.x, 0.0, middle.y)
 
 			var bl = mp - half
 			var tr = bl + f + r
@@ -458,18 +502,17 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
 			
-			# var thick = 0.05 * Vector3.DOWN
-			var thick = 0.3 * Vector3.DOWN
+			var thick = -plank_thickness * Vector3.DOWN
 			# add sides
 			# if we want to we can make sure to only add this if we do not have four filled neighbours
 
 			
-			var bl_b = bl + thick
-			var tr_b = tr + thick
-			var br_b = br + thick
-			var tl_b = tl + thick
+			var bl_b = bl - thick
+			var tr_b = tr - thick
+			var br_b = br - thick
+			var tl_b = tl - thick
 
-			# #front facing side
+			#front facing side
 			mesh.surface_set_normal(back)
 			mesh.surface_add_vertex(bl)
 			mesh.surface_add_vertex(br_b)
@@ -534,7 +577,7 @@ func convert_points_and_cuts_to_mesh(polygon: Array[Vector2], mesh: ImmediateMes
 
 	var num_points = polygon.size()
 	
-	var bottom_y = -thickness;
+	var bottom_y = -plank_thickness;
 	var top_y = 0.0;
 	# Add top face
 	for i in range(1, num_points - 1):
