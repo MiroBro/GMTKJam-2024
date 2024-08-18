@@ -1,12 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://eof063ohd4ob"]
+[gd_scene load_steps=29 format=3 uid="uid://eof063ohd4ob"]
 
 [ext_resource type="Script" path="res://move_stuff.gd" id="1_6117w"]
 [ext_resource type="Texture2D" uid="uid://bkqvjlbvv7f6f" path="res://Assets/Images/MainMenu/Man.png" id="2_etoq4"]
 [ext_resource type="Texture2D" uid="uid://dpyfbptvm7daq" path="res://Assets/Images/Results/Result_Family_Excited.png" id="3_ixqjf"]
 [ext_resource type="Texture2D" uid="uid://k0gsdj5bqvsq" path="res://Assets/Images/Results/Result_Family_Happy.png" id="4_3o54u"]
+[ext_resource type="Texture2D" uid="uid://bn61pc7y7e8wj" path="res://Assets/Images/Results/Result_Little_Girl_Happy.png" id="4_611bx"]
+[ext_resource type="Texture2D" uid="uid://de8acfgwjt5f1" path="res://Assets/Images/Results/Result_Little_Girl_Sad.png" id="5_gluen"]
 [ext_resource type="Texture2D" uid="uid://dgdqlr52iwa2u" path="res://Assets/Images/Results/Result_Family_Sad.png" id="5_gyvmu"]
 [ext_resource type="Texture2D" uid="uid://d4msecpum76g5" path="res://Assets/Images/MainMenu/Main_Menu_Banana_Glow.png" id="6_vmog1"]
+[ext_resource type="Texture2D" uid="uid://dqw4fkk1rdcj1" path="res://Assets/Images/Results/Result_Old_Lady_Excited.png" id="6_ytbf6"]
 [ext_resource type="PackedScene" uid="uid://bbx0k4mrgsq38" path="res://Meshes/SM_Banana_1.fbx" id="7_du7lv"]
+[ext_resource type="Texture2D" uid="uid://dhn0yqdclsdon" path="res://Assets/Images/Results/Result_Old_Lady_Sad.png" id="7_rnea4"]
+[ext_resource type="AudioStream" uid="uid://6orl8xmhrw8a" path="res://Assets/Music/Banana (for Scale)_3_derp.mp3" id="8_e06ra"]
 
 [sub_resource type="Environment" id="Environment_e7igb"]
 background_mode = 1
@@ -16,6 +21,9 @@ background_color = Color(0.348477, 0.712873, 0.558233, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e5b8k"]
 size = Vector3(10, 2, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8djgm"]
+albedo_color = Color(0.426918, 0.59337, 0.50963, 1)
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_4jbka"]
 albedo_color = Color(0.205117, 0.205117, 0.205117, 1)
@@ -39,6 +47,34 @@ alpha_scissor_threshold = 0.888
 alpha_antialiasing_mode = 1
 alpha_antialiasing_edge = 0.96
 albedo_texture = ExtResource("3_ixqjf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_argar"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("4_611bx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kifwe"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("5_gluen")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_563nb"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("6_ytbf6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0aj8d"]
+transparency = 2
+alpha_scissor_threshold = 0.888
+alpha_antialiasing_mode = 1
+alpha_antialiasing_edge = 0.96
+albedo_texture = ExtResource("7_rnea4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e3eu"]
 transparency = 2
@@ -88,6 +124,7 @@ freeze = true
 shape = SubResource("BoxShape3D_e5b8k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+material_override = SubResource("StandardMaterial3D_8djgm")
 mesh = SubResource("BoxMesh_un3l2")
 
 [node name="Node3D" type="Node3D" parent="."]
@@ -101,13 +138,37 @@ mesh = SubResource("QuadMesh_54dmw")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(2.3223, 0.481853, -0.453105, -0.449067, 2.3631, 0.21142, 0.485614, -0.119068, 2.36232, 1.6238, 5.00969, 0.742909)
+transform = Transform3D(2.3223, 0.481853, -0.453105, -0.449067, 2.3631, 0.21142, 0.485614, -0.119068, 2.36232, 1.6238, 2.64995, 0.742909)
 material_override = SubResource("StandardMaterial3D_yonhv")
 mesh = SubResource("QuadMesh_54dmw")
 skeleton = NodePath("../..")
 
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.247086, -0.167422, 2.39614, -0.449067, 2.3631, 0.21142, -2.35963, -0.467257, 0.210678, -0.631181, 2.73553, 4.154)
+material_override = SubResource("StandardMaterial3D_argar")
+mesh = SubResource("QuadMesh_54dmw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.941823, -0.0199365, 2.22332, -0.449067, 2.3631, 0.21142, -2.17759, -0.495946, 0.918008, -1.87829, 2.78691, 1.88423)
+material_override = SubResource("StandardMaterial3D_kifwe")
+mesh = SubResource("QuadMesh_54dmw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(2.27783, 0.36924, 0.711141, -0.449067, 2.3631, 0.21142, -0.66363, -0.331695, 2.29786, 3.83905, 2.78691, 1.40172)
+material_override = SubResource("StandardMaterial3D_563nb")
+mesh = SubResource("QuadMesh_54dmw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.262306, -0.268192, 2.38534, 0.0814687, 2.39916, 0.260785, -2.39899, 0.0521517, 0.269675, 2.3119, 2.56547, 6.26781)
+material_override = SubResource("StandardMaterial3D_0aj8d")
+mesh = SubResource("QuadMesh_54dmw")
+skeleton = NodePath("../..")
+
 [node name="MeshInstance3D9" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(0.643994, -0.0856866, 2.32562, -0.449067, 2.3631, 0.21142, -2.28346, -0.488894, 0.614313, -1.70209, 4.7444, 4.29197)
+transform = Transform3D(0.643994, -0.0856866, 2.32562, -0.449067, 2.3631, 0.21142, -2.28346, -0.488894, 0.614313, -1.70209, 2.67742, 5.51784)
 material_override = SubResource("StandardMaterial3D_6e3eu")
 mesh = SubResource("QuadMesh_54dmw")
 skeleton = NodePath("../..")
@@ -169,3 +230,9 @@ text = "Keybinds:
 
 - Turn on Gravity: Space
 - Next \"Day\": Enter"
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="RegularAudio" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("8_e06ra")
+autoplay = true
