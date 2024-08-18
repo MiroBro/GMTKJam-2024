@@ -465,19 +465,19 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var w = i % grid_width;
 			var h = i / grid_width;
 			
-			var skip = true
+			var skip_sides = true
+			if w == 0 || w == grid_width-1 || h == 0 || h == grid_height-1:
+				skip_sides = false
 			for d in [Vector2i(-1,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(0,1)]:
 				var wi = w + d.x
 				var hi = h + d.y
-				if !(0 < wi && wi <= grid_width && 0 <= hi && hi < grid_height):
-					skip = false
+				if !(0 <= wi && wi < grid_width && 0 <= hi && hi < grid_height):
+					continue
+				var side_idx = wh_to_index(wi,hi)
+				if grid[side_idx] == 0:
+					skip_sides = false
 					break
-				#var side_idx = wh_to_index(w,h)
-				#if grid[side_idx] == 0:
-					#skip = false
-					#break
-			#if skip:
-				#continue
+			
 			
 			var middle = index_to_world_space(i)
 			var mp = Vector3(middle.x, 0.0, middle.y)
@@ -511,47 +511,47 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			var tr_b = tr - thick
 			var br_b = br - thick
 			var tl_b = tl - thick
+			if !skip_sides:
+				#front facing side
+				mesh.surface_set_normal(back)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(bl_b)
+				
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(br)
+				
+				
+				# # back facing side
+				mesh.surface_set_normal(forward)
+				mesh.surface_add_vertex(tl)
+				mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(tr_b)
+				
+				mesh.surface_add_vertex(tr_b)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(tl)
 
-			#front facing side
-			mesh.surface_set_normal(back)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(bl_b)
-			
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(br)
-			
-			
-			# # back facing side
-			mesh.surface_set_normal(forward)
-			mesh.surface_add_vertex(tl)
-			mesh.surface_add_vertex(tl_b)
-			mesh.surface_add_vertex(tr_b)
-			
-			mesh.surface_add_vertex(tr_b)
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(tl)
+				# # left side
+				mesh.surface_set_normal(left)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(bl_b)
+				mesh.surface_add_vertex(tl_b)
 
-			# # left side
-			mesh.surface_set_normal(left)
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(bl_b)
-			mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(bl)
+				mesh.surface_add_vertex(tl_b)
+				mesh.surface_add_vertex(tl)
 
-			mesh.surface_add_vertex(bl)
-			mesh.surface_add_vertex(tl_b)
-			mesh.surface_add_vertex(tl)
+				# # right side
+				mesh.surface_set_normal(right)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(tr_b)
+				mesh.surface_add_vertex(br_b)
 
-			# # right side
-			mesh.surface_set_normal(right)
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(tr_b)
-			mesh.surface_add_vertex(br_b)
-
-			mesh.surface_add_vertex(tr)
-			mesh.surface_add_vertex(br_b)
-			mesh.surface_add_vertex(br)
+				mesh.surface_add_vertex(tr)
+				mesh.surface_add_vertex(br_b)
+				mesh.surface_add_vertex(br)
 
 			# add bottom
 			mesh.surface_set_normal(down)
