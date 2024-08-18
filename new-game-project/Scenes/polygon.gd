@@ -14,11 +14,6 @@ func set_banana_relative_pos(pos: Vector3):
 		var new_pos = camera.global_position + pos
 		reference_banana.global_position.x = new_pos.x
 		reference_banana.global_position.z = new_pos.z
-		
-		print(reference_banana.global_position)
-		print(camera.global_position)
-		print(pos)
-		print("-------")
 
 func make_thing(mesh: MeshInstance3D):
 	reference_mesh.mesh = mesh.mesh
