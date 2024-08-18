@@ -79,7 +79,7 @@ func _ready() -> void:
 
 	find_and_delete_islands()
 	convert_grid_to_mesh(grid, plank.mesh)
-	#blueprint_ui.make_blueprint_from_mesh(plank)
+	blueprint_ui.set_plank_blueprint_mesh(plank)
 	blueprint_ui.set_banana_relative_pos(debug1.global_position)
 
 func _input(event):
@@ -142,7 +142,6 @@ func _input(event):
 				tool = TOOL_NOTHING
 
 				var radius = 0.2
-				
 				var tools = [TOOL_BANANA, TOOL_SAW]
 				var poss = [debug1.global_position, debug0.global_position]
 
@@ -167,7 +166,7 @@ func _input(event):
 				var island_indices: PackedInt32Array
 				var island_lens: Array[int]
 				find_islands(island_indices, island_lens)
-				#blueprint_ui.make_blueprint_from_mesh(plank)
+				blueprint_ui.set_plank_blueprint_mesh(plank)
 
 				# spawn_rigidbody_version_of_mesh(plank)
 

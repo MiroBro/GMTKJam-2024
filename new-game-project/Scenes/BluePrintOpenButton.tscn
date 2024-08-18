@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdldsdwvl51ux"]
+[gd_scene load_steps=14 format=3 uid="uid://cdldsdwvl51ux"]
 
 [ext_resource type="Script" path="res://Scenes/blue_print_open_button.gd" id="1_ur85g"]
 [ext_resource type="PackedScene" uid="uid://brjwoebsn2v4j" path="res://Scenes/BlueprintUI.tscn" id="2_o7ptg"]
@@ -19,6 +19,11 @@ ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 0)
 ambient_light_energy = 1.03
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oncup"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pg7p4"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhs40"]
 shading_mode = 2
 diffuse_mode = 3
@@ -27,6 +32,16 @@ disable_fog = true
 emission = Color(1, 1, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xdfgc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_inylk"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_fog = true
+albedo_color = Color(0.268965, 0.140454, 2.40654e-08, 1)
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_guvil"]
 
 [node name="BluePrintOpenButton" type="Control" node_paths=PackedStringArray("polygon")]
 layout_mode = 3
@@ -91,6 +106,12 @@ environment = SubResource("Environment_gjm4a")
 projection = 1
 size = 0.423
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="BlueprintUi/TextureRect/SubViewport/Camera3D"]
+transform = Transform3D(0.0270241, 0, 0, 0, -1.18126e-09, -0.0270241, 0, 0.0270241, -1.18126e-09, 0, 0, -0.385)
+material_override = SubResource("StandardMaterial3D_oncup")
+mesh = SubResource("BoxMesh_pg7p4")
+skeleton = NodePath("../..")
+
 [node name="debug1" type="Node3D" parent="BlueprintUi/TextureRect/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.987122, 0.159967, 0, -0.159967, 0.987122, -9.09276, -0.38918, -0.576508)
 
@@ -102,7 +123,12 @@ transform = Transform3D(0.0837, 0, 0, 0, -3.65865e-09, 0.0837, 0, -0.0837, -3.65
 material_override = SubResource("StandardMaterial3D_bhs40")
 mesh = SubResource("CapsuleMesh_xdfgc")
 
-[node name="Polygon" type="TextureRect" parent="BlueprintUi" node_paths=PackedStringArray("reference_mesh", "reference_banana", "camera")]
+[node name="bg reference" type="MeshInstance3D" parent="BlueprintUi/TextureRect/SubViewport"]
+transform = Transform3D(0.0837, 0, 0, 0, -3.65865e-09, 0.0837, 0, -0.0837, -3.65865e-09, -8.95168, -0.670644, -0.649589)
+material_override = SubResource("StandardMaterial3D_inylk")
+mesh = SubResource("CapsuleMesh_guvil")
+
+[node name="Polygon" type="TextureRect" parent="BlueprintUi" node_paths=PackedStringArray("reference_mesh", "reference_banana", "plank_mesh", "camera")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -120,6 +146,7 @@ stretch_mode = 1
 script = ExtResource("3_nuaf2")
 reference_mesh = NodePath("../TextureRect/SubViewport/MeshInstance3D")
 reference_banana = NodePath("../TextureRect/SubViewport/debug1")
+plank_mesh = NodePath("../TextureRect/SubViewport/bg reference")
 camera = NodePath("../TextureRect/SubViewport/Camera3D")
 
 [node name="Close" type="Button" parent="BlueprintUi"]
