@@ -114,7 +114,7 @@ func spawn_rigidbody_version_of_mesh(ref: MeshInstance3D):
 
 				
 func load_result_scene():
-	Globals.mesh = plank.mesh
+	Globals.mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())	
 	get_tree().change_scene_to_file("res://Scenes/result.tscn")
 	pass
 	
@@ -211,8 +211,7 @@ func _process(delta: float) -> void:
 
 	find_and_delete_islands()
 	
-	if Input.is_key_pressed(KEY_E):
-		load_result_scene()
+
 
 	#fix_music()
 
@@ -255,6 +254,18 @@ func _process(delta: float) -> void:
 	if cut_any:
 		find_and_delete_islands()
 		convert_grid_to_mesh(grid, plank.mesh)
+		
+	if Input.is_key_pressed(KEY_E):
+		if Globals.cut_meshes.size() == 3:
+			load_result_scene()
+		else:
+			reload_scene()
+
+func reload_scene():
+	var mesh = convert_grid_to_mesh(grid, plank.mesh.duplicate())
+	Globals.cut_meshes.append(mesh)
+	get_tree().change_scene_to_file("res://splitting_algorithm_scene.tscn")
+	pass
 
 # from 0.0->1.0 in xy
 func point_to_grid_space(p: Vector2):
@@ -498,7 +509,9 @@ func convert_grid_to_mesh(grid: PackedByteArray, mesh: ImmediateMesh):
 			# mesh.surface_set_normal(up)
 			mesh.surface_add_vertex(tl)
 			
+
 			var thick = -plank_thickness * Vector3.DOWN
+
 			# add sides
 			# if we want to we can make sure to only add this if we do not have four filled neighbours
 

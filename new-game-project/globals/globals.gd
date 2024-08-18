@@ -1,6 +1,8 @@
 extends Node
 
+
 var mesh = ImmediateMesh.new()
+var cut_meshes: Array[ImmediateMesh]
 
 ## Called when the node enters the scene tree for the first time.
 #func _ready() -> void:

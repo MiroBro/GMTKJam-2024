@@ -3,30 +3,27 @@ extends Node3D
 @onready var reference_root: Node3D = $"reference"
 @onready var project_root: Node3D = $"project" 
 
+
+
 func instantiate_piece(instance, counter):
 	
 	
-	var child_mesh: MeshInstance3D = MeshInstance3D.new()
-	child_mesh.mesh = Globals.mesh
+	var mesh_instance: MeshInstance3D = MeshInstance3D.new()
+	mesh_instance.mesh = Globals.cut_meshes[counter]
+	mesh_instance.material_override = load("res://Materials/material_Wood.tres")
 	
-	child_mesh.global_transform.origin = reference_root.get_child(counter).global_transform.origin
-	#child_mesh.global_transform.origin = 
-	#print("positon",child_mesh.global_transform.origin)
-	
-	#child_mesh.scale = Vector3(5,5,5)
-	child_mesh.rotation = reference_root.get_child(counter).rotation
+	mesh_instance.global_transform.origin = reference_root.get_child(counter).global_transform.origin + Vector3(-0.025,0,0)
+
+	mesh_instance.rotation = reference_root.get_child(counter).rotation
 	
 	var collision_shape = CollisionShape3D.new()
 	
-	collision_shape.shape = child_mesh.mesh.create_convex_shape()
-	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin
+	collision_shape.shape = mesh_instance.mesh.create_convex_shape()
+	collision_shape.global_transform.origin = reference_root.get_child(counter).global_transform.origin + Vector3(-0.025,0,0)
 	collision_shape.rotation = reference_root.get_child(counter).rotation
 	
-	instance.add_child(child_mesh)
+	instance.add_child(mesh_instance)
 	instance.add_child(collision_shape)
-			
-	#var box_shape: BoxShape3D = child.shape
-	#box_shape.size = reference_root.get_child(counter).scale
 			
 				
 
