@@ -1,9 +1,280 @@
-[gd_scene format=3 uid="uid://bnmry3j8iccbj"]
+[gd_scene load_steps=3 format=3 uid="uid://bnmry3j8iccbj"]
+
+[ext_resource type="Texture2D" uid="uid://cxtkafe14ov1n" path="res://Assets/Images/Intro/Intro_Art_Background.png" id="1_wb0m4"]
+[ext_resource type="Texture2D" uid="uid://b6y74en7p8pqo" path="res://Assets/Images/Intro/Intro Art_Split_Smaller.png" id="2_18dg3"]
 
 [node name="IntroScene" type="Node2D"]
 
 [node name="TextEdit" type="TextEdit" parent="."]
+visible = false
 offset_right = 218.0
 offset_bottom = 54.0
 text = "Intro scene"
 editable = false
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(944, 515)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("1_wb0m4")
+
+[node name="Worker" type="Node2D" parent="."]
+position = Vector2(441, 1159)
+
+[node name="Shadow" type="Sprite2D" parent="Worker"]
+position = Vector2(21, -2)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1845, 176, 389, 122)
+
+[node name="Relaxed" type="Node2D" parent="Worker"]
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Relaxed"]
+position = Vector2(205, -971)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1384, 767, 224, 363)
+
+[node name="Body" type="Sprite2D" parent="Worker/Relaxed"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Happy" type="Sprite2D" parent="Worker/Relaxed"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(60, 91, 202, 237)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Relaxed"]
+position = Vector2(-192, -936)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1350, 1189, 293, 446)
+
+[node name="Mini_Surprised" type="Node2D" parent="Worker"]
+visible = false
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Mini_Surprised"]
+position = Vector2(205, -971)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1384, 767, 224, 363)
+
+[node name="Body" type="Sprite2D" parent="Worker/Mini_Surprised"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Talk" type="Sprite2D" parent="Worker/Mini_Surprised"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(758, 91, 202, 237)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Mini_Surprised"]
+position = Vector2(97, -1009)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(622, 1218, 597, 387)
+
+[node name="Calls_Boss" type="Node2D" parent="Worker"]
+visible = false
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Calls_Boss"]
+position = Vector2(418, -965)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(591, 370, 530, 312)
+
+[node name="Body" type="Sprite2D" parent="Worker/Calls_Boss"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Mini_Surprised" type="Sprite2D" parent="Worker/Calls_Boss"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(523, 96, 202, 236)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Calls_Boss"]
+position = Vector2(-176, -958)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1350, 1189, 293, 446)
+
+[node name="Boss_Angry" type="Node2D" parent="Worker"]
+visible = false
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Boss_Angry"]
+position = Vector2(418, -965)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(591, 370, 530, 312)
+
+[node name="Body" type="Sprite2D" parent="Worker/Boss_Angry"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Surprised" type="Sprite2D" parent="Worker/Boss_Angry"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(300, 98, 202, 237)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Boss_Angry"]
+position = Vector2(-176, -958)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1350, 1189, 293, 446)
+
+[node name="Boss_Thinking" type="Node2D" parent="Worker"]
+visible = false
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Boss_Thinking"]
+position = Vector2(247, -955)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1384, 767, 224, 363)
+
+[node name="Body" type="Sprite2D" parent="Worker/Boss_Thinking"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Surprised" type="Sprite2D" parent="Worker/Boss_Thinking"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(300, 98, 202, 237)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Boss_Thinking"]
+position = Vector2(-176, -958)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1350, 1189, 293, 446)
+
+[node name="Boss_Aha" type="Node2D" parent="Worker"]
+visible = false
+
+[node name="Arm_L_To_Side" type="Sprite2D" parent="Worker/Boss_Aha"]
+position = Vector2(247, -955)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1384, 767, 224, 363)
+
+[node name="Body" type="Sprite2D" parent="Worker/Boss_Aha"]
+position = Vector2(30, -622)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(32, 420, 493, 1244)
+
+[node name="Head_Surprised" type="Sprite2D" parent="Worker/Boss_Aha"]
+position = Vector2(11, -1365)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(983, 96, 202, 236)
+
+[node name="Arm_R_To_Side" type="Sprite2D" parent="Worker/Boss_Aha"]
+position = Vector2(78, -1002)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(639, 767, 559, 387)
+
+[node name="Banana" type="Sprite2D" parent="Worker"]
+position = Vector2(-144, -691)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1350, 578, 120, 105)
+
+[node name="Boss" type="Node2D" parent="."]
+position = Vector2(1549, 1111)
+
+[node name="Shadow2" type="Sprite2D" parent="Boss"]
+position = Vector2(8, 5)
+scale = Vector2(1.11073, 1.11073)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1845, 176, 389, 122)
+
+[node name="Listening" type="Node2D" parent="Boss"]
+visible = false
+
+[node name="Body" type="Sprite2D" parent="Boss/Listening"]
+position = Vector2(0, -377)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1763, 767, 553, 847)
+
+[node name="Head" type="Sprite2D" parent="Boss/Listening"]
+position = Vector2(-16, -837)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1533, 94, 231, 241)
+
+[node name="Shouting" type="Node2D" parent="Boss"]
+visible = false
+
+[node name="Arm" type="Sprite2D" parent="Boss/Shouting"]
+position = Vector2(-251, -713)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1699, 390, 508, 330)
+
+[node name="Body" type="Sprite2D" parent="Boss/Shouting"]
+position = Vector2(0, -377)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1763, 767, 553, 847)
+
+[node name="Head" type="Sprite2D" parent="Boss/Shouting"]
+position = Vector2(-67, -808)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1236, 94, 231, 241)
+
+[node name="Shouting2" type="Node2D" parent="Boss"]
+
+[node name="Body" type="Sprite2D" parent="Boss/Shouting2"]
+position = Vector2(0, -377)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1763, 767, 553, 847)
+
+[node name="Head" type="Sprite2D" parent="Boss/Shouting2"]
+position = Vector2(-73, -799)
+texture = ExtResource("2_18dg3")
+region_enabled = true
+region_rect = Rect2(1533, 94, 231, 241)
