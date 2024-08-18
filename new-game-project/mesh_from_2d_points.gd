@@ -276,6 +276,9 @@ func fix_music(delta: float):
 	var is_cutting = drawing && tool == TOOL_SAW
 	var is_really_cutting = is_cutting && any
 
+	if is_really_cutting:
+		camera.add_trauma(0.2)
+
 	var sawing_sfx = $Audio/SawingSFX
 
 	if not is_really_cutting and not regularAudio.playing:
