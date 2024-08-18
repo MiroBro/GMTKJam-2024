@@ -34,8 +34,8 @@ var grid_height
 
 var cell = Vector3(cell_size.x, plank_thickness, cell_size.y)
 
-@export var normal_bg: AudioStreamPlayer3D
-@export var cutting_bg: AudioStreamPlayer3D
+@export var regularAudio: AudioStreamPlayer
+@export var cutting_audio: AudioStreamPlayer
 
 @export var rb_template: RigidBody3D
 
@@ -181,19 +181,20 @@ func find_and_delete_islands():
 	if any:
 		plank_collision_shape.shape = plank.mesh.create_convex_shape()
 
-
 func fix_music():
-	if not drawing and not normal_bg.playing:
-		normal_bg.play(normal_from)
-	if drawing and not cutting_bg.playing:
-		cutting_bg.play(cutting_from)
-		
+	if not drawing and not regularAudio.playing:
+		regularAudio.play(normal_from)
+	if drawing and not cutting_audio.playing:
+		cutting_audio.play(cutting_from)
+		$Audio/SawingSFX.play()
+
 	if not drawing:
-		cutting_from = cutting_bg.get_playback_position()
-		cutting_bg.stop()
+		cutting_from = cutting_audio.get_playback_position()
+		cutting_audio.stop()
+		$Audio/SawingSFX.stop()
 	if drawing:
-		normal_from = cutting_bg.get_playback_position()
-		normal_bg.stop()
+		normal_from = cutting_audio.get_playback_position()
+		regularAudio.stop()
 
 func wh_to_index(w: int, h: int) -> int:
 	return w + h*grid_width;

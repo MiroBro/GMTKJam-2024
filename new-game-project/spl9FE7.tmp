@@ -101,6 +101,12 @@ transform = Transform3D(0.999015, 0, 0, 1.42109e-14, 0.999015, -2.98023e-08, 7.1
 fov = 52.0304
 script = ExtResource("1_lws0k")
 
+[node name="CuttingAudio" type="AudioStreamPlayer" parent="Node3D"]
+stream = ExtResource("4_eajf0")
+
+[node name="RegularAudio" type="AudioStreamPlayer" parent="Node3D"]
+stream = ExtResource("3_q8d4d")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_afixl")
 
@@ -117,7 +123,7 @@ directional_shadow_fade_start = 0.795
 directional_shadow_max_distance = 2.0
 directional_shadow_pancake_size = 8.9
 
-[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "regularAudio", "cutting_audio", "rb_template", "plank_collision_shape", "blueprint_ui")]
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("camera", "debug0", "debug1", "debug2", "particles", "rb_template", "plank_collision_shape", "blueprint_ui")]
 script = ExtResource("1_gb60y")
 points = Array[Vector2]([Vector2(0, 0)])
 camera = NodePath("../Node3D/Camera3D")
@@ -125,8 +131,6 @@ debug0 = NodePath("../debug0")
 debug1 = NodePath("../debug1")
 debug2 = NodePath("../debug2")
 particles = NodePath("../debug0/CPUParticles3D")
-regularAudio = NodePath("Audio/RegularAudio")
-cutting_audio = NodePath("Audio/CuttingAudio")
 rb_template = NodePath("../rb_template")
 plank_collision_shape = NodePath("plank_mesh/RigidBody3D/plank_collision_shape")
 blueprint_ui = NodePath("../BluePrintOpenButton")
@@ -142,17 +146,8 @@ freeze = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.074215, 0)
 shape = SubResource("BoxShape3D_04bfi")
 
-[node name="Audio" type="Node" parent="GameManager"]
-
-[node name="CuttingAudio" type="AudioStreamPlayer" parent="GameManager/Audio"]
-stream = ExtResource("4_eajf0")
-
-[node name="RegularAudio" type="AudioStreamPlayer" parent="GameManager/Audio"]
-stream = ExtResource("3_q8d4d")
-
-[node name="SawingSFX" type="AudioStreamPlayer" parent="GameManager/Audio"]
+[node name="SawSFX" type="AudioStreamPlayer2D" parent="GameManager"]
 stream = ExtResource("13_qug8o")
-volume_db = 1.868
 
 [node name="Table" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13239, 0.13755)
